@@ -25,6 +25,8 @@ export default function Services() {
       icon: PenTool,
       title: "Architecture & Design",
       description: "Innovative, climate-smart designs tailored to Ghana's landscape and culture.",
+      slug: "architecture",
+      link: "/services/architecture",
       features: [
         "Concept Design & Feasibility Studies",
         "3D Visualization & Virtual Walkthroughs",
@@ -41,6 +43,8 @@ export default function Services() {
       icon: Box,
       title: "Materials Supply & Procurement",
       description: "Premium building materials sourced globally and supplied locally for quality construction.",
+      slug: "materials",
+      link: "/services/materials",
       features: [
         "Global Sourcing (China, Europe, USA)",
         "Quality Assurance & Testing",
@@ -57,6 +61,8 @@ export default function Services() {
       icon: HardHat,
       title: "Construction Management",
       description: "Full construction management — from foundation to finishing with quality assurance.",
+      slug: "construction",
+      link: "/services/construction",
       features: [
         "Project Planning & Scheduling",
         "Quality Control & Safety Management",
@@ -73,6 +79,8 @@ export default function Services() {
       icon: Building2,
       title: "Real Estate Development",
       description: "Residential & commercial development with investment-grade returns.",
+      slug: "real-estate",
+      link: "/services/real-estate",
       features: [
         "Property Development",
         "Investment Analysis",
@@ -82,6 +90,25 @@ export default function Services() {
       ],
       image: "https://images.pexels.com/photos/1396132/pexels-photo-1396132.jpeg?w=600&h=400&fit=crop",
       color: "from-green-500 to-green-600"
+    },
+    {
+      id: 5,
+      category: "feasibility",
+      icon: FileText,
+      title: "Feasibility Studies",
+      description: "Comprehensive project analysis to ensure success before you build.",
+      slug: "feasibility",
+      link: "/services/feasibility",
+      features: [
+        "Technical & Site Assessment",
+        "Financial Analysis & ROI Projections",
+        "Market Research & Demand Analysis",
+        "Risk Assessment & Mitigation Strategies",
+        "Regulatory & Permitting Review",
+        "Detailed Feasibility Report with Recommendations"
+      ],
+      image: "https://images.pexels.com/photos/1181263/pexels-photo-1181263.jpeg?w=600&h=400&fit=crop",
+      color: "from-purple-500 to-purple-600"
     }
   ]
 
@@ -89,32 +116,38 @@ export default function Services() {
     {
       icon: FileText,
       title: "Project Feasibility",
-      description: "Comprehensive project assessment and viability studies"
+      description: "Comprehensive project assessment and viability studies",
+      link: "/services/feasibility"
     },
     {
       icon: Wrench,
       title: "Renovation & Face-lifts",
-      description: "Transform existing spaces with modern upgrades"
+      description: "Transform existing spaces with modern upgrades",
+      link: "/services/construction"
     },
     {
       icon: Building2,
       title: "Facility Management",
-      description: "Ongoing maintenance and facility operations"
+      description: "Ongoing maintenance and facility operations",
+      link: "/services/construction"
     },
     {
       icon: Ruler,
       title: "Quantity Surveying",
-      description: "Accurate cost estimation and contract administration"
+      description: "Accurate cost estimation and contract administration",
+      link: "/services/construction"
     },
     {
       icon: Users,
       title: "Project Supervision",
-      description: "Dedicated oversight throughout project lifecycle"
+      description: "Dedicated oversight throughout project lifecycle",
+      link: "/services/construction"
     },
     {
       icon: Truck,
       title: "Logistics & Delivery",
-      description: "Efficient material transportation and handling"
+      description: "Efficient material transportation and handling",
+      link: "/services/materials"
     }
   ]
 
@@ -249,19 +282,6 @@ export default function Services() {
         className="bg-white min-h-screen"
         aria-label="AGEdge Global Services - Architecture, Materials, Construction, Real Estate"
       >
-        {/* Navigation Bar */}
-        {/* <div className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8 py-4">
-            <Link 
-              to="/"
-              className="inline-flex items-center gap-2 text-gray-600 hover:text-amber-600 transition-colors"
-            >
-              <Home className="w-5 h-5" />
-              <span>Back to Home</span>
-            </Link>
-          </div>
-        </div> */}
-
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-12 lg:py-16">
           {/* Hero Section */}
           <div className={`text-center mb-16 transition-all duration-700 ${
@@ -280,14 +300,14 @@ export default function Services() {
             </h1>
 
             <p className="text-xl text-gray-500 max-w-3xl mx-auto">
-              Architecture • Materials • Construction • Real Estate
+              Architecture • Materials • Construction • Real Estate • Feasibility Studies
             </p>
 
             <div className="max-w-3xl mx-auto mt-6">
               <p className="text-gray-600 leading-relaxed">
                 A vertically integrated powerhouse bringing architecture, materials, construction, 
-                and real estate under one roof. We remove middleman friction and deliver turnkey 
-                solutions with uncompromising quality and innovation.
+                feasibility studies, and real estate under one roof. We remove middleman friction 
+                and deliver turnkey solutions with uncompromising quality and innovation.
               </p>
             </div>
 
@@ -368,16 +388,30 @@ export default function Services() {
             >
               Real Estate
             </button>
+            <button
+              onClick={() => setActiveCategory('feasibility')}
+              className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                activeCategory === 'feasibility'
+                  ? 'bg-amber-500 text-white shadow-md'
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              }`}
+            >
+              Feasibility
+            </button>
           </div>
 
-          {/* Core Services Grid */}
+          {/* Core Services Grid - Clickable Cards */}
           <div className={`grid lg:grid-cols-2 gap-8 mb-20 transition-all duration-700 delay-200 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           }`}>
             {filteredServices.map((service, idx) => {
               const Icon = service.icon
               return (
-                <div key={service.id} className="group bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+                <Link 
+                  key={service.id} 
+                  to={service.link}
+                  className="group bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2"
+                >
                   <div className="relative h-48 overflow-hidden">
                     <img
                       src={service.image}
@@ -393,23 +427,30 @@ export default function Services() {
                     </div>
                   </div>
                   <div className="p-6">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-2">{service.title}</h3>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-2 group-hover:text-amber-600 transition-colors">
+                      {service.title}
+                    </h3>
                     <p className="text-gray-600 mb-4">{service.description}</p>
                     <ul className="space-y-2">
-                      {service.features.map((feature, i) => (
+                      {service.features.slice(0, 4).map((feature, i) => (
                         <li key={i} className="flex items-start gap-2 text-sm">
                           <CheckCircle className="w-4 h-4 text-amber-500 mt-0.5 flex-shrink-0" />
                           <span className="text-gray-600">{feature}</span>
                         </li>
                       ))}
+                      {service.features.length > 4 && (
+                        <li className="text-amber-500 text-sm font-medium mt-2">
+                          + {service.features.length - 4} more features →
+                        </li>
+                      )}
                     </ul>
                   </div>
-                </div>
+                </Link>
               )
             })}
           </div>
 
-          {/* Additional Services */}
+          {/* Additional Services - Now Clickable */}
           <div className={`mb-20 transition-all duration-700 delay-250 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           }`}>
@@ -426,15 +467,22 @@ export default function Services() {
               {additionalServices.map((service, idx) => {
                 const Icon = service.icon
                 return (
-                  <div key={idx} className="flex items-start gap-4 p-4 bg-gray-50 rounded-xl hover:bg-amber-50 transition-all duration-300">
-                    <div className="p-2 bg-amber-100 rounded-lg">
+                  <Link 
+                    key={idx} 
+                    to={service.link}
+                    className="flex items-start gap-4 p-4 bg-gray-50 rounded-xl hover:bg-amber-50 hover:shadow-md transition-all duration-300 group"
+                  >
+                    <div className="p-2 bg-amber-100 rounded-lg group-hover:bg-amber-200 transition-colors">
                       <Icon className="w-5 h-5 text-amber-600" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900">{service.title}</h3>
+                      <h3 className="font-semibold text-gray-900 group-hover:text-amber-600 transition-colors">
+                        {service.title}
+                      </h3>
                       <p className="text-sm text-gray-500">{service.description}</p>
                     </div>
-                  </div>
+                    <ChevronRight className="w-4 h-4 text-gray-400 ml-auto opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+                  </Link>
                 )
               })}
             </div>
@@ -556,13 +604,22 @@ export default function Services() {
           }`}>
             <h3 className="text-2xl font-bold text-gray-900 mb-3">Ready to Build Your Vision?</h3>
             <p className="text-gray-600 mb-6">Let's discuss how our integrated services can bring your project to life</p>
-            <Link
-              to="/contact"
-              className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-full font-semibold hover:shadow-lg transition-all duration-300"
-            >
-              Schedule a Consultation
-              <ArrowRight className="w-4 h-4" />
-            </Link>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Link
+                to="/contact"
+                className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-full font-semibold hover:shadow-lg transition-all duration-300"
+              >
+                Schedule a Consultation
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link
+                to="/services/feasibility"
+                className="inline-flex items-center gap-2 px-8 py-3 border-2 border-amber-500 text-amber-600 rounded-full font-semibold hover:bg-amber-50 transition-all duration-300"
+              >
+                Learn About Feasibility Studies
+                <ChevronRight className="w-4 h-4" />
+              </Link>
+            </div>
           </div>
         </div>
       </section>

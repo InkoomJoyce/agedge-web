@@ -284,11 +284,11 @@ export default function ClientsSection() {
 
       <section
         ref={sectionRef}
-        className="relative overflow-hidden py-12 lg:py-16  bg-gradient-to-br from-slate-50 via-white to-amber-50/30"
+        className="relative overflow-hidden py-12 lg:py-16 bg-white"
         aria-label="Our Trusted Clients - Partners Across Ghana"
       >
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-amber-100/40 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-green-100/20 via-transparent to-transparent" />
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
@@ -297,21 +297,21 @@ export default function ClientsSection() {
             isVisible? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
           }`}>
 
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-light tracking-tight text-slate-800 mb-3">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-light tracking-tight text-gray-800 mb-3">
               Our{' '}
-              <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-600 to-amber-800">
+              <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-green-800">
                 Valued Clients
               </span>
             </h2>
 
-            <p className="text-lg text-slate-500 max-w-2xl mx-auto mt-3 font-light">
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto mt-3 font-light">
               Building lasting partnerships with industry leaders across Ghana's most prestigious sectors
             </p>
 
             <div className="flex justify-center gap-2 mt-6">
-              <div className="w-12 h-px bg-amber-300"></div>
-              <div className="w-2 h-2 rounded-full bg-amber-400"></div>
-              <div className="w-12 h-px bg-amber-300"></div>
+              <div className="w-12 h-px bg-green-300"></div>
+              <div className="w-2 h-2 rounded-full bg-green-400"></div>
+              <div className="w-12 h-px bg-green-300"></div>
             </div>
           </div>
 
@@ -319,21 +319,21 @@ export default function ClientsSection() {
           <div className={`grid grid-cols-2 md:grid-cols-4 gap-4 mb-12 transition-all duration-1000 delay-200 transform ${
             isVisible? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
           }`}>
-            <div className="text-center p-5 bg-gradient-to-br from-white to-amber-50/50 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border border-amber-100/50">
-              <p className="text-3xl font-bold text-slate-800 mb-1">{stats.totalClients}+</p>
-              <p className="text-xs text-slate-500 font-medium">Trusted Clients</p>
+            <div className="text-center p-5 bg-gradient-to-br from-white to-green-50/50 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border border-green-100/50">
+              <p className="text-3xl font-bold text-gray-800 mb-1">{stats.totalClients}+</p>
+              <p className="text-xs text-gray-600 font-medium">Trusted Clients</p>
             </div>
-            <div className="text-center p-5 bg-gradient-to-br from-white to-amber-50/50 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border border-amber-100/50">
-              <p className="text-3xl font-bold text-slate-800 mb-1">{stats.totalProjects}+</p>
-              <p className="text-xs text-slate-500 font-medium">Projects Completed</p>
+            <div className="text-center p-5 bg-gradient-to-br from-white to-green-50/50 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border border-green-100/50">
+              <p className="text-3xl font-bold text-gray-800 mb-1">{stats.totalProjects}+</p>
+              <p className="text-xs text-gray-600 font-medium">Projects Completed</p>
             </div>
-            <div className="text-center p-5 bg-gradient-to-br from-white to-amber-50/50 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border border-amber-100/50">
-              <p className="text-3xl font-bold text-slate-800 mb-1">{stats.repeatRate}</p>
-              <p className="text-xs text-slate-500 font-medium">Repeat Clients</p>
+            <div className="text-center p-5 bg-gradient-to-br from-white to-green-50/50 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border border-green-100/50">
+              <p className="text-3xl font-bold text-gray-800 mb-1">{stats.repeatRate}</p>
+              <p className="text-xs text-gray-600 font-medium">Repeat Clients</p>
             </div>
-            <div className="text-center p-5 bg-gradient-to-br from-white to-amber-50/50 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border border-amber-100/50">
-              <p className="text-3xl font-bold text-slate-800 mb-1">{stats.industries}+</p>
-              <p className="text-xs text-slate-500 font-medium">Industries Served</p>
+            <div className="text-center p-5 bg-gradient-to-br from-white to-green-50/50 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border border-green-100/50">
+              <p className="text-3xl font-bold text-gray-800 mb-1">{stats.industries}+</p>
+              <p className="text-xs text-gray-600 font-medium">Industries Served</p>
             </div>
           </div>
 
@@ -342,8 +342,8 @@ export default function ClientsSection() {
             isVisible? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
           }`}>
             <div className="text-center mb-8">
-              <h3 className="text-2xl font-semibold text-slate-800 mb-2">Featured Partnerships</h3>
-              <p className="text-slate-500 text-sm">Proud to work with Ghana's most respected organizations</p>
+              <h3 className="text-2xl font-semibold text-gray-800 mb-2">Featured Partnerships</h3>
+              <p className="text-gray-600 text-sm">Proud to work with Ghana's most respected organizations</p>
             </div>
 
             <div className="relative">
@@ -351,17 +351,17 @@ export default function ClientsSection() {
                 <>
                   <button
                     onClick={handleFeaturedPrevious}
-                    className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 lg:-translate-x-6 z-20 p-3 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-amber-400"
+                    className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 lg:-translate-x-6 z-20 p-3 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-green-500"
                     aria-label="Previous featured clients"
                   >
-                    <ChevronLeft className="w-5 h-5 text-slate-700" />
+                    <ChevronLeft className="w-5 h-5 text-gray-700" />
                   </button>
                   <button
                     onClick={handleFeaturedNext}
-                    className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 lg:translate-x-6 z-20 p-3 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-amber-400"
+                    className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 lg:translate-x-6 z-20 p-3 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-green-500"
                     aria-label="Next featured clients"
                   >
-                    <ChevronRight className="w-5 h-5 text-slate-700" />
+                    <ChevronRight className="w-5 h-5 text-gray-700" />
                   </button>
                 </>
               )}
@@ -377,11 +377,11 @@ export default function ClientsSection() {
                         {chunk.map((client) => (
                           <div
                             key={client.id}
-                            className="group relative bg-gradient-to-br from-white via-white to-amber-50/40 rounded-2xl shadow-md hover:shadow-2xl transition-all duration-500 overflow-hidden border border-amber-100/60 hover:border-amber-300 hover:-translate-y-1"
+                            className="group relative bg-gradient-to-br from-white via-white to-green-50/40 rounded-2xl shadow-md hover:shadow-2xl transition-all duration-500 overflow-hidden border border-green-100/60 hover:border-green-300 hover:-translate-y-1"
                           >
                             <div className="relative p-6">
                               {/* Logo with colored background */}
-                              <div className="flex items-center justify-center h-28 mb-4 bg-gradient-to-br from-slate-50 to-amber-50/30 rounded-xl group-hover:from-amber-50 group-hover:to-amber-100/50 transition-all duration-500">
+                              <div className="flex items-center justify-center h-28 mb-4 bg-gradient-to-br from-gray-50 to-green-50/30 rounded-xl group-hover:from-green-50 group-hover:to-green-100/50 transition-all duration-500">
                                 <img
                                   src={client.logo}
                                   alt={`${client.name} logo - Trusted AGEdge client partner`}
@@ -391,23 +391,23 @@ export default function ClientsSection() {
                               </div>
 
                               <div className="text-center">
-                                <h4 className="text-lg font-bold text-slate-800 mb-1 group-hover:text-amber-700 transition-colors">{client.name}</h4>
-                                <p className="text-amber-600 text-sm font-medium mb-2">{client.industry}</p>
-                                <p className="text-slate-500 text-sm mb-3 font-light">{client.description}</p>
+                                <h4 className="text-lg font-bold text-gray-800 mb-1 group-hover:text-green-700 transition-colors">{client.name}</h4>
+                                <p className="text-green-600 text-sm font-medium mb-2">{client.industry}</p>
+                                <p className="text-gray-600 text-sm mb-3 font-light">{client.description}</p>
 
-                                <div className="bg-gradient-to-br from-amber-50 to-white rounded-lg p-3 mb-3 border border-amber-100/50">
-                                  <p className="text-sm text-slate-700 italic font-light">"{client.testimonial}"</p>
+                                <div className="bg-gradient-to-br from-green-50 to-white rounded-lg p-3 mb-3 border border-green-100/50">
+                                  <p className="text-sm text-gray-700 italic font-light">"{client.testimonial}"</p>
                                 </div>
 
-                                <div className="flex justify-center gap-4 pt-3 border-t border-amber-100/50">
+                                <div className="flex justify-center gap-4 pt-3 border-t border-green-100/50">
                                   <div className="text-center">
-                                    <p className="text-xs text-slate-400">Projects</p>
-                                    <p className="text-lg font-semibold text-slate-800">{client.projectCount}</p>
+                                    <p className="text-xs text-gray-500">Projects</p>
+                                    <p className="text-lg font-semibold text-gray-800">{client.projectCount}</p>
                                   </div>
-                                  <div className="w-px bg-amber-200/50"></div>
+                                  <div className="w-px bg-green-200/50"></div>
                                   <div className="text-center">
-                                    <p className="text-xs text-slate-400">Partner Since</p>
-                                    <p className="text-lg font-semibold text-slate-800">{client.since}</p>
+                                    <p className="text-xs text-gray-500">Partner Since</p>
+                                    <p className="text-lg font-semibold text-gray-800">{client.since}</p>
                                   </div>
                                 </div>
                               </div>
@@ -428,8 +428,8 @@ export default function ClientsSection() {
                       onClick={() => goToFeaturedSlide(idx)}
                       className={`transition-all duration-300 rounded-full ${
                         idx === featuredIndex
-                        ? 'w-8 h-2 bg-amber-500'
-                          : 'w-2 h-2 bg-slate-300 hover:bg-slate-400'
+                        ? 'w-8 h-2 bg-green-600'
+                          : 'w-2 h-2 bg-gray-300 hover:bg-gray-400'
                       }`}
                       aria-label={`Go to featured slide ${idx + 1}`}
                     />
@@ -444,8 +444,8 @@ export default function ClientsSection() {
             isVisible? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
           }`}>
             <div className="text-center mb-8">
-              <h3 className="text-2xl font-semibold text-slate-800 mb-2">Our Extended Family</h3>
-              <p className="text-slate-500 text-sm">Every client is a partner in our journey of excellence</p>
+              <h3 className="text-2xl font-semibold text-gray-800 mb-2">Our Family</h3>
+              <p className="text-gray-600 text-sm">Every client is a partner in our journey of excellence</p>
             </div>
 
             <div className="relative">
@@ -453,17 +453,17 @@ export default function ClientsSection() {
                 <>
                   <button
                     onClick={handleClientsPrevious}
-                    className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 lg:-translate-x-6 z-20 p-3 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-amber-400"
+                    className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 lg:-translate-x-6 z-20 p-3 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-green-500"
                     aria-label="Previous clients"
                   >
-                    <ChevronLeft className="w-5 h-5 text-slate-700" />
+                    <ChevronLeft className="w-5 h-5 text-gray-700" />
                   </button>
                   <button
                     onClick={handleClientsNext}
-                    className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 lg:translate-x-6 z-20 p-3 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-amber-400"
+                    className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 lg:translate-x-6 z-20 p-3 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-green-500"
                     aria-label="Next clients"
                   >
-                    <ChevronRight className="w-5 h-5 text-slate-700" />
+                    <ChevronRight className="w-5 h-5 text-gray-700" />
                   </button>
                 </>
               )}
@@ -479,7 +479,7 @@ export default function ClientsSection() {
                         {chunk.map((client) => (
                           <div
                             key={client.id}
-                            className="group relative bg-gradient-to-br from-white to-amber-50/30 hover:to-amber-50/60 rounded-xl p-5 transition-all duration-300 border border-amber-100/50 hover:border-amber-300 hover:shadow-xl hover:-translate-y-1"
+                            className="group relative bg-gradient-to-br from-white to-green-50/30 hover:to-green-50/60 rounded-xl p-5 transition-all duration-300 border border-green-100/50 hover:border-green-300 hover:shadow-xl hover:-translate-y-1"
                           >
                             <div className="flex items-center justify-center h-20 mb-3 bg-white rounded-lg shadow-sm group-hover:shadow-md transition-all duration-300">
                               <img
@@ -491,16 +491,16 @@ export default function ClientsSection() {
                             </div>
 
                             <div className="text-center">
-                              <p className="text-sm font-semibold text-slate-800 mb-1 group-hover:text-amber-700 transition-colors">{client.name}</p>
-                              <p className="text-xs text-amber-600 mb-2">{client.industry}</p>
-                              <div className="flex justify-center gap-2 text-xs text-slate-400">
+                              <p className="text-sm font-semibold text-gray-800 mb-1 group-hover:text-green-700 transition-colors">{client.name}</p>
+                              <p className="text-xs text-green-600 mb-2">{client.industry}</p>
+                              <div className="flex justify-center gap-2 text-xs text-gray-500">
                                 <span>{client.projectCount} projects</span>
                                 <span>•</span>
                                 <span>{client.since}</span>
                               </div>
                             </div>
 
-                            <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-amber-400 to-amber-600 group-hover:w-12 transition-all duration-300 rounded-full" />
+                            <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-green-500 to-green-700 group-hover:w-12 transition-all duration-300 rounded-full" />
                           </div>
                         ))}
                       </div>
@@ -517,8 +517,8 @@ export default function ClientsSection() {
                       onClick={() => goToClientsSlide(idx)}
                       className={`transition-all duration-300 rounded-full ${
                         idx === clientsIndex
-                        ? 'w-8 h-2 bg-amber-500'
-                          : 'w-2 h-2 bg-slate-300 hover:bg-slate-400'
+                        ? 'w-8 h-2 bg-green-600'
+                          : 'w-2 h-2 bg-gray-300 hover:bg-gray-400'
                       }`}
                       aria-label={`Go to clients slide ${idx + 1}`}
                     />
@@ -529,12 +529,12 @@ export default function ClientsSection() {
           </div>
 
           {/* Industry Categories */}
-          <div className={`mt-16 pt-10 border-t border-amber-100/50 transition-all duration-1000 delay-500 transform ${
+          <div className={`mt-16 pt-10 border-t border-green-100/50 transition-all duration-1000 delay-500 transform ${
             isVisible? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
           }`}>
             <div className="text-center mb-8">
-              <h3 className="text-2xl font-semibold text-slate-800 mb-2">Industries We Serve</h3>
-              <p className="text-slate-500 text-sm">Expertise across Ghana's key economic sectors</p>
+              <h3 className="text-2xl font-semibold text-gray-800 mb-2">Industries We Serve</h3>
+              <p className="text-gray-600 text-sm">Expertise across Ghana's key economic sectors</p>
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5">
@@ -543,14 +543,14 @@ export default function ClientsSection() {
                 return (
                   <div
                     key={category.category}
-                    className="group text-center p-5 rounded-2xl bg-gradient-to-br from-white to-amber-50/30 hover:to-amber-50/60 hover:shadow-xl hover:-translate-y-1 transition-all duration-500 border border-amber-100/50 hover:border-amber-300 cursor-pointer"
+                    className="group text-center p-5 rounded-2xl bg-gradient-to-br from-white to-green-50/30 hover:to-green-50/60 hover:shadow-xl hover:-translate-y-1 transition-all duration-500 border border-green-100/50 hover:border-green-300 cursor-pointer"
                     style={{ transitionDelay: `${idx * 100}ms` }}
                   >
-                    <div className="inline-flex p-3 rounded-xl bg-gradient-to-br from-amber-100 to-amber-50 group-hover:from-amber-200 group-hover:to-amber-100 transition-all duration-500 mb-3 shadow-sm">
-                      <Icon className="w-6 h-6 text-amber-600" />
+                    <div className="inline-flex p-3 rounded-xl bg-gradient-to-br from-green-100 to-green-50 group-hover:from-green-200 group-hover:to-green-100 transition-all duration-500 mb-3 shadow-sm">
+                      <Icon className="w-6 h-6 text-green-600" />
                     </div>
-                    <h4 className="font-semibold text-slate-800 mb-1 text-sm group-hover:text-amber-700 transition-colors">{category.category}</h4>
-                    <p className="text-xs text-slate-500">{category.count}</p>
+                    <h4 className="font-semibold text-gray-800 mb-1 text-sm group-hover:text-green-700 transition-colors">{category.category}</h4>
+                    <p className="text-xs text-gray-600">{category.count}</p>
                   </div>
                 )
               })}

@@ -34,10 +34,10 @@ export default function Navbar() {
   }
 
   const navLinks = [
-    { name: 'HOME', path: '/', ariaLabel: 'AGEdge Global Homepage' },
-    { name: 'ABOUT US', path: '/about', ariaLabel: 'About AGEdge Global' },
+    { name: 'Home', path: '/', ariaLabel: 'AGEdge Global Homepage' },
+    { name: 'About Us', path: '/about', ariaLabel: 'About AGEdge Global' },
     {
-      name: 'SERVICES',
+      name: 'Services',
       path: '/services',
       ariaLabel: 'Construction and Real Estate Services',
       dropdown: [
@@ -51,7 +51,7 @@ export default function Navbar() {
       ]
     },
     {
-      name: 'PROJECTS',
+      name: 'Projects',
       path: '/projects',
       ariaLabel: 'AGEdge Construction Projects in Ghana',
       dropdown: [
@@ -68,27 +68,29 @@ export default function Navbar() {
       ]
     },
     {
-      name: 'RESOURCES',
+      name: 'Resources',
       path: '/resources',
       ariaLabel: 'AGEdge Resources and Tools',
       dropdown: [
         { name: 'Locations', path: '/locations' },
-        { name: 'Cost Calculator', path: '/cost-calculator' },
+        { name: 'Cost Calculator', path: '/calculator' },
         { name: '360° Walkthrough', path: '/walkthrough' }
       ]
     },
     {
-      name: 'BLOG',
+      name: 'Blog',
       path: '/blog',
       ariaLabel: 'AGEdge Blog and News',
       dropdown: [
         { name: 'Blog', path: '/blog' },
-        { name: 'News', path: '/news' },
-        { name: 'Quarterly Reports', path: '/reports' },
-        { name: 'Magazine', path: '/magazine' }
+        { name: 'News', path: '/live-news' },
+         { name: 'Magazine', path: '/magazine' },
+        { name: 'Annual Reports', path: '/annual-reports' },
+       
       ]
     },
-    { name: 'CONTACT US', path: '/contact', ariaLabel: 'Contact AGEdge Global' },
+    { name: 'Contact Us', path: '/contact', ariaLabel: 'Contact AGEdge Global' },
+    { name: 'Team', path: '/team', ariaLabel: 'AGEdge Global Team' },
   ]
 
   const linkBaseClass = "font-bold px-3 py-2 rounded-full transition duration-200 relative"
@@ -183,7 +185,7 @@ export default function Navbar() {
                 to="/contact"
                 className={`px-6 py-2.5 rounded-full font-semibold transition ${
                   scrolled
-                ? 'bg-amber-500 text-white hover:bg-amber-600'
+                ? 'bg-green-600 text-white hover:bg-amber-600'
                     : 'bg-white text-black hover:bg-gray-200'
                 }`}
                 aria-label="Contact AGEdge Global to start your construction project"

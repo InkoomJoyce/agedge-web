@@ -57,7 +57,7 @@ export default function TrustBar() {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting &&!hasAnimated) {
+        if (entries[0].isIntersecting && !hasAnimated) {
           setHasAnimated(true);
         }
       },
@@ -130,7 +130,7 @@ export default function TrustBar() {
 
       <section
         ref={sectionRef}
-        className="bg-white overflow-hidden relative"
+        className="bg-gray-200 overflow-hidden relative"
         aria-labelledby="trust-heading"
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-12 lg:py-16 relative z-10">
@@ -138,25 +138,25 @@ export default function TrustBar() {
           <div className="text-center mb-10 lg:mb-12">
             <h2
               id="trust-heading"
-              className="text-4xl lg:text-6xl font-semibold tracking-tight text-slate-800 mb-3"
+              className="text-4xl lg:text-6xl font-semibold tracking-tight text-gray-800 mb-3"
             >
               AGEdge Global Impact
-              <span className="block text-2xl lg:text-3xl font-light text-slate-400 mt-2">
+              <span className="block text-2xl lg:text-3xl font-light text-gray-500 mt-2">
                 Architecture · Materials · Construction · Real Estate
               </span>
             </h2>
 
             <div className="max-w-2xl mx-auto">
-              <p className="text-slate-500 text-lg leading-relaxed font-light">
-                Leading <strong className="font-medium text-slate-700">architecture and construction firm in Ghana</strong>. 
-                Delivering end-to-end building solutions with <span className="italic text-slate-700 font-medium">innovation and sustainability</span>.
+              <p className="text-gray-600 text-lg leading-relaxed font-light">
+                Leading <strong className="font-medium text-gray-700">architecture and construction firm in Ghana</strong>. 
+                Delivering end-to-end building solutions with <span className="italic text-gray-700 font-medium">innovation and sustainability</span>.
               </p>
             </div>
 
             <div className="flex justify-center gap-2 mt-6" aria-hidden="true">
-              <div className="w-12 h-px bg-amber-300"></div>
-              <div className="w-3 h-px bg-amber-400"></div>
-              <div className="w-3 h-px bg-amber-500"></div>
+              <div className="w-12 h-px bg-green-300"></div>
+              <div className="w-3 h-px bg-green-400"></div>
+              <div className="w-3 h-px bg-green-500"></div>
             </div>
           </div>
 
@@ -167,56 +167,49 @@ export default function TrustBar() {
             aria-label="AGEdge Global company statistics"
           >
             {stats.map((stat) => {
-              const Icon = stat.icon;
               const displayValue = stat.id === 'projects'
-          ? counts.projects
+                ? counts.projects
                 : stat.id === 'services'
-          ? counts.services
+                ? counts.services
                 : stat.finalValue;
 
               return (
                 <article
                   key={stat.id}
-                  className="group relative bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-500 border border-stone-100 hover:border-amber-200"
+                  className="group relative bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-200 hover:border-green-300"
                   role="listitem"
                   aria-label={stat.ariaLabel}
                 >
                   <div className="absolute top-4 right-4 w-8 h-8 opacity-0 group-hover:opacity-100 transition-opacity duration-500" aria-hidden="true">
-                    <div className="w-full h-full border-t-2 border-r-2 border-amber-300 rounded-tr-lg" />
+                    <div className="w-full h-full border-t-2 border-r-2 border-green-300 rounded-tr-lg" />
                   </div>
 
-                  <div className="mb-6">
-                    <div className="inline-flex p-3 rounded-xl bg-gradient-to-br from-stone-50 to-amber-50 group-hover:from-amber-50 group-hover:to-amber-100 transition-all duration-500">
-                      <Icon className="w-6 h-6 text-amber-600 group-hover:text-amber-700 transition-colors" aria-hidden="true" />
-                    </div>
-                  </div>
-
-                  <div className="space-y-3">
-                    <p className="text-5xl lg:text-6xl font-light text-slate-900 tracking-tighter leading-tight">
+                  <div className="space-y-2">
+                    <p className="text-5xl lg:text-6xl font-light text-gray-900 tracking-tighter leading-tight">
                       {stat.suffix === "+"
-                  ? `${displayValue}${stat.suffix}`
+                        ? `${displayValue}${stat.suffix}`
                         : stat.id === 'year'
-                  ? displayValue
+                        ? displayValue
                         : displayValue}
                     </p>
 
                     <div>
-                      <h3 className="text-lg font-medium text-slate-800 mb-1">
+                      <h3 className="text-base font-medium text-gray-800 mb-1">
                         {stat.label}
                       </h3>
-                      <p className="text-sm text-amber-600 font-medium">
+                      <p className="text-sm text-green-600 font-medium">
                         {stat.description}
                       </p>
                     </div>
 
-                    <div className="pt-3 opacity-0 group-hover:opacity-100 transition-all duration-700 transform group-hover:translate-y-0 translate-y-2">
-                      <p className="text-xs text-slate-600 leading-relaxed border-t border-stone-100 pt-3 font-medium">
+                    <div className="pt-2 opacity-0 group-hover:opacity-100 transition-all duration-700 transform group-hover:translate-y-0 translate-y-2">
+                      <p className="text-xs text-gray-600 leading-relaxed border-t border-gray-100 pt-2 font-medium">
                         {stat.detail}
                       </p>
                     </div>
                   </div>
 
-                  <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-gradient-to-br from-transparent via-amber-50/20 to-transparent" aria-hidden="true" />
+                  <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-gradient-to-br from-transparent via-green-50/20 to-transparent" aria-hidden="true" />
                 </article>
               );
             })}

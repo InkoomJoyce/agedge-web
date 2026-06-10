@@ -143,10 +143,10 @@ export default function About() {
         <div className={`text-center mb-16 transition-all duration-700 ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         }`}>
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-100 text-amber-700 text-sm font-medium mb-6">
+          {/* <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-100 text-amber-700 text-sm font-medium mb-6">
             <Building2 className="w-4 h-4" />
             <span>Ghana's Premier Design & Build Firm</span>
-          </div>
+          </div> */}
 
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-light tracking-tight text-gray-900 mb-4">
             AGEdge{' '}
@@ -156,7 +156,7 @@ export default function About() {
           </h1>
 
           <p className="text-xl text-gray-500 max-w-2xl mx-auto">
-            Architecture • Design • Build
+            Feasibility • Design • Build • Procurement • Facility Management 
           </p>
 
           <div className="max-w-3xl mx-auto mt-6">
@@ -179,7 +179,7 @@ export default function About() {
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         }`}>
           <img
-            src="https://images.pexels.com/photos/2760242/pexels-photo-2760242.jpeg?w=1600&h=600&fit=crop"
+            src="https://images.pexels.com/photos/13729358/pexels-photo-13729358.png"
             alt="AGEdge Global architecture firm - Modern building design showcase"
             className="w-full h-[300px] md:h-[400px] object-cover"
             loading="lazy"
@@ -360,7 +360,7 @@ export default function About() {
           </div>
           <div className="rounded-2xl overflow-hidden shadow-lg">
             <img
-              src="https://images.pexels.com/photos/2927008/pexels-photo-2927008.jpeg?w=600&h=400&fit=crop"
+              src="https://images.pexels.com/photos/36444550/pexels-photo-36444550.png"
               alt="Architecture team meeting and collaboration"
               className="w-full h-[300px] object-cover hover:scale-105 transition-transform duration-500"
               loading="lazy"
@@ -378,7 +378,7 @@ export default function About() {
               <h3 className="text-xl font-semibold text-gray-900">Visit Us</h3>
             </div>
             <p className="text-gray-600">
-              Number 1 Beige Street, Azumah, New Weija, Accra
+              Number 1 Beige Street, Azumah, New Weija, Accra, Ghana
             </p>
             <p className="text-gray-500 text-sm mt-2">GPS: GS-0065-2998</p>
             <p className="text-gray-600 mt-3">P. O. Box CT 1061, Cantonments, Accra</p>
@@ -391,18 +391,18 @@ export default function About() {
             </div>
             <p className="text-gray-600">Email: info@agedgeglobal.com</p>
             <p className="text-gray-600 mt-2">Website: www.agedgeglobal.com</p>
-            <div className="mt-4 pt-4 border-t border-gray-200">
+            {/* <div className="mt-4 pt-4 border-t border-gray-200">
               <p className="text-sm text-gray-500 mb-2">Bankers:</p>
               <div className="flex flex-wrap gap-2">
                 <span className="px-3 py-1 bg-white rounded-lg text-sm text-gray-600">Stanbic Bank Ghana</span>
                 <span className="px-3 py-1 bg-white rounded-lg text-sm text-gray-600">Fidelity Bank Ghana</span>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
 
         {/* Footer */}
-        <div className={`text-center pt-8 border-t border-gray-100 transition-all duration-700 delay-500 ${
+        {/* <div className={`text-center pt-8 border-t border-gray-100 transition-all duration-700 delay-500 ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         }`}>
           <div className="inline-flex items-center gap-2 px-6 py-3 bg-amber-50 rounded-full">
@@ -411,7 +411,7 @@ export default function About() {
               Innovation • Sustainability • Excellence in Global Architecture
             </p>
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   )

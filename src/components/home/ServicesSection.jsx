@@ -93,7 +93,7 @@ export default function ServicesSection() {
 
       <section 
         ref={sectionRef}
-        className="relative overflow-hidden py-16 lg:py-20"
+        className="relative overflow-hidden py-16 lg:py-20 bg-gray-900"
         aria-labelledby="services-heading"
       >
         {/* Parallax Background */}
@@ -108,9 +108,9 @@ export default function ServicesSection() {
           }}
           aria-hidden="true"
         >
-          {/* BLACK overlay - lighter so background shows */}
-          <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/50 to-black/60" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-black/20 to-black/70" />
+          {/* Dark grey overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-900/85 via-gray-900/80 to-gray-900/85" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-gray-900/50 to-gray-950/80" />
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
@@ -118,33 +118,22 @@ export default function ServicesSection() {
           <div className={`text-center mb-12 lg:mb-16 transition-all duration-1000 transform ${
             isVisible? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
           }`}>
-            {/* <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 backdrop-blur-md border border-amber-400/20 text-amber-300 text-sm font-medium mb-6">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
-              </span>
-              Integrated Building Solutions in Ghana
-            </div> */}
-
             <h2 
               id="services-heading"
               className="text-4xl md:text-5xl lg:text-6xl font-light text-white mb-4 tracking-tight"
             >
               Our Core Services
-              {/* <span className="block text-2xl lg:text-3xl font-light text-amber-200/90 mt-3">
-                Architecture · Materials · Construction · Real Estate
-              </span> */}
             </h2>
             
-            <p className="text-lg md:text-xl text-slate-100 max-w-3xl mx-auto leading-relaxed font-light">
+            <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed font-light">
               AGEdge Global is a vertical powerhouse that integrates all four pillars of building with 
-              <strong className="font-medium text-amber-300"> one expert team</strong>, ensuring you own the entire journey.
+              <strong className="font-medium text-gray-200"> one expert team</strong>, ensuring you own the entire journey.
             </p>
 
             <div className="flex justify-center gap-3 mt-8">
-              <div className="w-16 h-px bg-gradient-to-r from-transparent via-amber-400/60 to-transparent" />
-              <div className="w-1.5 h-1.5 rounded-full bg-amber-400/80" />
-              <div className="w-16 h-px bg-gradient-to-l from-transparent via-amber-400/60 to-transparent" />
+              <div className="w-16 h-px bg-gradient-to-r from-transparent via-gray-400/60 to-transparent" />
+              <div className="w-1.5 h-1.5 rounded-full bg-gray-400/80" />
+              <div className="w-16 h-px bg-gradient-to-l from-transparent via-gray-400/60 to-transparent" />
             </div>
           </div>
 
@@ -160,9 +149,9 @@ export default function ServicesSection() {
                 }`}
                 style={{ transitionDelay: `${service.delay}ms` }}
               >
-                <div className="absolute -inset-2 bg-gradient-to-br from-amber-500/30 to-amber-600/20 rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute -inset-2 bg-gradient-to-br from-gray-400/30 to-gray-500/20 rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 
-                <div className="relative bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-8 transition-all duration-300 group-hover:bg-amber-500/10 group-hover:border-amber-400/40 [&_*]:text-white [&_h3]:text-white [&_p]:text-slate-100 group-hover:[&_h3]:text-amber-300 group-hover:[&_p]:text-amber-100">
+                <div className="relative bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 transition-all duration-300 group-hover:bg-white/20 group-hover:border-white/40 [&_*]:text-white [&_h3]:text-white [&_p]:text-gray-100 group-hover:[&_h3]:text-white group-hover:[&_p]:text-gray-200">
                   <ServiceCard 
                     title={service.title} 
                     description={service.desc}

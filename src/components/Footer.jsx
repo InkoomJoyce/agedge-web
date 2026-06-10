@@ -72,22 +72,22 @@ export default function Footer() {
         {JSON.stringify(schemaData)}
       </script>
 
-      <footer className="bg-black text-white" role="contentinfo">
+      <footer className="bg-gray-300 text-gray-800" role="contentinfo">
         {/* Newsletter Section */}
-        <div className="border-b border-gray-800">
+        <div className="border-b border-gray-400">
           <div className="max-w-7xl mx-auto px-6 py-12">
             <div className="grid md:grid-cols-2 gap-8 items-center">
               <div>
-                <h3 className="text-2xl font-bold mb-2">Stay Updated</h3>
-                <p className="text-gray-400">
+                <h3 className="text-2xl font-bold mb-2 text-gray-800">Stay Updated</h3>
+                <p className="text-gray-600">
                   Get project updates, real estate insights, and exclusive offers from AGEdge Global.
                 </p>
               </div>
               <div>
                 {status === 'success' ? (
-                  <div className="bg-white/10 border border-green-500/50 rounded-lg p-4 text-center" role="status" aria-live="polite">
-                    <p className="font-semibold text-green-400">Thank you for subscribing!</p>
-                    <p className="text-sm text-gray-400 mt-1">Watch your inbox for exciting things from us.</p>
+                  <div className="bg-green-100 border border-green-500 rounded-lg p-4 text-center" role="status" aria-live="polite">
+                    <p className="font-semibold text-green-700">Thank you for subscribing!</p>
+                    <p className="text-sm text-green-600 mt-1">Watch your inbox for exciting things from us.</p>
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3" aria-label="Newsletter subscription form">
@@ -101,7 +101,7 @@ export default function Footer() {
                       onChange={handleChange}
                       required
                       disabled={status === 'loading'}
-                      className="flex-1 bg-white/10 border border-gray-700 rounded-full px-5 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-white transition disabled:opacity-50"
+                      className="flex-1 bg-white border border-gray-300 rounded-full px-5 py-3 text-gray-800 placeholder-gray-500 focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition disabled:opacity-50"
                     />
                     <label htmlFor="newsletter-email" className="sr-only">Your email</label>
                     <input
@@ -113,20 +113,20 @@ export default function Footer() {
                       onChange={handleChange}
                       required
                       disabled={status === 'loading'}
-                      className="flex-1 bg-white/10 border border-gray-700 rounded-full px-5 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-white transition disabled:opacity-50"
+                      className="flex-1 bg-white border border-gray-300 rounded-full px-5 py-3 text-gray-800 placeholder-gray-500 focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition disabled:opacity-50"
                     />
                     <button
                       type="submit"
                       disabled={status === 'loading'}
                       aria-label="Subscribe to newsletter"
-                      className="bg-white text-black px-8 py-3 rounded-full font-semibold hover:bg-gray-200 transition whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="bg-green-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-green-700 transition whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {status === 'loading' ? 'Sending...' : 'Subscribe'}
                     </button>
                   </form>
                 )}
                 {status === 'error' && (
-                  <p className="text-red-400 text-sm mt-2" role="alert">Something went wrong. Please try again.</p>
+                  <p className="text-red-600 text-sm mt-2" role="alert">Something went wrong. Please try again.</p>
                 )}
               </div>
             </div>
@@ -140,9 +140,9 @@ export default function Footer() {
             {/* Column 1: Brand */}
             <div className="lg:col-span-2">
               <Link to="/" className="inline-block mb-4" aria-label="AGEdge Global Homepage">
-                <h3 className="text-2xl font-bold tracking-wide">AGEdge Global</h3>
+                <h3 className="text-2xl font-bold tracking-wide text-gray-800">AGEdge Global</h3>
               </Link>
-              <p className="text-gray-400 leading-relaxed max-w-md mb-6">
+              <p className="text-gray-600 leading-relaxed max-w-md mb-6">
                 Architecture, Materials, Construction, Real Estate — Under One Roof.
                 Building dreams and creating communities across Ghana.
               </p>
@@ -150,32 +150,32 @@ export default function Footer() {
               {/* All Social Icons */}
               <nav aria-label="Social media links" className="flex flex-wrap gap-3">
                 <a href="https://instagram.com/agedgeglobal" target="_blank" rel="noopener noreferrer me"
-                   className="w-9 h-9 rounded-full border border-gray-700 flex items-center justify-center hover:bg-white hover:text-black transition"
+                   className="w-9 h-9 rounded-full border border-gray-400 flex items-center justify-center text-gray-600 hover:bg-green-600 hover:text-white hover:border-green-600 transition"
                    aria-label="Follow AGEdge Global on Instagram">
                   <FaInstagram className="w-4 h-4" />
                 </a>
                 <a href="https://linkedin.com/company/agedgegloballimited" target="_blank" rel="noopener noreferrer me"
-                   className="w-9 h-9 rounded-full border border-gray-700 flex items-center justify-center hover:bg-white hover:text-black transition"
+                   className="w-9 h-9 rounded-full border border-gray-400 flex items-center justify-center text-gray-600 hover:bg-green-600 hover:text-white hover:border-green-600 transition"
                    aria-label="Follow AGEdge Global on LinkedIn">
                   <FaLinkedinIn className="w-4 h-4" />
                 </a>
                 <a href="https://facebook.com/agedgegloballimited" target="_blank" rel="noopener noreferrer me"
-                   className="w-9 h-9 rounded-full border border-gray-700 flex items-center justify-center hover:bg-white hover:text-black transition"
+                   className="w-9 h-9 rounded-full border border-gray-400 flex items-center justify-center text-gray-600 hover:bg-green-600 hover:text-white hover:border-green-600 transition"
                    aria-label="Follow AGEdge Global on Facebook">
                   <FaFacebookF className="w-4 h-4" />
                 </a>
                 <a href="https://twitter.com/agedgeglobal" target="_blank" rel="noopener noreferrer me"
-                   className="w-9 h-9 rounded-full border border-gray-700 flex items-center justify-center hover:bg-white hover:text-black transition"
+                   className="w-9 h-9 rounded-full border border-gray-400 flex items-center justify-center text-gray-600 hover:bg-green-600 hover:text-white hover:border-green-600 transition"
                    aria-label="Follow AGEdge Global on X">
                   <FaXTwitter className="w-4 h-4" />
                 </a>
                 <a href="https://youtube.com/@agedgegloballimited" target="_blank" rel="noopener noreferrer me"
-                   className="w-9 h-9 rounded-full border border-gray-700 flex items-center justify-center hover:bg-white hover:text-black transition"
+                   className="w-9 h-9 rounded-full border border-gray-400 flex items-center justify-center text-gray-600 hover:bg-green-600 hover:text-white hover:border-green-600 transition"
                    aria-label="Subscribe to AGEdge Global on YouTube">
                   <FaYoutube className="w-4 h-4" />
                 </a>
                 <a href="https://tiktok.com/@agedgegloballimited" target="_blank" rel="noopener noreferrer me"
-                   className="w-9 h-9 rounded-full border border-gray-700 flex items-center justify-center hover:bg-white hover:text-black transition"
+                   className="w-9 h-9 rounded-full border border-gray-400 flex items-center justify-center text-gray-600 hover:bg-green-600 hover:text-white hover:border-green-600 transition"
                    aria-label="Follow AGEdge Global on TikTok">
                   <FaTiktok className="w-4 h-4" />
                 </a>
@@ -184,24 +184,24 @@ export default function Footer() {
 
             {/* Column 2: Quick Links */}
             <nav aria-label="Company links">
-              <h4 className="font-semibold mb-4">Company</h4>
+              <h4 className="font-semibold mb-4 text-gray-800">Company</h4>
               <ul className="space-y-3">
-                <li><Link to="/about" className="text-gray-400 hover:text-white transition text-sm">About AGEdge Global</Link></li>
-                <li><Link to="/services" className="text-gray-400 hover:text-white transition text-sm">Construction & Architectural Services</Link></li>
-                <li><Link to="/projects" className="text-gray-400 hover:text-white transition text-sm">Featured Projects in Ghana</Link></li>
-                <li><Link to="/locations" className="text-gray-400 hover:text-white transition text-sm">Our Locations</Link></li>
+                <li><Link to="/about" className="text-gray-600 hover:text-green-600 transition text-sm">About AGEdge Global</Link></li>
+                <li><Link to="/services" className="text-gray-600 hover:text-green-600 transition text-sm">Construction & Architectural Services</Link></li>
+                <li><Link to="/projects" className="text-gray-600 hover:text-green-600 transition text-sm">Featured Projects in Ghana</Link></li>
+                <li><Link to="/locations" className="text-gray-600 hover:text-green-600 transition text-sm">Our Locations</Link></li>
               </ul>
             </nav>
 
             {/* Column 3: Contact */}
             <div>
-              <h4 className="font-semibold mb-4">Contact</h4>
+              <h4 className="font-semibold mb-4 text-gray-800">Contact</h4>
               <address className="not-italic">
-                <ul className="space-y-3 text-gray-400 text-sm">
+                <ul className="space-y-3 text-gray-600 text-sm">
                   <li>Number 1 Beige Street, Azumah, New Weija, Accra, Ghana</li>
-                  <li><a href="mailto:info@agedgeglobal.com" className="hover:text-white transition">info@agedgeglobal.com</a></li>
-                  <li><a href="tel:+233256073041" className="hover:text-white transition">+233 25 607 3041</a></li>
-                  <li><Link to="/contact" className="hover:text-white transition">Contact AGEdge Global</Link></li>
+                  <li><a href="mailto:info@agedgeglobal.com" className="hover:text-green-600 transition">info@agedgeglobal.com</a></li>
+                  <li><a href="tel:+233256073041" className="hover:text-green-600 transition">+233 25 607 3041</a></li>
+                  <li><Link to="/contact" className="hover:text-green-600 transition">Contact AGEdge Global</Link></li>
                 </ul>
               </address>
             </div>
@@ -209,15 +209,15 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-gray-800">
+        <div className="border-t border-gray-400">
           <div className="max-w-7xl mx-auto px-6 py-5 flex flex-col md:flex-row justify-between items-center gap-3 text-xs">
-            <p className="text-gray-500">
+            <p className="text-gray-600">
               © {currentYear} AGEdge Global Limited. All rights reserved.
             </p>
             <nav aria-label="Legal" className="flex gap-5">
-              <Link to="/privacy" className="text-gray-500 hover:text-white transition">Privacy Policy</Link>
-              <Link to="/terms" className="text-gray-500 hover:text-white transition">Terms of Service</Link>
-              <span className="text-gray-600">Architecture & Construction Company in Accra, Ghana</span>
+              <Link to="/privacy" className="text-gray-600 hover:text-green-600 transition">Privacy Policy</Link>
+              <Link to="/terms" className="text-gray-600 hover:text-green-600 transition">Terms of Service</Link>
+              <span className="text-gray-500">Architecture & Construction Company in Accra, Ghana</span>
             </nav>
           </div>
         </div>
