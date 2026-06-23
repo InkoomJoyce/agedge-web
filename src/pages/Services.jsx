@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useRef, useState, useMemo, useCallback } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { 
   Home, Building2, HardHat, PenTool, 
   Ruler, Wrench, Users, Calendar, 
@@ -13,12 +13,47 @@ import {
   FileText, Briefcase, Handshake
 } from 'lucide-react'
 
+// Constants - Extracted for maintainability
+const SERVICE_CATEGORIES = [
+  { id: 'all', label: 'All Services' },
+  { id: 'architecture', label: 'Architecture' },
+  { id: 'materials', label: 'Materials' },
+  { id: 'construction', label: 'Construction' },
+  { id: 'realestate', label: 'Real Estate' },
+  { id: 'feasibility', label: 'Feasibility' }
+]
+
+const QUALITY_METRICS = [
+  { value: "100%", label: "Quality Assurance", icon: Shield },
+  { value: "98%", label: "Client Satisfaction", icon: Star },
+  { value: "15+", label: "Years Combined Experience", icon: Users },
+  { value: "50+", label: "Projects Completed", icon: Building2 }
+]
+
+const GLOBAL_PARTNERS = [
+  { country: "China", flag: "🇨🇳", partners: "3 Strategic Partners", icon: Ship },
+  { country: "Germany", flag: "🇩🇪", partners: "2 Manufacturing Partners", icon: Factory },
+  { country: "Turkey", flag: "🇹🇷", partners: "2 Material Suppliers", icon: Package },
+  { country: "UAE", flag: "🇦🇪", partners: "1 Logistics Hub", icon: Warehouse },
+  { country: "South Africa", flag: "🇿🇦", partners: "2 Regional Partners", icon: Handshake },
+  { country: "USA", flag: "🇺🇸", partners: "1 Technology Partner", icon: Cpu }
+]
+
+const INNOVATION_HIGHLIGHTS = [
+  { icon: Cpu, title: "BIM Technology", description: "Building Information Modeling for precision planning" },
+  { icon: Sparkles, title: "Sustainable Design", description: "Eco-friendly materials and energy-efficient solutions" },
+  { icon: Gem, title: "Premium Finishes", description: "Luxury materials from world-class suppliers" },
+  { icon: Rocket, title: "Fast-Track Delivery", description: "Accelerated project timelines without quality compromise" }
+]
+
 export default function Services() {
   const [isVisible, setIsVisible] = useState(false)
   const [activeCategory, setActiveCategory] = useState('all')
   const sectionRef = useRef(null)
+  const navigate = useNavigate()
 
-  const coreServices = [
+  // Service data - ONLY Feasibility has a link
+  const coreServices = useMemo(() => [
     {
       id: 1,
       category: "architecture",
@@ -26,7 +61,7 @@ export default function Services() {
       title: "Architecture & Design",
       description: "Innovative, climate-smart designs tailored to Ghana's landscape and culture.",
       slug: "architecture",
-      link: "/services/architecture",
+      link: null,
       features: [
         "Concept Design & Feasibility Studies",
         "3D Visualization & Virtual Walkthroughs",
@@ -35,7 +70,7 @@ export default function Services() {
         "Post-Occupancy Evaluation"
       ],
       image: "https://images.pexels.com/photos/2760242/pexels-photo-2760242.jpeg?w=600&h=400&fit=crop",
-      color: "from-amber-500 to-amber-600"
+      color: "from-green-500 to-green-600"
     },
     {
       id: 2,
@@ -44,7 +79,7 @@ export default function Services() {
       title: "Materials Supply & Procurement",
       description: "Premium building materials sourced globally and supplied locally for quality construction.",
       slug: "materials",
-      link: "/services/materials",
+      link: null,
       features: [
         "Global Sourcing (China, Europe, USA)",
         "Quality Assurance & Testing",
@@ -62,7 +97,7 @@ export default function Services() {
       title: "Construction Management",
       description: "Full construction management — from foundation to finishing with quality assurance.",
       slug: "construction",
-      link: "/services/construction",
+      link: null,
       features: [
         "Project Planning & Scheduling",
         "Quality Control & Safety Management",
@@ -80,7 +115,7 @@ export default function Services() {
       title: "Real Estate Development",
       description: "Residential & commercial development with investment-grade returns.",
       slug: "real-estate",
-      link: "/services/real-estate",
+      link: null,
       features: [
         "Property Development",
         "Investment Analysis",
@@ -110,114 +145,33 @@ export default function Services() {
       image: "https://images.pexels.com/photos/1181263/pexels-photo-1181263.jpeg?w=600&h=400&fit=crop",
       color: "from-purple-500 to-purple-600"
     }
-  ]
+  ], [])
 
-  const additionalServices = [
-    {
-      icon: FileText,
-      title: "Project Feasibility",
-      description: "Comprehensive project assessment and viability studies",
-      link: "/services/feasibility"
-    },
-    {
-      icon: Wrench,
-      title: "Renovation & Face-lifts",
-      description: "Transform existing spaces with modern upgrades",
-      link: "/services/construction"
-    },
-    {
-      icon: Building2,
-      title: "Facility Management",
-      description: "Ongoing maintenance and facility operations",
-      link: "/services/construction"
-    },
-    {
-      icon: Ruler,
-      title: "Quantity Surveying",
-      description: "Accurate cost estimation and contract administration",
-      link: "/services/construction"
-    },
-    {
-      icon: Users,
-      title: "Project Supervision",
-      description: "Dedicated oversight throughout project lifecycle",
-      link: "/services/construction"
-    },
-    {
-      icon: Truck,
-      title: "Logistics & Delivery",
-      description: "Efficient material transportation and handling",
-      link: "/services/materials"
+  // Additional services - ONLY Feasibility has a link, ALL icons are green
+  const additionalServices = useMemo(() => [
+    { icon: FileText, title: "Project Feasibility", description: "Comprehensive project assessment and viability studies", link: "/services/feasibility" },
+    { icon: Wrench, title: "Renovation & Face-lifts", description: "Transform existing spaces with modern upgrades", link: null },
+    { icon: Building2, title: "Facility Management", description: "Ongoing maintenance and facility operations", link: null },
+    { icon: Ruler, title: "Quantity Surveying", description: "Accurate cost estimation and contract administration", link: null },
+    { icon: Users, title: "Project Supervision", description: "Dedicated oversight throughout project lifecycle", link: null },
+    { icon: Truck, title: "Logistics & Delivery", description: "Efficient material transportation and handling", link: null }
+  ], [])
+
+  // Service detail handler
+  const handleServiceClick = useCallback((service) => {
+    if (service.link) {
+      navigate(service.link)
     }
-  ]
+  }, [navigate])
 
-  const qualityMetrics = [
-    { value: "100%", label: "Quality Assurance", icon: Shield },
-    { value: "98%", label: "Client Satisfaction", icon: Star },
-    { value: "15+", label: "Years Combined Experience", icon: Users },
-    { value: "50+", label: "Projects Completed", icon: Building2 }
-  ]
+  // Filter services based on active category
+  const filteredServices = useMemo(() => {
+    return activeCategory === 'all' 
+      ? coreServices 
+      : coreServices.filter(s => s.category === activeCategory)
+  }, [activeCategory, coreServices])
 
-  const globalPartners = [
-    { country: "China", flag: "🇨🇳", partners: "3 Strategic Partners", icon: Ship },
-    { country: "Germany", flag: "🇩🇪", partners: "2 Manufacturing Partners", icon: Factory },
-    { country: "Turkey", flag: "🇹🇷", partners: "2 Material Suppliers", icon: Package },
-    { country: "UAE", flag: "🇦🇪", partners: "1 Logistics Hub", icon: Warehouse },
-    { country: "South Africa", flag: "🇿🇦", partners: "2 Regional Partners", icon: Handshake },
-    { country: "USA", flag: "🇺🇸", partners: "1 Technology Partner", icon: Cpu }
-  ]
-
-  const innovationHighlights = [
-    {
-      icon: Cpu,
-      title: "BIM Technology",
-      description: "Building Information Modeling for precision planning"
-    },
-    {
-      icon: Sparkles,
-      title: "Sustainable Design",
-      description: "Eco-friendly materials and energy-efficient solutions"
-    },
-    {
-      icon: Gem,
-      title: "Premium Finishes",
-      description: "Luxury materials from world-class suppliers"
-    },
-    {
-      icon: Rocket,
-      title: "Fast-Track Delivery",
-      description: "Accelerated project timelines without quality compromise"
-    }
-  ]
-
-  const processSteps = [
-    {
-      step: "01",
-      title: "Consultation",
-      description: "Discuss vision, budget, and timeline"
-    },
-    {
-      step: "02",
-      title: "Design & Planning",
-      description: "Architectural designs and material selection"
-    },
-    {
-      step: "03",
-      title: "Procurement",
-      description: "Global sourcing and logistics coordination"
-    },
-    {
-      step: "04",
-      title: "Construction",
-      description: "Expert execution with quality control"
-    },
-    {
-      step: "05",
-      title: "Handover",
-      description: "Final inspection and project completion"
-    }
-  ]
-
+  // Intersection Observer
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -226,19 +180,23 @@ export default function Services() {
           observer.disconnect()
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1, rootMargin: '20px' }
     )
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current)
-    }
+    const currentRef = sectionRef.current
+    if (currentRef) observer.observe(currentRef)
 
-    return () => observer.disconnect()
+    return () => {
+      if (currentRef) observer.unobserve(currentRef)
+    }
   }, [])
 
-  const filteredServices = activeCategory === 'all' 
-    ? coreServices 
-    : coreServices.filter(s => s.category === activeCategory)
+  // Animation helper
+  const getAnimationClasses = (delay = 0) => {
+    return `transition-all duration-700 delay-${delay} ${
+      isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+    }`
+  }
 
   // Schema markup
   const servicesSchema = {
@@ -271,7 +229,6 @@ export default function Services() {
 
   return (
     <>
-      {/* SEO Schema */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(servicesSchema) }}
@@ -279,342 +236,298 @@ export default function Services() {
 
       <section
         ref={sectionRef}
-        className="bg-white min-h-screen"
+        className="relative min-h-screen bg-gray-50 pt-24 pb-16 md:pt-28 md:pb-20 overflow-hidden"
         aria-label="AGEdge Global Services - Architecture, Materials, Construction, Real Estate"
       >
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-12 lg:py-16">
+        {/* Green Background Highlights */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute -top-32 -right-32 w-96 h-96 bg-green-200/30 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute top-1/2 -left-32 w-80 h-80 bg-green-300/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
+          <div className="absolute -bottom-32 right-1/3 w-72 h-72 bg-green-200/25 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '4s' }} />
+          <div className="absolute top-2/3 right-1/4 w-64 h-64 bg-green-400/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+          
+          {/* Subtle grid pattern */}
+          <div 
+            className="absolute inset-0 opacity-[0.02]"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='grid' width='60' height='60' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 60 0 L 0 0 0 60' fill='none' stroke='%2322c55e' stroke-width='1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23grid)'/%3E%3C/svg%3E")`
+            }}
+          />
+        </div>
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Hero Section */}
-          <div className={`text-center mb-16 transition-all duration-700 ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-          }`}>
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-100 text-amber-700 text-sm font-medium mb-6">
+          <div className={`text-center mb-12 ${getAnimationClasses(0)}`}>
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-green-500/10 border border-green-500/20 rounded-full text-green-600 text-xs font-medium mb-4">
               <Briefcase className="w-4 h-4" />
               <span>Integrated Building Solutions</span>
             </div>
 
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-light tracking-tight text-gray-900 mb-4">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-light tracking-tight text-gray-900 mb-2">
               Our{' '}
-              <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-600 to-amber-800">
+              <span className="font-bold bg-gradient-to-r from-green-600 to-green-700 bg-clip-text text-transparent">
                 Services
               </span>
             </h1>
 
-            <p className="text-xl text-gray-500 max-w-3xl mx-auto">
+            <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto font-light">
               Architecture • Materials • Construction • Real Estate • Feasibility Studies
             </p>
 
-            <div className="max-w-3xl mx-auto mt-6">
-              <p className="text-gray-600 leading-relaxed">
-                A vertically integrated powerhouse bringing architecture, materials, construction, 
-                feasibility studies, and real estate under one roof. We remove middleman friction 
-                and deliver turnkey solutions with uncompromising quality and innovation.
-              </p>
-            </div>
+            <p className="text-gray-700 max-w-3xl mx-auto mt-4 text-sm sm:text-base leading-relaxed">
+              A vertically integrated powerhouse bringing architecture, materials, construction, 
+              feasibility studies, and real estate under one roof. We remove middleman friction 
+              and deliver turnkey solutions with uncompromising quality and innovation.
+            </p>
 
-            <div className="flex justify-center gap-2 mt-8">
-              <div className="w-12 h-px bg-amber-300"></div>
-              <div className="w-2 h-2 rounded-full bg-amber-400"></div>
-              <div className="w-12 h-px bg-amber-300"></div>
+            <div className="flex justify-center gap-2 mt-6">
+              <div className="w-12 h-px bg-gradient-to-r from-transparent via-green-400 to-transparent"></div>
+              <div className="w-1.5 h-1.5 rounded-full bg-green-500"></div>
+              <div className="w-12 h-px bg-gradient-to-l from-transparent via-green-400 to-transparent"></div>
             </div>
           </div>
 
           {/* Quality Metrics */}
-          <div className={`grid grid-cols-2 md:grid-cols-4 gap-6 mb-20 transition-all duration-700 delay-100 ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-          }`}>
-            {qualityMetrics.map((metric, idx) => {
+          <div className={`grid grid-cols-2 md:grid-cols-4 gap-4 mb-12 ${getAnimationClasses(100)}`}>
+            {QUALITY_METRICS.map((metric, idx) => {
               const Icon = metric.icon
               return (
-                <div key={idx} className="text-center p-6 bg-gray-50 rounded-2xl border border-gray-100 hover:shadow-lg transition-all duration-300">
-                  <Icon className="w-10 h-10 text-amber-500 mx-auto mb-3" />
-                  <p className="text-2xl font-bold text-gray-900 mb-1">{metric.value}</p>
-                  <p className="text-sm text-gray-500">{metric.label}</p>
+                <div key={idx} className="text-center p-4 bg-white rounded-xl border border-gray-200/50 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                  <Icon className="w-8 h-8 text-green-500 mx-auto mb-2" />
+                  <p className="text-2xl font-bold text-gray-900">{metric.value}</p>
+                  <p className="text-xs text-gray-600 font-medium">{metric.label}</p>
                 </div>
               )
             })}
           </div>
 
-          {/* Category Filter */}
-          <div className={`flex flex-wrap justify-center gap-3 mb-12 transition-all duration-700 delay-150 ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-          }`}>
-            <button
-              onClick={() => setActiveCategory('all')}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                activeCategory === 'all'
-                  ? 'bg-amber-500 text-white shadow-md'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-            >
-              All Services
-            </button>
-            <button
-              onClick={() => setActiveCategory('architecture')}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                activeCategory === 'architecture'
-                  ? 'bg-amber-500 text-white shadow-md'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-            >
-              Architecture
-            </button>
-            <button
-              onClick={() => setActiveCategory('materials')}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                activeCategory === 'materials'
-                  ? 'bg-amber-500 text-white shadow-md'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-            >
-              Materials
-            </button>
-            <button
-              onClick={() => setActiveCategory('construction')}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                activeCategory === 'construction'
-                  ? 'bg-amber-500 text-white shadow-md'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-            >
-              Construction
-            </button>
-            <button
-              onClick={() => setActiveCategory('realestate')}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                activeCategory === 'realestate'
-                  ? 'bg-amber-500 text-white shadow-md'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-            >
-              Real Estate
-            </button>
-            <button
-              onClick={() => setActiveCategory('feasibility')}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                activeCategory === 'feasibility'
-                  ? 'bg-amber-500 text-white shadow-md'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-            >
-              Feasibility
-            </button>
+          {/* Category Filter - Green Theme */}
+          <div className={`flex flex-wrap justify-center gap-2 mb-10 ${getAnimationClasses(150)}`}>
+            {SERVICE_CATEGORIES.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => setActiveCategory(cat.id)}
+                className={`px-5 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${
+                  activeCategory === cat.id
+                    ? 'bg-green-600 text-white shadow-lg shadow-green-500/25'
+                    : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
+                }`}
+              >
+                {cat.label}
+              </button>
+            ))}
           </div>
 
-          {/* Core Services Grid - Clickable Cards */}
-          <div className={`grid lg:grid-cols-2 gap-8 mb-20 transition-all duration-700 delay-200 ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-          }`}>
-            {filteredServices.map((service, idx) => {
+          {/* Core Services Grid - Only Feasibility is clickable */}
+          <div className={`grid lg:grid-cols-2 gap-6 mb-12 ${getAnimationClasses(200)}`}>
+            {filteredServices.map((service) => {
               const Icon = service.icon
+              const isClickable = service.link !== null
+              
               return (
-                <Link 
+                <div 
                   key={service.id} 
-                  to={service.link}
-                  className="group bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2"
+                  onClick={() => isClickable && handleServiceClick(service)}
+                  className={`group bg-white rounded-xl border border-gray-200/50 overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 ${
+                    isClickable ? 'cursor-pointer' : 'cursor-default'
+                  }`}
                 >
-                  <div className="relative h-48 overflow-hidden">
+                  <div className="relative h-40 overflow-hidden">
                     <img
                       src={service.image}
                       alt={service.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                       loading="lazy"
                     />
-                    <div className={`absolute inset-0 bg-gradient-to-r ${service.color} opacity-60 mix-blend-multiply`} />
-                    <div className="absolute bottom-4 left-4 right-4">
-                      <div className="inline-flex p-2 bg-white/20 backdrop-blur-md rounded-xl">
-                        <Icon className="w-6 h-6 text-white" />
+                    <div className={`absolute inset-0 bg-gradient-to-r ${service.color} opacity-50 mix-blend-multiply`} />
+                    <div className="absolute bottom-3 left-3 right-3">
+                      <div className="inline-flex p-1.5 bg-white/20 backdrop-blur-md rounded-lg">
+                        <Icon className="w-5 h-5 text-white" />
                       </div>
+                      {isClickable && (
+                        <div className="absolute top-3 right-3 px-2 py-0.5 bg-green-500/90 text-white text-[10px] font-medium rounded-full backdrop-blur-sm">
+                          Learn More
+                        </div>
+                      )}
                     </div>
                   </div>
-                  <div className="p-6">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-2 group-hover:text-amber-600 transition-colors">
+                  <div className="p-5">
+                    <h3 className={`text-xl font-bold text-gray-900 mb-1 ${
+                      isClickable ? 'group-hover:text-green-600 transition-colors' : ''
+                    }`}>
                       {service.title}
                     </h3>
-                    <p className="text-gray-600 mb-4">{service.description}</p>
-                    <ul className="space-y-2">
-                      {service.features.slice(0, 4).map((feature, i) => (
-                        <li key={i} className="flex items-start gap-2 text-sm">
-                          <CheckCircle className="w-4 h-4 text-amber-500 mt-0.5 flex-shrink-0" />
+                    <p className="text-sm text-gray-600 mb-3">{service.description}</p>
+                    <ul className="space-y-1">
+                      {service.features.slice(0, 3).map((feature, i) => (
+                        <li key={i} className="flex items-start gap-2 text-xs">
+                          <CheckCircle className="w-3.5 h-3.5 text-green-500 mt-0.5 flex-shrink-0" />
                           <span className="text-gray-600">{feature}</span>
                         </li>
                       ))}
-                      {service.features.length > 4 && (
-                        <li className="text-amber-500 text-sm font-medium mt-2">
-                          + {service.features.length - 4} more features →
+                      {service.features.length > 3 && (
+                        <li className="text-green-500 text-xs font-medium mt-1">
+                          + {service.features.length - 3} more features
+                          {isClickable && ' →'}
                         </li>
                       )}
                     </ul>
                   </div>
-                </Link>
+                </div>
               )
             })}
           </div>
 
-          {/* Additional Services - Now Clickable */}
-          <div className={`mb-20 transition-all duration-700 delay-250 ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-          }`}>
-            <div className="text-center mb-10">
-              <h2 className="text-3xl font-semibold text-gray-900 mb-2">Additional Services</h2>
-              <p className="text-gray-500">Comprehensive solutions for every project need</p>
-              <div className="flex justify-center gap-2 mt-4">
-                <div className="w-12 h-px bg-amber-300"></div>
-                <div className="w-2 h-2 rounded-full bg-amber-400"></div>
-                <div className="w-12 h-px bg-amber-300"></div>
+          {/* Additional Services - ALL icons are green, only Feasibility clickable */}
+          <div className={`mb-12 ${getAnimationClasses(250)}`}>
+            <div className="text-center mb-8">
+              <h2 className="text-2xl font-semibold text-gray-900 mb-1">Additional Services</h2>
+              <p className="text-sm text-gray-600">Comprehensive solutions for every project need</p>
+              <div className="flex justify-center gap-2 mt-3">
+                <div className="w-8 h-px bg-green-300"></div>
+                <div className="w-1.5 h-1.5 rounded-full bg-green-400"></div>
+                <div className="w-8 h-px bg-green-300"></div>
               </div>
             </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
               {additionalServices.map((service, idx) => {
                 const Icon = service.icon
+                const isClickable = service.link !== null
+                
+                if (isClickable) {
+                  return (
+                    <Link 
+                      key={idx} 
+                      to={service.link}
+                      className="flex items-center gap-3 p-3 bg-white rounded-xl border border-green-200 hover:border-green-300 hover:shadow-md transition-all duration-300 group"
+                    >
+                      <div className="p-2 bg-green-100 rounded-lg group-hover:bg-green-200 transition-colors flex-shrink-0">
+                        <Icon className="w-4 h-4 text-green-600" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-semibold text-gray-800 text-sm group-hover:text-green-600 transition-colors truncate">
+                          {service.title}
+                        </h3>
+                        <p className="text-xs text-gray-500 truncate">{service.description}</p>
+                      </div>
+                      <ChevronRight className="w-4 h-4 text-green-500 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all flex-shrink-0" />
+                    </Link>
+                  )
+                }
+                
                 return (
-                  <Link 
+                  <div 
                     key={idx} 
-                    to={service.link}
-                    className="flex items-start gap-4 p-4 bg-gray-50 rounded-xl hover:bg-amber-50 hover:shadow-md transition-all duration-300 group"
+                    className="flex items-center gap-3 p-3 bg-white rounded-xl border border-gray-200/50 hover:border-green-200 hover:shadow-md transition-all duration-300 group"
                   >
-                    <div className="p-2 bg-amber-100 rounded-lg group-hover:bg-amber-200 transition-colors">
-                      <Icon className="w-5 h-5 text-amber-600" />
+                    <div className="p-2 bg-green-50 rounded-lg group-hover:bg-green-100 transition-colors flex-shrink-0">
+                      <Icon className="w-4 h-4 text-green-500" />
                     </div>
-                    <div>
-                      <h3 className="font-semibold text-gray-900 group-hover:text-amber-600 transition-colors">
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-semibold text-gray-700 text-sm truncate">
                         {service.title}
                       </h3>
-                      <p className="text-sm text-gray-500">{service.description}</p>
+                      <p className="text-xs text-gray-400 truncate">{service.description}</p>
                     </div>
-                    <ChevronRight className="w-4 h-4 text-gray-400 ml-auto opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
-                  </Link>
+                  </div>
                 )
               })}
             </div>
           </div>
 
-          {/* Global Partners Section */}
-          <div className={`mb-20 transition-all duration-700 delay-300 ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-          }`}>
-            <div className="text-center mb-10">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-100 text-amber-700 text-sm font-medium mb-4">
+          {/* Global Partners */}
+          <div className={`mb-12 ${getAnimationClasses(300)}`}>
+            <div className="text-center mb-8">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-green-500/10 border border-green-500/20 rounded-full text-green-600 text-xs font-medium mb-3">
                 <Globe2 className="w-4 h-4" />
                 <span>Global Reach</span>
               </div>
-              <h2 className="text-3xl font-semibold text-gray-900 mb-2">Our Global Partners</h2>
-              <p className="text-gray-500 max-w-2xl mx-auto">
-                Strategic partnerships with premium suppliers and manufacturers worldwide, ensuring access to the finest materials and technologies
+              <h2 className="text-2xl font-semibold text-gray-900 mb-1">Our Global Partners</h2>
+              <p className="text-sm text-gray-600 max-w-2xl mx-auto">
+                Strategic partnerships with premium suppliers and manufacturers worldwide
               </p>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-              {globalPartners.map((partner, idx) => {
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+              {GLOBAL_PARTNERS.map((partner, idx) => {
                 const Icon = partner.icon
                 return (
-                  <div key={idx} className="text-center p-4 bg-gray-50 rounded-xl hover:shadow-md transition-all duration-300">
-                    <div className="text-4xl mb-2">{partner.flag}</div>
-                    <Icon className="w-6 h-6 text-amber-500 mx-auto mb-2" />
-                    <p className="font-semibold text-gray-800 text-sm">{partner.country}</p>
-                    <p className="text-xs text-gray-500">{partner.partners}</p>
+                  <div key={idx} className="text-center p-3 bg-white rounded-xl border border-gray-200/50 hover:shadow-md transition-all duration-300 hover:-translate-y-1">
+                    <div className="text-3xl mb-1">{partner.flag}</div>
+                    <Icon className="w-5 h-5 text-green-500 mx-auto mb-1" />
+                    <p className="font-semibold text-gray-800 text-xs">{partner.country}</p>
+                    <p className="text-[10px] text-gray-500">{partner.partners}</p>
                   </div>
                 )
               })}
             </div>
           </div>
 
-          {/* Innovation & Quality Section */}
-          <div className={`mb-20 transition-all duration-700 delay-350 ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-          }`}>
-            <div className="grid lg:grid-cols-2 gap-12">
-              <div>
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-100 text-amber-700 text-sm font-medium mb-4">
-                  <Sparkles className="w-4 h-4" />
-                  <span>Innovation at Heart</span>
+          {/* Innovation Section */}
+          <div className={`grid lg:grid-cols-2 gap-8 mb-12 ${getAnimationClasses(350)}`}>
+            <div>
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-green-500/10 border border-green-500/20 rounded-full text-green-600 text-xs font-medium mb-3">
+                <Sparkles className="w-4 h-4" />
+                <span>Innovation at Heart</span>
+              </div>
+              <h2 className="text-2xl font-semibold text-gray-900 mb-3">Quality & Innovation</h2>
+              <p className="text-sm text-gray-600 leading-relaxed mb-4">
+                At AGEdge Global, we continuously explore modern technology to improve our product delivery. 
+                We undertake regular updates to enhance the quality of our work, ensuring every project meets 
+                global standards of excellence.
+              </p>
+              <div className="space-y-3">
+                <div className="flex items-start gap-3">
+                  <Shield className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="font-semibold text-gray-800 text-sm">Quality Assurance</p>
+                    <p className="text-xs text-gray-500">Rigorous testing and inspection at every stage</p>
+                  </div>
                 </div>
-                <h2 className="text-3xl font-semibold text-gray-900 mb-4">Quality & Innovation</h2>
-                <p className="text-gray-600 mb-6">
-                  At AGEdge Global, we continuously explore modern technology to improve our product delivery. 
-                  We undertake regular updates to enhance the quality of our work, ensuring every project meets 
-                  global standards of excellence.
-                </p>
-                <div className="space-y-4">
-                  <div className="flex items-start gap-3">
-                    <Shield className="w-5 h-5 text-amber-500 mt-0.5" />
-                    <div>
-                      <p className="font-semibold text-gray-800">Quality Assurance</p>
-                      <p className="text-sm text-gray-500">Rigorous testing and inspection at every stage</p>
-                    </div>
+                <div className="flex items-start gap-3">
+                  <TrendingUp className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="font-semibold text-gray-800 text-sm">Continuous Improvement</p>
+                    <p className="text-xs text-gray-500">Regular updates to processes and technology</p>
                   </div>
-                  <div className="flex items-start gap-3">
-                    <TrendingUp className="w-5 h-5 text-amber-500 mt-0.5" />
-                    <div>
-                      <p className="font-semibold text-gray-800">Continuous Improvement</p>
-                      <p className="text-sm text-gray-500">Regular updates to processes and technology</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <Award className="w-5 h-5 text-amber-500 mt-0.5" />
-                    <div>
-                      <p className="font-semibold text-gray-800">Industry Recognition</p>
-                      <p className="text-sm text-gray-500">Award-winning designs and construction</p>
-                    </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Award className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="font-semibold text-gray-800 text-sm">Industry Recognition</p>
+                    <p className="text-xs text-gray-500">Award-winning designs and construction</p>
                   </div>
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-4">
-                {innovationHighlights.map((item, idx) => {
-                  const Icon = item.icon
-                  return (
-                    <div key={idx} className="p-4 bg-gray-50 rounded-xl text-center hover:bg-amber-50 transition-all duration-300">
-                      <Icon className="w-8 h-8 text-amber-500 mx-auto mb-2" />
-                      <p className="font-semibold text-gray-800 text-sm">{item.title}</p>
-                      <p className="text-xs text-gray-500">{item.description}</p>
-                    </div>
-                  )
-                })}
-              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              {INNOVATION_HIGHLIGHTS.map((item, idx) => {
+                const Icon = item.icon
+                return (
+                  <div key={idx} className="p-4 bg-white rounded-xl border border-gray-200/50 text-center hover:border-green-200 hover:shadow-md transition-all duration-300">
+                    <Icon className="w-6 h-6 text-green-500 mx-auto mb-2" />
+                    <p className="font-semibold text-gray-800 text-sm">{item.title}</p>
+                    <p className="text-xs text-gray-500">{item.description}</p>
+                  </div>
+                )
+              })}
             </div>
           </div>
 
-          {/* Process Section */}
-          <div className={`mb-20 transition-all duration-700 delay-400 ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-          }`}>
-            <div className="text-center mb-10">
-              <h2 className="text-3xl font-semibold text-gray-900 mb-2">Our Process</h2>
-              <p className="text-gray-500">A seamless journey from vision to reality</p>
-              <div className="flex justify-center gap-2 mt-4">
-                <div className="w-12 h-px bg-amber-300"></div>
-                <div className="w-2 h-2 rounded-full bg-amber-400"></div>
-                <div className="w-12 h-px bg-amber-300"></div>
-              </div>
-            </div>
-            <div className="grid md:grid-cols-5 gap-4">
-              {processSteps.map((step, idx) => (
-                <div key={idx} className="relative text-center">
-                  <div className="w-12 h-12 rounded-full bg-amber-500 text-white flex items-center justify-center text-lg font-bold mx-auto mb-3">
-                    {step.step}
-                  </div>
-                  <h3 className="font-semibold text-gray-800 mb-1">{step.title}</h3>
-                  <p className="text-xs text-gray-500">{step.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* CTA Section */}
-          <div className={`text-center py-12 bg-gradient-to-r from-gray-50 to-amber-50 rounded-3xl transition-all duration-700 delay-500 ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-          }`}>
-            <h3 className="text-2xl font-bold text-gray-900 mb-3">Ready to Build Your Vision?</h3>
-            <p className="text-gray-600 mb-6">Let's discuss how our integrated services can bring your project to life</p>
-            <div className="flex flex-wrap justify-center gap-4">
+          {/* CTA Section - Green Theme */}
+          <div className={`text-center py-10 px-6 bg-gradient-to-r from-gray-50 to-green-50 rounded-2xl border border-green-100/50 ${getAnimationClasses(450)}`}>
+            <h3 className="text-xl font-bold text-gray-900 mb-2">Ready to Build Your Vision?</h3>
+            <p className="text-sm text-gray-600 mb-5">Let's discuss how our integrated services can bring your project to life</p>
+            <div className="flex flex-wrap justify-center gap-3">
               <Link
                 to="/contact"
-                className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-full font-semibold hover:shadow-lg transition-all duration-300"
+                className="inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-full font-semibold hover:shadow-lg hover:shadow-green-500/25 transition-all duration-300 text-sm"
               >
                 Schedule a Consultation
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
                 to="/services/feasibility"
-                className="inline-flex items-center gap-2 px-8 py-3 border-2 border-amber-500 text-amber-600 rounded-full font-semibold hover:bg-amber-50 transition-all duration-300"
+                className="inline-flex items-center gap-2 px-6 py-2.5 border-2 border-green-500 text-green-600 rounded-full font-semibold hover:bg-green-50 transition-all duration-300 text-sm"
               >
                 Learn About Feasibility Studies
                 <ChevronRight className="w-4 h-4" />

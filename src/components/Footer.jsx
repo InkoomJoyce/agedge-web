@@ -72,7 +72,7 @@ export default function Footer() {
         {JSON.stringify(schemaData)}
       </script>
 
-      <footer className="bg-gray-300 text-gray-800" role="contentinfo">
+      <footer className="bg-gray-300 text-gray-900" role="contentinfo">
         {/* Newsletter Section */}
         <div className="border-b border-gray-400">
           <div className="max-w-7xl mx-auto px-6 py-12">

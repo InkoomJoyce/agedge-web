@@ -207,6 +207,20 @@ export default function LuxuryHomeSection() {
       .animate-drop {
           animation: dropIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         }
+        @keyframes float {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          50% { transform: translateY(-20px) rotate(5deg); }
+        }
+        .animate-float {
+          animation: float 8s ease-in-out infinite;
+        }
+        @keyframes floatSlow {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          50% { transform: translateY(-30px) rotate(-5deg); }
+        }
+        .animate-float-slow {
+          animation: floatSlow 12s ease-in-out infinite;
+        }
       `}</style>
 
       <script
@@ -216,152 +230,178 @@ export default function LuxuryHomeSection() {
 
       <section
         ref={sectionRef}
-        className="relative overflow-hidden pt-8 pb-20 lg:pt-12 lg:pb-28 bg-gray-200"
+        className="relative overflow-hidden py-12 lg:py-16 bg-gray-100"
         aria-label="Build Your Luxury Home - Premium Design & Construction Services"
       >
+        {/* Green Highlight Backgrounds */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          {/* Top left green glow */}
+          <div className="absolute -top-40 -left-40 w-80 h-80 bg-green-200/40 rounded-full blur-3xl animate-float" />
+          
+          {/* Center right green glow */}
+          <div className="absolute top-1/2 -right-40 w-96 h-96 bg-green-300/30 rounded-full blur-3xl animate-float-slow" />
+          
+          {/* Bottom left green glow */}
+          <div className="absolute -bottom-40 -left-20 w-72 h-72 bg-green-200/35 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }} />
+          
+          {/* Middle left subtle green glow */}
+          <div className="absolute top-1/3 -left-20 w-64 h-64 bg-green-400/20 rounded-full blur-3xl animate-float-slow" style={{ animationDelay: '4s' }} />
+          
+          {/* Bottom right green glow */}
+          <div className="absolute bottom-1/4 -right-20 w-80 h-80 bg-green-300/25 rounded-full blur-3xl animate-float" style={{ animationDelay: '3s' }} />
+          
+          {/* Subtle grid pattern overlay */}
+          <div 
+            className="absolute inset-0 opacity-[0.03]"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='grid' width='60' height='60' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 60 0 L 0 0 0 60' fill='none' stroke='%2322c55e' stroke-width='1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23grid)'/%3E%3C/svg%3E")`
+            }}
+          />
+        </div>
+
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
-          {/* Section Header */}
-          <div ref={headerRef} className={`text-center mb-16 transition-all duration-1000 ${
+          {/* Section Header - Reduced margin */}
+          <div ref={headerRef} className={`text-center mb-10 transition-all duration-1000 ${
             headerVisible? 'animate-drop opacity-100' : 'translate-y-[-80px] opacity-0'
           }`} style={{ animationDelay: '0ms' }}>
 
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-gray-800 mb-4">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-light tracking-tight text-gray-800 mb-3">
               Build Your{' '}
               <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-green-800">
                 Luxury Home
               </span>
             </h2>
 
-            <p className="text-gray-600 max-w-2xl mx-auto mt-4 font-light">
+            <p className="text-gray-600 max-w-2xl mx-auto font-light text-sm md:text-base">
               Experience the pinnacle of architectural excellence. Let us bring your dream home to life with uncompromising quality and timeless design.
             </p>
 
-            <div className="flex justify-center gap-2 mt-8">
-              <div className="w-16 h-px bg-green-300"></div>
+            <div className="flex justify-center gap-2 mt-5">
+              <div className="w-12 h-px bg-green-300"></div>
               <div className="w-2 h-2 rounded-full bg-green-400"></div>
               <div className="w-2 h-2 rounded-full bg-green-500"></div>
               <div className="w-2 h-2 rounded-full bg-green-400"></div>
-              <div className="w-16 h-px bg-green-300"></div>
+              <div className="w-12 h-px bg-green-300"></div>
             </div>
           </div>
 
-          {/* Process Section - MOVED TO TOP */}
-          <div ref={processRef} className={`mb-20 transition-all duration-1000 ${
+          {/* Process Section - Reduced margin */}
+          <div ref={processRef} className={`mb-12 transition-all duration-1000 ${
             processVisible? 'animate-drop opacity-100' : 'translate-y-[-80px] opacity-0'
           }`} style={{ animationDelay: '0ms' }}>
-            <div className="text-center mb-10">
-              <h3 className="text-2xl font-semibold text-gray-800 mb-2">Our Process</h3>
-              <p className="text-gray-600 font-light">A seamless journey from vision to reality</p>
+            <div className="text-center mb-6">
+              <h3 className="text-xl font-semibold text-gray-800 mb-1">Our Process</h3>
+              <p className="text-gray-600 text-sm font-light">A seamless journey from vision to reality</p>
             </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
               {processSteps.map((step, idx) => (
                 <div key={idx} className="relative">
                   {idx < processSteps.length - 1 && (
-                    <div className="hidden lg:block absolute top-10 left-full w-full h-px bg-gradient-to-r from-green-300 to-transparent" />
+                    <div className="hidden lg:block absolute top-8 left-full w-full h-px bg-gradient-to-r from-green-300 to-transparent" />
                   )}
                   <div className="text-center">
-                    <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-green-500 to-green-600 text-white text-2xl font-bold mb-4 shadow-lg">
+                    <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-green-500 to-green-600 text-white text-lg font-bold mb-3 shadow-lg">
                       {step.step}
                     </div>
-                    <h4 className="text-lg font-semibold text-gray-800 mb-2">{step.title}</h4>
-                    <p className="text-gray-600 text-sm font-light">{step.description}</p>
+                    <h4 className="text-base font-semibold text-gray-800 mb-1">{step.title}</h4>
+                    <p className="text-gray-600 text-xs font-light">{step.description}</p>
                   </div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Hero Image & Features Grid - Side by Side */}
-          <div ref={heroRef} className={`grid lg:grid-cols-2 gap-8 mb-20 transition-all duration-1000 ${
+          {/* Hero Image & Features Grid - Reduced margin */}
+          <div ref={heroRef} className={`grid lg:grid-cols-2 gap-6 mb-12 transition-all duration-1000 ${
             heroVisible? 'animate-drop opacity-100' : 'translate-y-[-80px] opacity-0'
           }`} style={{ animationDelay: '0ms' }}>
             {/* Image Column */}
-            <div className="relative group rounded-2xl overflow-hidden shadow-2xl">
+            <div className="relative group rounded-2xl overflow-hidden shadow-xl">
               <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent z-10" />
               <img
                 src="https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=1600"
                 alt="Luxury modern home exterior with contemporary architecture"
-                className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+                className="w-full h-[280px] lg:h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
                 loading="lazy"
               />
-              <div className="absolute bottom-6 left-6 right-6 z-20">
+              <div className="absolute bottom-4 left-4 right-4 z-20">
                 <div className="flex items-center gap-2 text-white">
-                  <Home className="w-5 h-5" />
-                  <span className="text-sm font-medium">Luxury Villa • East Legon</span>
+                  <Home className="w-4 h-4" />
+                  <span className="text-xs font-medium">Luxury Villa • East Legon</span>
                 </div>
               </div>
             </div>
 
-            {/* Features Grid - 2x2 layout, no icons, LARGER TEXT */}
-            <div className="grid grid-cols-2 gap-4">
+            {/* Features Grid - 2x2 layout, more compact */}
+            <div className="grid grid-cols-2 gap-3">
               {luxuryFeatures.map((feature, idx) => (
                 <div
                   key={idx}
-                  className="bg-gradient-to-br from-green-50 to-white p-5 rounded-2xl border border-green-100 hover:shadow-md transition-all duration-300 hover:-translate-y-1"
+                  className="bg-gradient-to-br from-green-50 to-white p-4 rounded-xl border border-green-100 hover:shadow-md transition-all duration-300 hover:-translate-y-1"
                 >
-                  <h3 className="text-lg font-semibold text-gray-800 mb-2">{feature.title}</h3>
-                  <p className="text-base text-gray-600 font-light leading-relaxed">{feature.description}</p>
+                  <h3 className="text-base font-semibold text-gray-800 mb-1">{feature.title}</h3>
+                  <p className="text-sm text-gray-600 font-light leading-relaxed">{feature.description}</p>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Testimonials & Booking Section */}
-          <div className={`grid lg:grid-cols-2 gap-12 ${
+          {/* Testimonials & Booking Section - Reduced gap */}
+          <div className={`grid lg:grid-cols-2 gap-8 ${
             testimonialsVisible || formVisible? 'opacity-100' : 'opacity-0'
           }`}>
             {/* Testimonials - Stars Kept */}
-            <div ref={testimonialsRef} className={`space-y-6 transition-all duration-1000 ${
+            <div ref={testimonialsRef} className={`space-y-4 transition-all duration-1000 ${
               testimonialsVisible? 'animate-drop' : 'translate-y-[-80px] opacity-0'
             }`} style={{ animationDelay: '0ms' }}>
               <div>
-                <h3 className="text-2xl font-semibold text-gray-800 mb-2">What Our Clients Say</h3>
-                <p className="text-gray-600 font-light">Trusted by discerning homeowners across Ghana</p>
+                <h3 className="text-xl font-semibold text-gray-800 mb-1">What Our Clients Say</h3>
+                <p className="text-gray-600 text-sm font-light">Trusted by discerning homeowners across Ghana</p>
               </div>
               {testimonials.map((testimonial, idx) => (
-                <div key={idx} className="bg-gray-50 rounded-2xl p-6 border border-gray-100">
-                  <div className="flex gap-1 mb-3">
+                <div key={idx} className="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                  <div className="flex gap-1 mb-2">
                     {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-green-500 text-green-500" />
+                      <Star key={i} className="w-3.5 h-3.5 fill-green-500 text-green-500" />
                     ))}
                   </div>
-                  <p className="text-gray-700 italic mb-4 font-light">"{testimonial.text}"</p>
+                  <p className="text-gray-700 italic mb-3 text-sm font-light">"{testimonial.text}"</p>
                   <div>
-                    <p className="font-semibold text-gray-800">{testimonial.name}</p>
-                    <p className="text-sm text-gray-500 font-light">{testimonial.location}</p>
+                    <p className="font-semibold text-gray-800 text-sm">{testimonial.name}</p>
+                    <p className="text-xs text-gray-500 font-light">{testimonial.location}</p>
                   </div>
                 </div>
               ))}
             </div>
 
-            {/* Booking Form - No Icons */}
-            <div ref={formRef} className={`bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 md:p-8 border border-gray-100 shadow-lg transition-all duration-1000 ${
+            {/* Booking Form - More compact */}
+            <div ref={formRef} className={`bg-gradient-to-br from-gray-50 to-white rounded-xl p-5 md:p-6 border border-gray-100 shadow-lg transition-all duration-1000 ${
               formVisible? 'animate-drop' : 'translate-y-[-80px] opacity-0'
             }`} style={{ animationDelay: '100ms' }}>
-              <div className="text-center mb-6">
-                <h3 className="text-2xl font-bold text-gray-800 mb-2">Schedule a Consultation</h3>
-                <p className="text-gray-600 text-sm font-light">Let's discuss your luxury home vision</p>
+              <div className="text-center mb-4">
+                <h3 className="text-xl font-bold text-gray-800 mb-1">Schedule a Consultation</h3>
+                <p className="text-gray-600 text-xs font-light">Let's discuss your luxury home vision</p>
               </div>
 
               {submitStatus === 'success' && (
-                <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-xl">
-                  <div className="flex items-center gap-3">
-                    <CheckCircle className="w-5 h-5 text-green-500" />
+                <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-xl">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-green-500" />
                     <div>
-                      <p className="text-green-700 font-medium">Request submitted successfully!</p>
-                      <p className="text-green-600 text-sm font-light">We'll contact you within 24 hours.</p>
+                      <p className="text-green-700 font-medium text-sm">Request submitted successfully!</p>
+                      <p className="text-green-600 text-xs font-light">We'll contact you within 24 hours.</p>
                     </div>
                   </div>
                 </div>
               )}
 
               {submitStatus === 'error' && (
-                <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl">
-                  <div className="flex items-center gap-3">
-                    <div className="w-5 h-5 text-red-500">⚠</div>
+                <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl">
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 text-red-500">⚠</div>
                     <div>
-                      <p className="text-red-700 font-medium">Submission failed</p>
-                      <p className="text-red-600 text-sm font-light">Please try again or contact us directly.</p>
+                      <p className="text-red-700 font-medium text-sm">Submission failed</p>
+                      <p className="text-red-600 text-xs font-light">Please try again or contact us directly.</p>
                     </div>
                   </div>
                 </div>
@@ -371,75 +411,65 @@ export default function LuxuryHomeSection() {
                 action="https://formspree.io/f/xeedzpbj"
                 method="POST"
                 onSubmit={handleSubmit}
-                className="space-y-4"
+                className="space-y-3"
               >
-                <div>
-                  <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    placeholder="Your Name"
-                    required
-                    className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:border-green-400 focus:ring-1 focus:ring-green-400 transition-all font-light"
-                  />
-                </div>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  placeholder="Your Name"
+                  required
+                  className="w-full px-3 py-2.5 text-sm bg-white border border-gray-200 rounded-xl focus:outline-none focus:border-green-400 focus:ring-1 focus:ring-green-400 transition-all font-light"
+                />
 
-                <div>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    placeholder="Email Address"
-                    required
-                    className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:border-green-400 focus:ring-1 focus:ring-green-400 transition-all font-light"
-                  />
-                </div>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  placeholder="Email Address"
+                  required
+                  className="w-full px-3 py-2.5 text-sm bg-white border border-gray-200 rounded-xl focus:outline-none focus:border-green-400 focus:ring-1 focus:ring-green-400 transition-all font-light"
+                />
 
-                <div>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    placeholder="Phone Number"
-                    required
-                    className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:border-green-400 focus:ring-1 focus:ring-green-400 transition-all font-light"
-                  />
-                </div>
+                <input
+                  type="tel"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  placeholder="Phone Number"
+                  required
+                  className="w-full px-3 py-2.5 text-sm bg-white border border-gray-200 rounded-xl focus:outline-none focus:border-green-400 focus:ring-1 focus:ring-green-400 transition-all font-light"
+                />
 
-                <div>
-                  <input
-                    type="date"
-                    name="preferredDate"
-                    value={formData.preferredDate}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:border-green-400 focus:ring-1 focus:ring-green-400 transition-all font-light"
-                  />
-                </div>
+                <input
+                  type="date"
+                  name="preferredDate"
+                  value={formData.preferredDate}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full px-3 py-2.5 text-sm bg-white border border-gray-200 rounded-xl focus:outline-none focus:border-green-400 focus:ring-1 focus:ring-green-400 transition-all font-light"
+                />
 
-                <div>
-                  <textarea
-                    name="message"
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    placeholder="Tell us about your vision..."
-                    rows="3"
-                    className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:border-green-400 focus:ring-1 focus:ring-green-400 transition-all resize-none font-light"
-                  />
-                </div>
+                <textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleInputChange}
+                  placeholder="Tell us about your vision..."
+                  rows="2"
+                  className="w-full px-3 py-2.5 text-sm bg-white border border-gray-200 rounded-xl focus:outline-none focus:border-green-400 focus:ring-1 focus:ring-green-400 transition-all resize-none font-light"
+                />
 
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full group relative overflow-hidden bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold py-3 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-green-500/25 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full group relative overflow-hidden bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold py-2.5 text-sm rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-green-500/25 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <span className="relative z-10 flex items-center justify-center gap-2">
                     {isSubmitting ? (
                       <>
-                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                         Submitting...
                       </>
                     ) : (
@@ -453,7 +483,7 @@ export default function LuxuryHomeSection() {
                 </button>
               </form>
 
-              <p className="text-center text-xs text-gray-500 mt-4 font-light">
+              <p className="text-center text-xs text-gray-500 mt-3 font-light">
                 We respect your privacy. No spam, ever.
               </p>
             </div>

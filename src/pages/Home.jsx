@@ -15,12 +15,12 @@ export default function Home() {
       <Hero />
       <CtaSection />
       <ServicesSection />
-      <TrustBar />
+      {/* <TrustBar /> */}
       <LuxuryLivingSection />
     
       {/* <TestimonialsSection /> */}
        
-      <ClientsSection />
+      {/* <ClientsSection /> */}
       
       {/* <NewsletterSection /> */}
       {/* <DiscoverGhanaSection /> */}
