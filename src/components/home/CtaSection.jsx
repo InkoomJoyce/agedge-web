@@ -127,7 +127,7 @@ export default function CtaSection() {
               </div>
 
               {/* Trust Indicators */}
-              <div className="flex items-center gap-6 pt-4 text-xs text-gray-500">
+              {/* <div className="flex items-center gap-6 pt-4 text-xs text-gray-500">
                 <div className="flex items-center gap-2">
                   <div className="w-1 h-1 rounded-full bg-green-500" />
                   <span>No obligation consultation</span>
@@ -140,7 +140,7 @@ export default function CtaSection() {
                   <div className="w-1 h-1 rounded-full bg-green-500" />
                   <span>24/7 client support</span>
                 </div>
-              </div>
+              </div> */}
             </div>
 
             {/* Right Column */}

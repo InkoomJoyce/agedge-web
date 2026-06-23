@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Users, Award, GraduationCap, MapPin, Mail, Phone, ChevronRight, Star, Calendar, BookOpen, HardHat, PenTool, Ruler, Wrench } from 'lucide-react'
+import { Users, Award, GraduationCap, MapPin, Mail, Phone, ChevronRight, Star, Calendar, BookOpen, HardHat, PenTool, Ruler, Wrench, Briefcase } from 'lucide-react'
 
 export default function TeamSection() {
   const [isVisible, setIsVisible] = useState(false)
@@ -111,6 +111,28 @@ export default function TeamSection() {
       email: "wilberforce.brown@agedge.com",
       phone: "+233 24 XXXX",
       location: "Accra, Ghana"
+    },
+    {
+      id: 6,
+      name: "Joyce Inkoom",
+      role: "Business Development Lead",
+      category: "Leadership",
+      experience: "8+ years",
+      image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=600&h=600&fit=crop",
+      icon: Briefcase,
+      qualifications: [
+        "BSc in Business Administration - University of Ghana",
+        "MBA in Marketing - GIMPA",
+        "Certified Sales Professional"
+      ],
+      affiliations: ["Member - Chartered Institute of Marketing Ghana"],
+      expertise: ["Business Development", "Strategic Partnerships", "Client Relations", "Market Expansion"],
+      description: "Joyce brings over 8 years of experience in business development and strategic partnerships across Ghana's real estate and construction sectors. Her expertise in client relations and market expansion has been instrumental in driving the firm's growth and establishing lasting client relationships.",
+      projects: 30,
+      awards: 4,
+      email: "joyce.inkoom@agedge.com",
+      phone: "+233 24 XXXX",
+      location: "Accra, Ghana"
     }
   ]
 
@@ -153,7 +175,7 @@ export default function TeamSection() {
   const teamSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": "Agedge",
+    "name": "AGEdge Global",
     "description": "Meet our expert team of architects, engineers, and construction professionals",
     "member": teamMembers.map(member => ({
       "@type": "Person",
@@ -161,7 +183,7 @@ export default function TeamSection() {
       "jobTitle": member.role,
       "worksFor": {
         "@type": "Organization",
-        "name": "Agedge"
+        "name": "AGEdge Global"
       },
       "hasCredential": member.qualifications.map(q => ({
         "@type": "EducationalOccupationalCredential",
@@ -208,7 +230,7 @@ export default function TeamSection() {
 
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-white mb-3">
               Meet the{' '}
-              <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-200">
+              <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-green-200">
                 Expert Team
               </span>
             </h2>
@@ -218,33 +240,11 @@ export default function TeamSection() {
             </p>
 
             <div className="flex justify-center gap-2 mt-6">
-              <div className="w-12 h-px bg-amber-300"></div>
-              <div className="w-3 h-px bg-amber-400"></div>
-              <div className="w-3 h-px bg-amber-500"></div>
+              <div className="w-12 h-px bg-green-300"></div>
+              <div className="w-3 h-px bg-green-400"></div>
+              <div className="w-3 h-px bg-green-500"></div>
             </div>
           </div>
-
-          {/* Team Stats */}
-          {/* <div className={`grid grid-cols-2 md:grid-cols-4 gap-4 mb-12 transition-all duration-1000 delay-200 transform ${
-            isVisible? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-          }`}>
-            <div className="text-center p-4 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20">
-              <p className="text-2xl font-bold text-white">{teamMembers.length}</p>
-              <p className="text-xs text-slate-300">Team Members</p>
-            </div>
-            <div className="text-center p-4 bg-white/10 backdrop-blur-sm rounded-xl border-white/20">
-              <p className="text-2xl font-bold text-white">{totalExperience}+</p>
-              <p className="text-xs text-slate-300">Combined Years</p>
-            </div>
-            <div className="text-center p-4 bg-white/10 backdrop-blur-sm rounded-xl border-white/20">
-              <p className="text-2xl font-bold text-white">{totalProjects}+</p>
-              <p className="text-xs text-slate-300">Projects Completed</p>
-            </div>
-            <div className="text-center p-4 bg-white/10 backdrop-blur-sm rounded-xl border-white/20">
-              <p className="text-2xl font-bold text-white">{totalAwards}</p>
-              <p className="text-xs text-slate-300">Industry Awards</p>
-            </div>
-          </div> */}
 
           {/* Team Grid */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -258,24 +258,24 @@ export default function TeamSection() {
                   }`}
                   style={{ transitionDelay: `${idx * 100}ms` }}
                 >
-                  <div className="absolute -inset-1 bg-gradient-to-r from-amber-500/30 to-amber-600/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="absolute -inset-1 bg-gradient-to-r from-green-500/30 to-green-600/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                  <div className="relative bg-white/5 backdrop-blur-md rounded-3xl shadow-xl overflow-hidden border border-white/10 group-hover:bg-amber-500/10 group-hover:border-amber-400/40 transition-all duration-500">
+                  <div className="relative bg-white/5 backdrop-blur-md rounded-3xl shadow-xl overflow-hidden border border-white/10 group-hover:bg-green-500/10 group-hover:border-green-400/40 transition-all duration-500">
                     <div className="p-6 lg:p-8">
                       {/* Profile Image */}
                       <div className="relative mb-6">
-                        <div className="absolute inset-0 bg-gradient-to-r from-amber-400 to-amber-600 rounded-2xl blur-md opacity-0 group-hover:opacity-50 transition-opacity duration-500" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-green-600 rounded-2xl blur-md opacity-0 group-hover:opacity-50 transition-opacity duration-500" />
                         <div className="relative w-28 h-28 lg:w-32 lg:h-32 mx-auto rounded-2xl overflow-hidden bg-gradient-to-br from-stone-800 to-stone-900">
                           <img
                             src={member.image}
-                            alt={`${member.name} - ${member.role} at Agedge`}
+                            alt={`${member.name} - ${member.role} at AGEdge Global`}
                             className="w-full h-full object-cover"
                             loading="lazy"
                           />
                         </div>
 
                         <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2">
-                          <div className="px-3 py-1 bg-gradient-to-r from-amber-500 to-amber-600 rounded-full text-white text-xs font-medium whitespace-nowrap">
+                          <div className="px-3 py-1 bg-gradient-to-r from-green-500 to-green-600 rounded-full text-white text-xs font-medium whitespace-nowrap">
                             {member.category}
                           </div>
                         </div>
@@ -284,7 +284,7 @@ export default function TeamSection() {
                       {/* Name & Role */}
                       <div className="text-center mb-4 mt-4">
                         <h3 className="text-lg lg:text-xl font-bold text-white mb-1">{member.name}</h3>
-                        <p className="text-amber-300 text-xs lg:text-sm font-medium">{member.role}</p>
+                        <p className="text-green-300 text-xs lg:text-sm font-medium">{member.role}</p>
                         <div className="flex items-center justify-center gap-2 mt-2 text-xs text-slate-300">
                           <Calendar className="w-3 h-3" />
                           <span>{member.experience} experience</span>
@@ -326,8 +326,8 @@ export default function TeamSection() {
                         </div>
                         <div className="w-px bg-white/20"></div>
                         <div className="text-center">
-                          <div className="inline-flex p-1.5 bg-amber-500/20 rounded-lg">
-                            <Icon className="w-4 h-4 text-amber-400" />
+                          <div className="inline-flex p-1.5 bg-green-500/20 rounded-lg">
+                            <Icon className="w-4 h-4 text-green-400" />
                           </div>
                         </div>
                       </div>
@@ -335,7 +335,7 @@ export default function TeamSection() {
                       {/* View Details Button */}
                       <button
                         onClick={() => setSelectedMember(member)}
-                        className="w-full mt-4 px-4 py-2 bg-white/10 hover:bg-amber-500/20 text-white hover:text-amber-200 rounded-xl text-sm font-medium transition-all duration-300 flex items-center justify-center gap-2 group/btn border-white/20 hover:border-amber-400/40"
+                        className="w-full mt-4 px-4 py-2 bg-white/10 hover:bg-green-500/20 text-white hover:text-green-200 rounded-xl text-sm font-medium transition-all duration-300 flex items-center justify-center gap-2 group/btn border-white/20 hover:border-green-400/40"
                       >
                         View Profile
                         <ChevronRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
@@ -346,38 +346,13 @@ export default function TeamSection() {
               )
             })}
           </div>
-
-          {/* Qualifications Highlight */}
-          {/* <div className={`mt-16 pt-10 border-t border-white/10 transition-all duration-1000 delay-500 transform ${
-            isVisible? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-          }`}>
-            <div className="text-center mb-8">
-              <h3 className="text-xl lg:text-2xl font-semibold text-white mb-2">Academic Excellence</h3>
-              <p className="text-slate-300 text-sm">Proudly trained at Ghana's premier institutions</p>
-            </div>
-
-            <div className="flex flex-wrap justify-center gap-4">
-              <div className="flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
-                <GraduationCap className="w-4 h-4 text-amber-400" />
-                <span className="text-white text-sm">KNUST</span>
-              </div>
-              <div className="flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
-                <Award className="w-4 h-4 text-amber-400" />
-                <span className="text-white text-sm">Ghana Institute of Architects</span>
-              </div>
-              <div className="flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
-                <Star className="w-4 h-4 text-amber-400" />
-                <span className="text-white text-sm">Mandella Washington Fellowship</span>
-              </div>
-            </div>
-          </div> */}
         </div>
       </section>
 
       {/* Modal for Member Details */}
       {selectedMember && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-in fade-in duration-300">
-          <div className="relative bg-white rounded-3xl max-w-4xl w-full max-h- overflow-y-auto">
+          <div className="relative bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
             <button
               onClick={() => setSelectedMember(null)}
               className="absolute top-4 right-4 p-2 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors z-10"
@@ -403,7 +378,7 @@ export default function TeamSection() {
 
                   <div className="text-center md:text-left">
                     <h3 className="text-xl md:text-2xl font-bold text-gray-900">{selectedMember.name}</h3>
-                    <p className="text-amber-600 font-medium mt-1">{selectedMember.role}</p>
+                    <p className="text-green-600 font-medium mt-1">{selectedMember.role}</p>
                     <div className="flex items-center justify-center md:justify-start gap-4 mt-4 text-sm text-gray-500">
                       <div className="flex items-center gap-1">
                         <Calendar className="w-4 h-4" />
@@ -418,11 +393,11 @@ export default function TeamSection() {
 
                   <div className="mt-6 space-y-2">
                     <div className="flex items-center gap-2 text-sm text-gray-600 break-all">
-                      <Mail className="w-4 h-4 text-amber-500 flex-shrink-0" />
+                      <Mail className="w-4 h-4 text-green-500 flex-shrink-0" />
                       <span>{selectedMember.email}</span>
                     </div>
                     <div className="flex items-center gap-2 text-sm text-gray-600">
-                      <Phone className="w-4 h-4 text-amber-500 flex-shrink-0" />
+                      <Phone className="w-4 h-4 text-green-500 flex-shrink-0" />
                       <span>{selectedMember.phone}</span>
                     </div>
                   </div>
@@ -432,7 +407,7 @@ export default function TeamSection() {
                 <div>
                   <div className="mb-6">
                     <h4 className="text-lg font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                      <BookOpen className="w-5 h-5 text-amber-500" />
+                      <BookOpen className="w-5 h-5 text-green-500" />
                       Biography
                     </h4>
                     <p className="text-gray-600 leading-relaxed text-sm">{selectedMember.description}</p>
@@ -440,13 +415,13 @@ export default function TeamSection() {
 
                   <div className="mb-6">
                     <h4 className="text-lg font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                      <GraduationCap className="w-5 h-5 text-amber-500" />
+                      <GraduationCap className="w-5 h-5 text-green-500" />
                       Qualifications
                     </h4>
                     <ul className="space-y-2">
                       {selectedMember.qualifications.map((qual, idx) => (
                         <li key={idx} className="flex items-start gap-2 text-sm text-gray-600">
-                          <div className="w-1.5 h-1.5 rounded-full bg-amber-400 mt-1.5 flex-shrink-0"></div>
+                          <div className="w-1.5 h-1.5 rounded-full bg-green-400 mt-1.5 flex-shrink-0"></div>
                           <span>{qual}</span>
                         </li>
                       ))}
@@ -456,13 +431,13 @@ export default function TeamSection() {
                   {selectedMember.affiliations.length > 0 && (
                     <div className="mb-6">
                       <h4 className="text-lg font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                        <Award className="w-5 h-5 text-amber-500" />
+                        <Award className="w-5 h-5 text-green-500" />
                         Affiliations
                       </h4>
                       <ul className="space-y-2">
                         {selectedMember.affiliations.map((aff, idx) => (
                           <li key={idx} className="flex items-start gap-2 text-sm text-gray-600">
-                            <div className="w-1.5 h-1.5 rounded-full bg-amber-400 mt-1.5 flex-shrink-0"></div>
+                            <div className="w-1.5 h-1.5 rounded-full bg-green-400 mt-1.5 flex-shrink-0"></div>
                             <span>{aff}</span>
                           </li>
                         ))}
@@ -472,14 +447,14 @@ export default function TeamSection() {
 
                   <div>
                     <h4 className="text-lg font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                      <Star className="w-5 h-5 text-amber-500" />
+                      <Star className="w-5 h-5 text-green-500" />
                       Core Expertise
                     </h4>
                     <div className="flex flex-wrap gap-2">
                       {selectedMember.expertise.map((skill) => (
                         <span
                           key={skill}
-                          className="px-3 py-1.5 bg-amber-50 text-amber-700 rounded-lg text-sm font-medium"
+                          className="px-3 py-1.5 bg-green-50 text-green-700 rounded-lg text-sm font-medium"
                         >
                           {skill}
                         </span>

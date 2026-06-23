@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 export default function Hero() {
   const [currentSlide, setCurrentSlide] = useState(0)
+  const [isTransitioning, setIsTransitioning] = useState(false)
 
   // Added descriptive alt text for each image - critical for SEO
   const images = [
@@ -57,36 +58,60 @@ export default function Hero() {
   // Auto-advance every 4 seconds
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % images.length)
+      handleSlideChange((prev) => (prev + 1) % images.length)
     }, 4000)
     return () => clearInterval(timer)
   }, [images.length])
 
+  const handleSlideChange = (newSlide) => {
+    if (isTransitioning) return
+    setIsTransitioning(true)
+    setCurrentSlide(newSlide)
+    setTimeout(() => {
+      setIsTransitioning(false)
+    }, 1000) // Match the transition duration
+  }
+
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % images.length)
+    if (isTransitioning) return
+    handleSlideChange((prev) => (prev + 1) % images.length)
   }
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + images.length) % images.length)
+    if (isTransitioning) return
+    handleSlideChange((prev) => (prev - 1 + images.length) % images.length)
+  }
+
+  const goToSlide = (index) => {
+    if (isTransitioning || index === currentSlide) return
+    handleSlideChange(index)
   }
 
   return (
-    <section className="relative bg-black text-white pt-20 h-screen" aria-label="AGEdge Global Hero">
-      {/* Background Images - Now using img tags for SEO + lazy loading */}
-      {images.map((img, index) => (
-        <img
-          key={index}
-          src={img.url}
-          alt={img.alt}
-          loading={index === 0? 'eager' : 'lazy'}
-          fetchpriority={index === 0? 'high' : 'low'}
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${
-            index === currentSlide? 'opacity-100' : 'opacity-0'
-          }`}
-        />
-      ))}
+    <section className="relative bg-black text-white pt-20 h-screen overflow-hidden" aria-label="AGEdge Global Hero">
+      {/* Background Images - Zoom Out Transition */}
+      <div className="absolute inset-0">
+        {images.map((img, index) => (
+          <div
+            key={index}
+            className={`absolute inset-0 transition-all duration-1000 ease-in-out ${
+              index === currentSlide 
+                ? 'opacity-100 scale-100' 
+                : 'opacity-0 scale-110'
+            }`}
+          >
+            <img
+              src={img.url}
+              alt={img.alt}
+              loading={index === 0 ? 'eager' : 'lazy'}
+              fetchpriority={index === 0 ? 'high' : 'low'}
+              className="w-full h-full object-cover"
+            />
+          </div>
+        ))}
+      </div>
 
-      
+      {/* Gradient Overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/30" aria-hidden="true" />
 
       {/* Content - H1 is now keyword optimized */}
@@ -120,8 +145,9 @@ export default function Hero() {
       {/* Arrows */}
       <button
         onClick={prevSlide}
-        className="absolute left-6 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 backdrop-blur-sm p-3 rounded-full transition"
+        className="absolute left-6 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 backdrop-blur-sm p-3 rounded-full transition z-10"
         aria-label="Previous project image"
+        disabled={isTransitioning}
       >
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -129,8 +155,9 @@ export default function Hero() {
       </button>
       <button
         onClick={nextSlide}
-        className="absolute right-6 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 backdrop-blur-sm p-3 rounded-full transition"
+        className="absolute right-6 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 backdrop-blur-sm p-3 rounded-full transition z-10"
         aria-label="Next project image"
+        disabled={isTransitioning}
       >
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -138,16 +165,17 @@ export default function Hero() {
       </button>
 
       {/* Dots Indicator */}
-      <nav aria-label="Hero image gallery navigation" className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
+      <nav aria-label="Hero image gallery navigation" className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-10">
         {images.map((_, index) => (
           <button
             key={index}
-            onClick={() => setCurrentSlide(index)}
+            onClick={() => goToSlide(index)}
             className={`h-2 rounded-full transition-all duration-300 ${
-              index === currentSlide? 'bg-white w-8' : 'bg-white/50 w-2'
+              index === currentSlide ? 'bg-white w-8' : 'bg-white/50 w-2 hover:bg-white/80'
             }`}
             aria-label={`Go to project image ${index + 1} of ${images.length}`}
-            aria-current={index === currentSlide? 'true' : 'false'}
+            aria-current={index === currentSlide ? 'true' : 'false'}
+            disabled={isTransitioning}
           />
         ))}
       </nav>

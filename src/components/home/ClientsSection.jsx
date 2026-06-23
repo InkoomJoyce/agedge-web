@@ -3,11 +3,9 @@ import { Building2, Home, Warehouse, Factory, Store, Hotel, GraduationCap, Heart
 
 export default function ClientsSection() {
   const [isVisible, setIsVisible] = useState(false)
-  const [featuredIndex, setFeaturedIndex] = useState(0)
   const [clientsIndex, setClientsIndex] = useState(0)
   const [isAnimating, setIsAnimating] = useState(false)
   const sectionRef = useRef(null)
-  const featuredAutoPlayRef = useRef(null)
   const clientsAutoPlayRef = useRef(null)
 
   const clientCategories = [
@@ -46,53 +44,6 @@ export default function ClientsSection() {
       icon: Store,
       description: "Modern shopping destinations",
       count: "10+"
-    }
-  ]
-
-  const featuredClients = [
-    {
-      id: 1,
-      name: "Asante Industries",
-      logo: "https://images.pexels.com/photos/3183197/pexels-photo-3183197.jpeg?auto=compress&cs=tinysrgb&w=600",
-      category: "Corporate Clients",
-      industry: "Manufacturing",
-      projectCount: 3,
-      since: 2024,
-      description: "Leading industrial conglomerate in West Africa",
-      testimonial: "AGEdge transformed our operations with world-class facilities."
-    },
-    {
-      id: 2,
-      name: "Osei Properties",
-      logo: "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=600",
-      category: "Real Estate Developers",
-      industry: "Real Estate",
-      projectCount: 5,
-      since: 2023,
-      description: "Premium residential & commercial developers",
-      testimonial: "The attention to detail and quality is unmatched."
-    },
-    {
-      id: 3,
-      name: "Heritage Bank Ghana",
-      logo: "https://images.pexels.com/photos/534216/pexels-photo-534216.jpeg?auto=compress&cs=tinysrgb&w=600",
-      category: "Corporate Clients",
-      industry: "Finance",
-      projectCount: 2,
-      since: 2024,
-      description: "Leading financial institution",
-      testimonial: "Professionalism from start to finish."
-    },
-    {
-      id: 4,
-      name: "Accra City Hotel",
-      logo: "https://images.pexels.com/photos/261102/pexels-photo-261102.jpeg?auto=compress&cs=tinysrgb&w=600",
-      category: "Hospitality",
-      industry: "Hospitality",
-      projectCount: 2,
-      since: 2025,
-      description: "Luxury hospitality development",
-      testimonial: "Exceeded our expectations in every way."
     }
   ]
 
@@ -171,14 +122,13 @@ export default function ClientsSection() {
     return chunks
   }
 
-  const featuredChunks = getChunks(featuredClients, 2)
   const clientsChunks = getChunks(allClients, 4)
 
   const stats = {
-    totalClients: allClients.length + featuredClients.length,
+    totalClients: allClients.length,
     repeatRate: "85%",
-    industries: [...new Set([...featuredClients,...allClients].map(c => c.industry))].length,
-    totalProjects: [...featuredClients,...allClients].reduce((sum, client) => sum + client.projectCount, 0)
+    industries: [...new Set(allClients.map(c => c.industry))].length,
+    totalProjects: allClients.reduce((sum, client) => sum + client.projectCount, 0)
   }
 
   useEffect(() => {
@@ -200,15 +150,6 @@ export default function ClientsSection() {
   }, [])
 
   useEffect(() => {
-    if (featuredChunks.length > 1) {
-      featuredAutoPlayRef.current = setInterval(() => {
-        handleFeaturedNext()
-      }, 3000)
-    }
-    return () => clearInterval(featuredAutoPlayRef.current)
-  }, [featuredIndex, featuredChunks.length])
-
-  useEffect(() => {
     if (clientsChunks.length > 1) {
       clientsAutoPlayRef.current = setInterval(() => {
         handleClientsNext()
@@ -217,26 +158,10 @@ export default function ClientsSection() {
     return () => clearInterval(clientsAutoPlayRef.current)
   }, [clientsIndex, clientsChunks.length])
 
-  const handleFeaturedPrevious = () => {
-    if (isAnimating) return
-    setIsAnimating(true)
-    setFeaturedIndex((prev) => (prev === 0? featuredChunks.length - 1 : prev - 1))
-    setTimeout(() => setIsAnimating(false), 500)
-    clearInterval(featuredAutoPlayRef.current)
-    featuredAutoPlayRef.current = setInterval(() => handleFeaturedNext(), 3000)
-  }
-
-  const handleFeaturedNext = () => {
-    if (isAnimating) return
-    setIsAnimating(true)
-    setFeaturedIndex((prev) => (prev === featuredChunks.length - 1? 0 : prev + 1))
-    setTimeout(() => setIsAnimating(false), 500)
-  }
-
   const handleClientsPrevious = () => {
     if (isAnimating) return
     setIsAnimating(true)
-    setClientsIndex((prev) => (prev === 0? clientsChunks.length - 1 : prev - 1))
+    setClientsIndex((prev) => (prev === 0 ? clientsChunks.length - 1 : prev - 1))
     setTimeout(() => setIsAnimating(false), 500)
     clearInterval(clientsAutoPlayRef.current)
     clientsAutoPlayRef.current = setInterval(() => handleClientsNext(), 3000)
@@ -245,14 +170,7 @@ export default function ClientsSection() {
   const handleClientsNext = () => {
     if (isAnimating) return
     setIsAnimating(true)
-    setClientsIndex((prev) => (prev === clientsChunks.length - 1? 0 : prev + 1))
-    setTimeout(() => setIsAnimating(false), 500)
-  }
-
-  const goToFeaturedSlide = (index) => {
-    if (isAnimating || index === featuredIndex) return
-    setIsAnimating(true)
-    setFeaturedIndex(index)
+    setClientsIndex((prev) => (prev === clientsChunks.length - 1 ? 0 : prev + 1))
     setTimeout(() => setIsAnimating(false), 500)
   }
 
@@ -294,7 +212,7 @@ export default function ClientsSection() {
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
           {/* Section Header */}
           <div className={`text-center mb-12 transition-all duration-1000 transform ${
-            isVisible? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
           }`}>
 
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-light tracking-tight text-gray-800 mb-3">
@@ -317,7 +235,7 @@ export default function ClientsSection() {
 
           {/* Stats Banner */}
           <div className={`grid grid-cols-2 md:grid-cols-4 gap-4 mb-12 transition-all duration-1000 delay-200 transform ${
-            isVisible? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
           }`}>
             <div className="text-center p-5 bg-gradient-to-br from-white to-green-50/50 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border border-green-100/50">
               <p className="text-3xl font-bold text-gray-800 mb-1">{stats.totalClients}+</p>
@@ -337,115 +255,13 @@ export default function ClientsSection() {
             </div>
           </div>
 
-          {/* Featured Clients Carousel */}
-          <div className={`mb-12 transition-all duration-1000 delay-300 transform ${
-            isVisible? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-          }`}>
-            <div className="text-center mb-8">
-              <h3 className="text-2xl font-semibold text-gray-800 mb-2">Featured Partnerships</h3>
-              <p className="text-gray-600 text-sm">Proud to work with Ghana's most respected organizations</p>
-            </div>
-
-            <div className="relative">
-              {featuredChunks.length > 1 && (
-                <>
-                  <button
-                    onClick={handleFeaturedPrevious}
-                    className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 lg:-translate-x-6 z-20 p-3 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-green-500"
-                    aria-label="Previous featured clients"
-                  >
-                    <ChevronLeft className="w-5 h-5 text-gray-700" />
-                  </button>
-                  <button
-                    onClick={handleFeaturedNext}
-                    className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 lg:translate-x-6 z-20 p-3 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-green-500"
-                    aria-label="Next featured clients"
-                  >
-                    <ChevronRight className="w-5 h-5 text-gray-700" />
-                  </button>
-                </>
-              )}
-
-              <div className="overflow-hidden">
-                <div
-                  className="flex transition-transform duration-500 ease-out"
-                  style={{ transform: `translateX(-${featuredIndex * 100}%)` }}
-                >
-                  {featuredChunks.map((chunk, chunkIndex) => (
-                    <div key={chunkIndex} className="w-full flex-shrink-0 px-4">
-                      <div className="grid md:grid-cols-2 gap-6">
-                        {chunk.map((client) => (
-                          <div
-                            key={client.id}
-                            className="group relative bg-gradient-to-br from-white via-white to-green-50/40 rounded-2xl shadow-md hover:shadow-2xl transition-all duration-500 overflow-hidden border border-green-100/60 hover:border-green-300 hover:-translate-y-1"
-                          >
-                            <div className="relative p-6">
-                              {/* Logo with colored background */}
-                              <div className="flex items-center justify-center h-28 mb-4 bg-gradient-to-br from-gray-50 to-green-50/30 rounded-xl group-hover:from-green-50 group-hover:to-green-100/50 transition-all duration-500">
-                                <img
-                                  src={client.logo}
-                                  alt={`${client.name} logo - Trusted AGEdge client partner`}
-                                  className="max-h-full w-auto object-contain transform group-hover:scale-105 transition-transform duration-500"
-                                  loading="lazy"
-                                />
-                              </div>
-
-                              <div className="text-center">
-                                <h4 className="text-lg font-bold text-gray-800 mb-1 group-hover:text-green-700 transition-colors">{client.name}</h4>
-                                <p className="text-green-600 text-sm font-medium mb-2">{client.industry}</p>
-                                <p className="text-gray-600 text-sm mb-3 font-light">{client.description}</p>
-
-                                <div className="bg-gradient-to-br from-green-50 to-white rounded-lg p-3 mb-3 border border-green-100/50">
-                                  <p className="text-sm text-gray-700 italic font-light">"{client.testimonial}"</p>
-                                </div>
-
-                                <div className="flex justify-center gap-4 pt-3 border-t border-green-100/50">
-                                  <div className="text-center">
-                                    <p className="text-xs text-gray-500">Projects</p>
-                                    <p className="text-lg font-semibold text-gray-800">{client.projectCount}</p>
-                                  </div>
-                                  <div className="w-px bg-green-200/50"></div>
-                                  <div className="text-center">
-                                    <p className="text-xs text-gray-500">Partner Since</p>
-                                    <p className="text-lg font-semibold text-gray-800">{client.since}</p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {featuredChunks.length > 1 && (
-                <div className="flex justify-center gap-2 mt-6">
-                  {featuredChunks.map((_, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => goToFeaturedSlide(idx)}
-                      className={`transition-all duration-300 rounded-full ${
-                        idx === featuredIndex
-                        ? 'w-8 h-2 bg-green-600'
-                          : 'w-2 h-2 bg-gray-300 hover:bg-gray-400'
-                      }`}
-                      aria-label={`Go to featured slide ${idx + 1}`}
-                    />
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-
           {/* All Clients Carousel */}
-          <div className={`transition-all duration-1000 delay-400 transform ${
-            isVisible? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+          <div className={`transition-all duration-1000 delay-300 transform ${
+            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
           }`}>
             <div className="text-center mb-8">
-              <h3 className="text-2xl font-semibold text-gray-800 mb-2">Our Family</h3>
-              <p className="text-gray-600 text-sm">Every client is a partner in our journey of excellence</p>
+              <h3 className="text-2xl font-semibold text-gray-800 mb-2">Our Clients</h3>
+              <p className="text-gray-600 text-sm">Trusted by leading organizations across Ghana</p>
             </div>
 
             <div className="relative">
@@ -517,7 +333,7 @@ export default function ClientsSection() {
                       onClick={() => goToClientsSlide(idx)}
                       className={`transition-all duration-300 rounded-full ${
                         idx === clientsIndex
-                        ? 'w-8 h-2 bg-green-600'
+                          ? 'w-8 h-2 bg-green-600'
                           : 'w-2 h-2 bg-gray-300 hover:bg-gray-400'
                       }`}
                       aria-label={`Go to clients slide ${idx + 1}`}
@@ -529,8 +345,8 @@ export default function ClientsSection() {
           </div>
 
           {/* Industry Categories */}
-          <div className={`mt-16 pt-10 border-t border-green-100/50 transition-all duration-1000 delay-500 transform ${
-            isVisible? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+          <div className={`mt-16 pt-10 border-t border-green-100/50 transition-all duration-1000 delay-400 transform ${
+            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
           }`}>
             <div className="text-center mb-8">
               <h3 className="text-2xl font-semibold text-gray-800 mb-2">Industries We Serve</h3>
