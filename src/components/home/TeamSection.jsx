@@ -223,21 +223,22 @@ export default function TeamSection() {
 
       <section
         ref={sectionRef}
-        className="relative overflow-hidden pt-24 pb-16 md:pt-28 md:pb-20 bg-gray-900"
+        className="relative overflow-hidden pt-24 pb-16 md:pt-28 md:pb-20 bg-gray-50"
         aria-label="Meet Our Expert Team"
       >
-        {/* Static Background - Removed parallax for performance */}
-        <div className="absolute inset-0 z-0">
+        {/* Green Background Highlights - No image */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+          <div className="absolute -top-32 -right-32 w-96 h-96 bg-green-200/30 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute top-1/2 -left-32 w-80 h-80 bg-green-300/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
+          <div className="absolute -bottom-32 right-1/3 w-72 h-72 bg-green-200/25 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '4s' }} />
+          <div className="absolute top-2/3 right-1/4 w-64 h-64 bg-green-400/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+          
           <div 
-            className="absolute inset-0 bg-cover bg-center"
+            className="absolute inset-0 opacity-[0.02]"
             style={{
-              backgroundImage: 'url("https://images.pexels.com/photos/29453302/pexels-photo-29453302.jpeg?auto=format&w=1920")',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='grid' width='60' height='60' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 60 0 L 0 0 0 60' fill='none' stroke='%2322c55e' stroke-width='1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23grid)'/%3E%3C/svg%3E")`
             }}
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/60 to-black/70" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-black/30 to-black/80" />
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
@@ -245,14 +246,14 @@ export default function TeamSection() {
           <div className={`text-center mb-12 transition-all duration-700 transform ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
           }`}>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-white mb-3">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-gray-900 mb-3">
               Meet the{' '}
-              <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-green-200">
+              <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-green-800">
                 Expert Team
               </span>
             </h2>
 
-            <p className="text-slate-100 max-w-3xl mx-auto mt-3 font-light">
+            <p className="text-gray-600 max-w-3xl mx-auto mt-3 font-light">
               Decades of combined experience, united by a passion for architectural excellence
             </p>
 
@@ -263,7 +264,7 @@ export default function TeamSection() {
             </div>
           </div>
 
-          {/* Team Grid - Reduced animation complexity */}
+          {/* Team Grid - Cards with Green Borders */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {TEAM_MEMBERS.map((member, idx) => {
               const Icon = member.icon
@@ -277,12 +278,12 @@ export default function TeamSection() {
                 >
                   <div className="absolute -inset-1 bg-gradient-to-r from-green-500/30 to-green-600/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                  <div className="relative bg-white/5 backdrop-blur-md rounded-3xl shadow-xl overflow-hidden border border-white/10 group-hover:bg-green-500/10 group-hover:border-green-400/40 transition-all duration-500">
+                  <div className="relative bg-white rounded-3xl shadow-lg overflow-hidden border-2 border-green-500/30 group-hover:border-green-500 transition-all duration-500">
                     <div className="p-6 lg:p-8">
                       {/* Profile Image */}
                       <div className="relative mb-6">
                         <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-green-600 rounded-2xl blur-md opacity-0 group-hover:opacity-50 transition-opacity duration-500" />
-                        <div className="relative w-28 h-28 lg:w-32 lg:h-32 mx-auto rounded-2xl overflow-hidden bg-gradient-to-br from-stone-800 to-stone-900">
+                        <div className="relative w-28 h-28 lg:w-32 lg:h-32 mx-auto rounded-2xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
                           <img
                             src={member.image}
                             alt={`${member.name} - ${member.role}`}
@@ -294,7 +295,7 @@ export default function TeamSection() {
                         </div>
 
                         <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2">
-                          <div className="px-3 py-1 bg-gradient-to-r from-green-500 to-green-600 rounded-full text-white text-xs font-medium whitespace-nowrap">
+                          <div className="px-3 py-1 bg-gradient-to-r from-green-500 to-green-600 rounded-full text-white text-xs font-medium whitespace-nowrap shadow-lg">
                             {member.category}
                           </div>
                         </div>
@@ -302,16 +303,16 @@ export default function TeamSection() {
 
                       {/* Name & Role */}
                       <div className="text-center mb-4 mt-4">
-                        <h3 className="text-lg lg:text-xl font-bold text-white mb-1">{member.name}</h3>
-                        <p className="text-green-300 text-xs lg:text-sm font-medium">{member.role}</p>
-                        <div className="flex items-center justify-center gap-2 mt-2 text-xs text-slate-300">
+                        <h3 className="text-lg lg:text-xl font-bold text-gray-900 mb-1">{member.name}</h3>
+                        <p className="text-green-600 text-xs lg:text-sm font-medium">{member.role}</p>
+                        <div className="flex items-center justify-center gap-2 mt-2 text-xs text-gray-500">
                           <Calendar className="w-3 h-3" />
                           <span>{member.experience} experience</span>
                         </div>
                       </div>
 
-                      {/* Description - Truncated for performance */}
-                      <p className="text-slate-200 text-xs lg:text-sm leading-relaxed mb-4 line-clamp-2">
+                      {/* Description */}
+                      <p className="text-gray-600 text-xs lg:text-sm leading-relaxed mb-4 line-clamp-2">
                         {member.description}
                       </p>
 
@@ -320,33 +321,33 @@ export default function TeamSection() {
                         {member.expertise.slice(0, 3).map((skill) => (
                           <span
                             key={skill}
-                            className="px-2 py-1 bg-white/10 backdrop-blur-sm text-white text-xs rounded-full border border-white/20"
+                            className="px-2 py-1 bg-green-50 text-green-700 text-xs rounded-full border border-green-200"
                           >
                             {skill}
                           </span>
                         ))}
                         {member.expertise.length > 3 && (
-                          <span className="px-2 py-1 bg-white/10 text-slate-300 text-xs rounded-full border-white/20">
+                          <span className="px-2 py-1 bg-gray-100 text-gray-500 text-xs rounded-full">
                             +{member.expertise.length - 3}
                           </span>
                         )}
                       </div>
 
                       {/* Stats Row */}
-                      <div className="flex justify-around pt-4 border-t border-white/10">
+                      <div className="flex justify-around pt-4 border-t border-gray-100">
                         <div className="text-center">
-                          <p className="text-base lg:text-lg font-bold text-white">{member.projects}+</p>
-                          <p className="text-xs text-slate-300">Projects</p>
+                          <p className="text-base lg:text-lg font-bold text-gray-900">{member.projects}+</p>
+                          <p className="text-xs text-gray-500">Projects</p>
                         </div>
-                        <div className="w-px bg-white/20"></div>
+                        <div className="w-px bg-gray-200"></div>
                         <div className="text-center">
-                          <p className="text-base lg:text-lg font-bold text-white">{member.awards}</p>
-                          <p className="text-xs text-slate-300">Awards</p>
+                          <p className="text-base lg:text-lg font-bold text-gray-900">{member.awards}</p>
+                          <p className="text-xs text-gray-500">Awards</p>
                         </div>
-                        <div className="w-px bg-white/20"></div>
+                        <div className="w-px bg-gray-200"></div>
                         <div className="text-center">
-                          <div className="inline-flex p-1.5 bg-green-500/20 rounded-lg">
-                            <Icon className="w-4 h-4 text-green-400" />
+                          <div className="inline-flex p-1.5 bg-green-100 rounded-lg">
+                            <Icon className="w-4 h-4 text-green-600" />
                           </div>
                         </div>
                       </div>
@@ -354,7 +355,7 @@ export default function TeamSection() {
                       {/* View Details Button */}
                       <button
                         onClick={() => handleMemberClick(member)}
-                        className="w-full mt-4 px-4 py-2 bg-white/10 hover:bg-green-500/20 text-white hover:text-green-200 rounded-xl text-sm font-medium transition-all duration-300 flex items-center justify-center gap-2 group/btn border-white/20 hover:border-green-400/40"
+                        className="w-full mt-4 px-4 py-2 bg-green-50 hover:bg-green-500 text-green-600 hover:text-white rounded-xl text-sm font-medium transition-all duration-300 flex items-center justify-center gap-2 group/btn border border-green-200 hover:border-green-600"
                         aria-label={`View ${member.name}'s profile`}
                       >
                         View Profile
@@ -421,14 +422,20 @@ export default function TeamSection() {
                   </div>
 
                   <div className="mt-6 space-y-2">
-                    <div className="flex items-center gap-2 text-sm text-gray-600 break-all">
+                    <a 
+                      href={`mailto:${selectedMember.email}`}
+                      className="flex items-center gap-2 text-sm text-gray-600 break-all hover:text-green-600 transition-colors"
+                    >
                       <Mail className="w-4 h-4 text-green-500 flex-shrink-0" />
                       <span>{selectedMember.email}</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-gray-600">
+                    </a>
+                    <a 
+                      href={`tel:${selectedMember.phone.replace(/\s/g, '')}`}
+                      className="flex items-center gap-2 text-sm text-gray-600 hover:text-green-600 transition-colors"
+                    >
                       <Phone className="w-4 h-4 text-green-500 flex-shrink-0" />
                       <span>{selectedMember.phone}</span>
-                    </div>
+                    </a>
                   </div>
                 </div>
 

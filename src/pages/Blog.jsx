@@ -1,4 +1,9 @@
 import { useState } from 'react'
+import { 
+  FiCalendar, FiClock, FiTag, FiBookOpen, 
+  FiUsers, FiShare2, FiMessageCircle,
+  FiFacebook, FiTwitter, FiLinkedin, FiSend
+} from 'react-icons/fi'
 
 export default function Blog() {
   const [selectedCategory, setSelectedCategory] = useState('all')
@@ -38,7 +43,8 @@ export default function Blog() {
       authorRole: "Principal Architect",
       date: "April 15, 2026",
       readTime: "5 min read",
-      tags: ["Architecture", "Trends", "Innovation"]
+      tags: ["Architecture", "Trends", "Innovation"],
+      slug: "10-modern-architectural-trends-shaping-ghanas-skyline"
     },
     {
       id: 2,
@@ -62,7 +68,8 @@ export default function Blog() {
       authorRole: "Project Manager & Quantity Surveyor",
       date: "April 10, 2026",
       readTime: "4 min read",
-      tags: ["Materials", "Construction", "Quality"]
+      tags: ["Materials", "Construction", "Quality"],
+      slug: "choosing-the-right-building-materials"
     },
     {
       id: 3,
@@ -86,7 +93,8 @@ export default function Blog() {
       authorRole: "Assistant Architect",
       date: "April 5, 2026",
       readTime: "6 min read",
-      tags: ["Sustainability", "Green Building", "Design"]
+      tags: ["Sustainability", "Green Building", "Design"],
+      slug: "sustainable-design-building-for-tomorrow"
     },
     {
       id: 4,
@@ -110,7 +118,8 @@ export default function Blog() {
       authorRole: "Civil & Structural Engineer",
       date: "March 28, 2026",
       readTime: "5 min read",
-      tags: ["Real Estate", "Luxury", "Investment"]
+      tags: ["Real Estate", "Luxury", "Investment"],
+      slug: "rise-of-luxury-real-estate-in-accra"
     },
     {
       id: 5,
@@ -134,7 +143,8 @@ export default function Blog() {
       authorRole: "Project Manager & Quantity Surveyor",
       date: "March 20, 2026",
       readTime: "4 min read",
-      tags: ["Construction", "Tips", "Avoid Mistakes"]
+      tags: ["Construction", "Tips", "Avoid Mistakes"],
+      slug: "common-construction-mistakes-to-avoid"
     },
     {
       id: 6,
@@ -158,7 +168,8 @@ export default function Blog() {
       authorRole: "Assistant Architect",
       date: "March 15, 2026",
       readTime: "5 min read",
-      tags: ["Design", "Biophilic", "Wellness"]
+      tags: ["Design", "Biophilic", "Wellness"],
+      slug: "biophilic-design-bringing-nature-indoors"
     },
     {
       id: 7,
@@ -182,7 +193,8 @@ export default function Blog() {
       authorRole: "Principal Architect",
       date: "March 10, 2026",
       readTime: "4 min read",
-      tags: ["Technology", "Innovation", "BIM"]
+      tags: ["Technology", "Innovation", "BIM"],
+      slug: "future-of-construction-technology-in-ghana"
     },
     {
       id: 8,
@@ -206,7 +218,8 @@ export default function Blog() {
       authorRole: "Senior Technician",
       date: "March 5, 2026",
       readTime: "3 min read",
-      tags: ["Interior Design", "Small Spaces", "Tips"]
+      tags: ["Interior Design", "Small Spaces", "Tips"],
+      slug: "maximizing-small-spaces-design-tips"
     }
   ]
 
@@ -215,10 +228,46 @@ export default function Blog() {
     ? blogPosts 
     : blogPosts.filter(post => post.category === selectedCategory)
 
+  // Share URL function
+  const getShareUrl = (platform, post) => {
+    const url = encodeURIComponent(`https://agedgeglobal.com/blog/${post.slug}`)
+    const title = encodeURIComponent(post.title)
+    
+    switch(platform) {
+      case 'facebook':
+        return `https://www.facebook.com/sharer/sharer.php?u=${url}`
+      case 'twitter':
+        return `https://twitter.com/intent/tweet?url=${url}&text=${title}`
+      case 'whatsapp':
+        return `https://api.whatsapp.com/send?text=${title}%20-%20${url}`
+      case 'linkedin':
+        return `https://www.linkedin.com/sharing/share-offsite/?url=${url}`
+      case 'telegram':
+        return `https://t.me/share/url?url=${url}&text=${title}`
+      default:
+        return '#'
+    }
+  }
+
   return (
-    <div className="bg-white min-h-screen">
-      {/* Hero Section */}
-      <div className="relative h-[50vh] min-h-[400px] flex items-center justify-center bg-gray-900">
+    <div className="relative min-h-screen bg-gray-50 overflow-hidden">
+      {/* Green Background Highlights */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+        <div className="absolute -top-32 -right-32 w-96 h-96 bg-green-200/30 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute top-1/2 -left-32 w-80 h-80 bg-green-300/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
+        <div className="absolute -bottom-32 right-1/3 w-72 h-72 bg-green-200/25 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '4s' }} />
+        <div className="absolute top-2/3 right-1/4 w-64 h-64 bg-green-400/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+        
+        <div 
+          className="absolute inset-0 opacity-[0.02]"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='grid' width='60' height='60' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 60 0 L 0 0 0 60' fill='none' stroke='%2322c55e' stroke-width='1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23grid)'/%3E%3C/svg%3E")`
+          }}
+        />
+      </div>
+
+      {/* Hero Section - Fixed navbar spacing with less top padding */}
+      <div className="relative h-[40vh] min-h-[300px] flex items-center justify-center bg-gray-900 pt-12 md:pt-16">
         <div className="absolute inset-0 overflow-hidden">
           <img
             src="https://images.pexels.com/photos/2760242/pexels-photo-2760242.jpeg?w=1600&h=900&fit=crop"
@@ -228,65 +277,60 @@ export default function Blog() {
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60" />
         <div className="relative z-10 text-center text-white px-4">
-          <div className="inline-block px-4 py-2 rounded-full bg-amber-500/20 text-amber-300 text-sm font-medium mb-4 backdrop-blur-sm">
+          <div className="inline-block px-4 py-2 rounded-full bg-green-500/20 text-green-300 text-sm font-medium mb-4 backdrop-blur-sm border border-green-400/30">
             Insights & Updates
           </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-light tracking-tight mb-4">
             Our{' '}
-            <span className="font-bold text-amber-400">Blog</span>
+            <span className="font-bold bg-gradient-to-r from-green-400 to-green-300 bg-clip-text text-transparent">
+              Blog
+            </span>
           </h1>
           <p className="text-lg text-gray-300 max-w-2xl mx-auto">
             Expert insights on architecture, construction, design, and industry trends
           </p>
           <div className="flex justify-center gap-2 mt-6">
-            <div className="w-12 h-px bg-amber-400"></div>
-            <div className="w-2 h-2 rounded-full bg-amber-400"></div>
-            <div className="w-12 h-px bg-amber-400"></div>
+            <div className="w-12 h-px bg-green-400"></div>
+            <div className="w-2 h-2 rounded-full bg-green-400"></div>
+            <div className="w-12 h-px bg-green-400"></div>
           </div>
         </div>
       </div>
 
-      {/* Stats Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-20">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="bg-white rounded-xl shadow-lg p-4 text-center border border-gray-100">
-            <div className="text-2xl mb-1">📝</div>
-            <p className="text-xl font-bold text-amber-500">12+</p>
-            <p className="text-sm text-gray-600">Articles Published</p>
-          </div>
-          <div className="bg-white rounded-xl shadow-lg p-4 text-center border border-gray-100">
-            <div className="text-2xl mb-1">👥</div>
-            <p className="text-xl font-bold text-amber-500">5+</p>
-            <p className="text-sm text-gray-600">Expert Contributors</p>
-          </div>
-          <div className="bg-white rounded-xl shadow-lg p-4 text-center border border-gray-100">
-            <div className="text-2xl mb-1">📖</div>
-            <p className="text-xl font-bold text-amber-500">4</p>
-            <p className="text-sm text-gray-600">Minutes Avg Read</p>
-          </div>
-          <div className="bg-white rounded-xl shadow-lg p-4 text-center border border-gray-100">
-            <div className="text-2xl mb-1">🏷️</div>
-            <p className="text-xl font-bold text-amber-500">5+</p>
-            <p className="text-sm text-gray-600">Topics Covered</p>
-          </div>
+      {/* Stats Section - Compact */}
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          {[
+            { icon: FiBookOpen, value: "12+", label: "Articles Published" },
+            { icon: FiUsers, value: "5+", label: "Expert Contributors" },
+            { icon: FiClock, value: "4", label: "Minutes Avg Read" },
+            { icon: FiTag, value: "5+", label: "Topics Covered" }
+          ].map((stat, idx) => (
+            <div key={idx} className="bg-white rounded-xl shadow-lg p-3 text-center border border-gray-200/50 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <stat.icon className="w-5 h-5 text-green-500 mx-auto mb-1" />
+              <p className="text-lg font-bold text-green-600">{stat.value}</p>
+              <p className="text-xs text-gray-600">{stat.label}</p>
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* Categories */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="flex flex-wrap justify-center gap-3 mb-12">
+      {/* Categories & Posts */}
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Categories - Green Theme */}
+        <div className="flex flex-wrap justify-center gap-2 mb-10">
           {categories.map((cat) => (
             <button
               key={cat.id}
               onClick={() => setSelectedCategory(cat.id)}
-              className={`px-5 py-2 rounded-full font-medium transition-all duration-300 flex items-center gap-2 ${
+              className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-1.5 ${
                 selectedCategory === cat.id
-                  ? 'bg-amber-500 text-white shadow-md'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  ? 'bg-green-600 text-white shadow-lg shadow-green-500/25'
+                  : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
               }`}
             >
               {cat.label}
-              <span className={`text-xs ${selectedCategory === cat.id ? 'text-amber-200' : 'text-gray-400'}`}>
+              <span className={`text-[10px] ${selectedCategory === cat.id ? 'text-green-200' : 'text-gray-400'}`}>
                 ({cat.count})
               </span>
             </button>
@@ -295,45 +339,47 @@ export default function Blog() {
 
         {/* Featured Posts Section */}
         {selectedCategory === 'all' && (
-          <div className="mb-16">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-              <span className="w-1 h-6 bg-amber-500 rounded-full"></span>
+          <div className="mb-12">
+            <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+              <span className="w-1 h-5 bg-green-500 rounded-full"></span>
               Featured Articles
             </h2>
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-3 gap-4">
               {featuredPosts.map((post) => (
                 <div
                   key={post.id}
-                  className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer"
+                  className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer border border-gray-200/50 hover:-translate-y-1"
                   onClick={() => setSelectedPost(post)}
                 >
-                  <div className="relative h-48 overflow-hidden">
+                  <div className="relative h-40 overflow-hidden">
                     <img
                       src={post.image}
                       alt={post.title}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                     />
-                    <div className="absolute top-4 left-4">
-                      <span className="bg-amber-500 text-white px-2 py-1 rounded-lg text-xs font-semibold">
+                    <div className="absolute top-3 left-3">
+                      <span className="bg-green-600 text-white px-2 py-0.5 rounded-lg text-[10px] font-semibold">
                         Featured
                       </span>
                     </div>
                   </div>
-                  <div className="p-5">
-                    <div className="flex items-center gap-2 text-xs text-gray-500 mb-2">
+                  <div className="p-4">
+                    <div className="flex items-center gap-2 text-[10px] text-gray-500 mb-1.5">
+                      <FiCalendar className="w-3 h-3" />
                       <span>{post.date}</span>
                       <span>•</span>
+                      <FiClock className="w-3 h-3" />
                       <span>{post.readTime}</span>
                     </div>
-                    <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2">{post.title}</h3>
-                    <p className="text-gray-600 text-sm line-clamp-2 mb-3">{post.excerpt}</p>
+                    <h3 className="text-base font-bold text-gray-900 mb-1.5 line-clamp-2">{post.title}</h3>
+                    <p className="text-gray-600 text-sm line-clamp-2 mb-2">{post.excerpt}</p>
                     <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center text-sm">
+                      <div className="w-7 h-7 bg-green-100 rounded-full flex items-center justify-center text-xs text-green-600 font-bold">
                         {post.author.charAt(0)}
                       </div>
-                      <div>
-                        <p className="text-xs font-medium text-gray-900">{post.author}</p>
-                        <p className="text-xs text-gray-500">{post.authorRole}</p>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-xs font-medium text-gray-900 truncate">{post.author}</p>
+                        <p className="text-[10px] text-gray-500 truncate">{post.authorRole}</p>
                       </div>
                     </div>
                   </div>
@@ -345,45 +391,47 @@ export default function Blog() {
 
         {/* All Posts Grid */}
         <div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-            <span className="w-1 h-6 bg-amber-500 rounded-full"></span>
+          <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <span className="w-1 h-5 bg-green-500 rounded-full"></span>
             {selectedCategory === 'all' ? 'Latest Articles' : `${categories.find(c => c.id === selectedCategory)?.label}`}
           </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             {(selectedCategory === 'all' ? filteredPosts.slice(3) : filteredPosts).map((post) => (
               <div
                 key={post.id}
-                className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer"
+                className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer border border-gray-200/50 hover:-translate-y-1"
                 onClick={() => setSelectedPost(post)}
               >
-                <div className="relative h-48 overflow-hidden">
+                <div className="relative h-40 overflow-hidden">
                   <img
                     src={post.image}
                     alt={post.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
-                  <div className="absolute bottom-4 left-4">
-                    <span className="bg-amber-500/90 text-white px-2 py-1 rounded-lg text-xs font-semibold backdrop-blur-sm">
+                  <div className="absolute bottom-3 left-3">
+                    <span className="bg-green-600/90 text-white px-2 py-0.5 rounded-lg text-[10px] font-semibold backdrop-blur-sm">
                       {post.tags[0]}
                     </span>
                   </div>
                 </div>
-                <div className="p-5">
-                  <div className="flex items-center gap-2 text-xs text-gray-500 mb-2">
+                <div className="p-4">
+                  <div className="flex items-center gap-2 text-[10px] text-gray-500 mb-1.5">
+                    <FiCalendar className="w-3 h-3" />
                     <span>{post.date}</span>
                     <span>•</span>
+                    <FiClock className="w-3 h-3" />
                     <span>{post.readTime}</span>
                   </div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2">{post.title}</h3>
-                  <p className="text-gray-600 text-sm line-clamp-2 mb-3">{post.excerpt}</p>
+                  <h3 className="text-base font-bold text-gray-900 mb-1.5 line-clamp-2">{post.title}</h3>
+                  <p className="text-gray-600 text-sm line-clamp-2 mb-2">{post.excerpt}</p>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <div className="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center text-xs">
+                      <div className="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center text-[10px] text-gray-600 font-medium">
                         {post.author.charAt(0)}
                       </div>
-                      <span className="text-xs text-gray-600">{post.author}</span>
+                      <span className="text-xs text-gray-600 truncate max-w-[100px]">{post.author}</span>
                     </div>
-                    <span className="text-amber-500 text-sm group-hover:translate-x-1 transition-transform inline-block">
+                    <span className="text-green-600 text-sm group-hover:translate-x-1 transition-transform inline-block font-medium">
                       Read More →
                     </span>
                   </div>
@@ -392,28 +440,9 @@ export default function Blog() {
             ))}
           </div>
         </div>
-
-        {/* Newsletter Signup */}
-        <div className="mt-16 bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl p-8 md:p-10 text-center">
-          <h3 className="text-2xl font-bold text-gray-900 mb-2">Subscribe to Our Newsletter</h3>
-          <p className="text-gray-600 mb-6 max-w-md mx-auto">
-            Get the latest insights on architecture, construction, and design delivered to your inbox.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="flex-1 px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:border-amber-400"
-            />
-            <button className="px-6 py-3 bg-amber-500 text-white rounded-xl font-semibold hover:bg-amber-600 transition-colors">
-              Subscribe
-            </button>
-          </div>
-          <p className="text-xs text-gray-400 mt-3">No spam. Unsubscribe anytime.</p>
-        </div>
       </div>
 
-      {/* Blog Post Modal */}
+      {/* Blog Post Modal - Green Theme */}
       {selectedPost && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm overflow-y-auto" onClick={() => setSelectedPost(null)}>
           <div className="relative bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
@@ -431,21 +460,21 @@ export default function Blog() {
               <img
                 src={selectedPost.image}
                 alt={selectedPost.title}
-                className="w-full h-64 md:h-80 object-cover rounded-xl mb-6"
+                className="w-full h-56 md:h-72 object-cover rounded-xl mb-6"
               />
               
               {/* Meta Info */}
               <div className="flex flex-wrap items-center gap-3 text-sm text-gray-500 mb-4">
                 <span className="flex items-center gap-1">
-                  <span>📅</span> {selectedPost.date}
+                  <FiCalendar className="w-4 h-4" /> {selectedPost.date}
                 </span>
                 <span>•</span>
                 <span className="flex items-center gap-1">
-                  <span>⏱️</span> {selectedPost.readTime}
+                  <FiClock className="w-4 h-4" /> {selectedPost.readTime}
                 </span>
                 <span>•</span>
                 <span className="flex items-center gap-1">
-                  <span>🏷️</span> {selectedPost.tags.join(', ')}
+                  <FiTag className="w-4 h-4" /> {selectedPost.tags.join(', ')}
                 </span>
               </div>
 
@@ -454,7 +483,7 @@ export default function Blog() {
 
               {/* Author Info */}
               <div className="flex items-center gap-3 pb-6 mb-6 border-b border-gray-100">
-                <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center text-lg font-bold text-amber-600">
+                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-lg font-bold text-green-600">
                   {selectedPost.author.charAt(0)}
                 </div>
                 <div>
@@ -472,28 +501,64 @@ export default function Blog() {
               {/* Tags */}
               <div className="flex flex-wrap gap-2 pt-6 mt-6 border-t border-gray-100">
                 {selectedPost.tags.map((tag, idx) => (
-                  <span key={idx} className="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm">
+                  <span key={idx} className="px-3 py-1 bg-green-50 text-green-700 rounded-full text-sm font-medium">
                     #{tag}
                   </span>
                 ))}
               </div>
 
-              {/* Share Section */}
-              <div className="mt-6 p-4 bg-gray-50 rounded-xl">
-                <p className="text-sm text-gray-600 mb-3">Share this article:</p>
-                <div className="flex gap-3">
-                  <button className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700 transition-colors">
+              {/* Share Section - Linked to respective sites */}
+              <div className="mt-6 p-5 bg-gray-50 rounded-xl border border-gray-200/50">
+                <p className="text-sm text-gray-600 mb-3 flex items-center gap-2">
+                  <FiShare2 className="w-4 h-4" />
+                  Share this article:
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <a
+                    href={getShareUrl('facebook', selectedPost)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 px-4 py-2 bg-[#1877F2] text-white rounded-lg text-sm hover:bg-[#1864D9] transition-colors"
+                  >
+                    <FiFacebook className="w-4 h-4" />
                     Facebook
-                  </button>
-                  <button className="px-4 py-2 bg-sky-500 text-white rounded-lg text-sm hover:bg-sky-600 transition-colors">
+                  </a>
+                  <a
+                    href={getShareUrl('twitter', selectedPost)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 px-4 py-2 bg-[#000000] text-white rounded-lg text-sm hover:bg-[#333333] transition-colors"
+                  >
+                    <FiTwitter className="w-4 h-4" />
                     Twitter
-                  </button>
-                  <button className="px-4 py-2 bg-green-600 text-white rounded-lg text-sm hover:bg-green-700 transition-colors">
+                  </a>
+                  <a
+                    href={getShareUrl('whatsapp', selectedPost)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 px-4 py-2 bg-[#25D366] text-white rounded-lg text-sm hover:bg-[#1DA851] transition-colors"
+                  >
+                    <FiMessageCircle className="w-4 h-4" />
                     WhatsApp
-                  </button>
-                  <button className="px-4 py-2 bg-gray-600 text-white rounded-lg text-sm hover:bg-gray-700 transition-colors">
+                  </a>
+                  <a
+                    href={getShareUrl('linkedin', selectedPost)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 px-4 py-2 bg-[#0A66C2] text-white rounded-lg text-sm hover:bg-[#084B8C] transition-colors"
+                  >
+                    <FiLinkedin className="w-4 h-4" />
                     LinkedIn
-                  </button>
+                  </a>
+                  <a
+                    href={getShareUrl('telegram', selectedPost)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 px-4 py-2 bg-[#0088CC] text-white rounded-lg text-sm hover:bg-[#006699] transition-colors"
+                  >
+                    <FiSend className="w-4 h-4" />
+                    Telegram
+                  </a>
                 </div>
               </div>
             </div>

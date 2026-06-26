@@ -126,14 +126,14 @@ export default function Hero() {
           <div className="flex gap-4 justify-center">
             <Link
               to="/projects"
-              className="bg-white text-black px-8 py-3 rounded-full font-semibold hover:bg-gray-200 transition shadow-lg"
+              className="bg-white text-black px-8 py-3 rounded-full font-semibold hover:bg-green-500 transition shadow-lg"
               aria-label="View AGEdge construction and real estate projects"
             >
               View Projects
             </Link>
             <Link
               to="/contact"
-              className="bg-black/40 backdrop-blur-sm border-2 border-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-black transition"
+              className="bg-black/40 backdrop-blur-sm border-2 border-green-500 px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-black transition"
               aria-label="Contact AGEdge to start your construction project"
             >
               Start Your Project
@@ -145,7 +145,7 @@ export default function Hero() {
       {/* Arrows */}
       <button
         onClick={prevSlide}
-        className="absolute left-6 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 backdrop-blur-sm p-3 rounded-full transition z-10"
+        className="absolute left-6 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-green-500 backdrop-blur-sm p-3 rounded-full transition z-10"
         aria-label="Previous project image"
         disabled={isTransitioning}
       >
@@ -155,7 +155,7 @@ export default function Hero() {
       </button>
       <button
         onClick={nextSlide}
-        className="absolute right-6 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 backdrop-blur-sm p-3 rounded-full transition z-10"
+        className="absolute right-6 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-green-500 backdrop-blur-sm p-3 rounded-full transition z-10"
         aria-label="Next project image"
         disabled={isTransitioning}
       >

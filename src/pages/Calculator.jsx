@@ -1,6 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect, useMemo, useCallback } from 'react'
+import { useLocation } from 'react-router-dom'
 
 export default function Calculator() {
+  const location = useLocation()
   const [step, setStep] = useState(1)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState(null)
@@ -21,65 +23,84 @@ export default function Calculator() {
     estimatedBudget: 0
   })
 
-  const projectTypes = [
+  // Reset state when navigating away or back to the page
+  useEffect(() => {
+    setStep(1)
+    setSubmitStatus(null)
+    setIsSubmitting(false)
+  }, [location.key])
+
+  const projectTypes = useMemo(() => [
     { id: 'residential', label: 'Residential Villa', basePrice: 250, description: 'Luxury homes, private residences' },
     { id: 'commercial', label: 'Commercial Building', basePrice: 300, description: 'Offices, retail spaces, warehouses' },
     { id: 'educational', label: 'Educational Facility', basePrice: 220, description: 'Schools, colleges, training centers' },
     { id: 'multifamily', label: 'Multi-Family Housing', basePrice: 200, description: 'Apartments, enclaves, compounds' },
     { id: 'renovation', label: 'Renovation Project', basePrice: 150, description: 'Face-lifts, remodeling, extensions' },
     { id: 'material', label: 'Material Supply Only', basePrice: 0, description: 'Premium building materials' }
-  ]
+  ], [])
 
-  const finishLevels = [
+  const finishLevels = useMemo(() => [
     { id: 'basic', label: 'Basic Finish', multiplier: 1.0, description: 'Essential finishes, functional spaces' },
     { id: 'standard', label: 'Standard Finish', multiplier: 1.3, description: 'Good quality materials, modern finishes' },
     { id: 'premium', label: 'Premium Finish', multiplier: 1.6, description: 'High-end materials, superior craftsmanship' },
     { id: 'luxury', label: 'Luxury Finish', multiplier: 2.0, description: 'Top-tier finishes, custom designs' }
-  ]
+  ], [])
 
-  const locations = [
+  const locations = useMemo(() => [
     { id: 'accra', label: 'Accra (Greater Accra)', multiplier: 1.2 },
     { id: 'kumasi', label: 'Kumasi (Ashanti Region)', multiplier: 1.0 },
     { id: 'takoradi', label: 'Takoradi (Western Region)', multiplier: 0.95 },
     { id: 'tema', label: 'Tema', multiplier: 1.1 },
     { id: 'other', label: 'Other Regions', multiplier: 0.9 }
-  ]
+  ], [])
 
-  // Calculate estimated budget
-  const calculateBudget = () => {
-    const project = projectTypes.find(p => p.id === formData.projectType)
-    const finish = finishLevels.find(f => f.id === formData.finishLevel)
-    const location = locations.find(l => l.id === formData.location)
+  // Calculate estimated budget - Pure function that doesn't depend on external state
+  const calculateBudget = useCallback((data) => {
+    const project = projectTypes.find(p => p.id === data.projectType)
+    const finish = finishLevels.find(f => f.id === data.finishLevel)
+    const location = locations.find(l => l.id === data.location)
     
     if (!project || !finish || !location) return 0
     
     let baseAmount = 0
     
-    if (formData.projectType === 'material') {
-      baseAmount = (formData.propertySize || 0) * 50
+    if (data.projectType === 'material') {
+      baseAmount = (data.propertySize || 0) * 50
     } else {
-      const size = formData.propertySize || 1000
-      const bedrooms = formData.bedrooms || 3
-      const bathrooms = formData.bathrooms || 2
-      const floors = formData.floors || 1
+      const size = data.propertySize || 1000
+      const bedrooms = data.bedrooms || 3
+      const bathrooms = data.bathrooms || 2
+      const floors = data.floors || 1
       
       baseAmount = (size * project.basePrice) + (bedrooms * 5000) + (bathrooms * 3000) + (floors * 10000)
     }
     
     const finalAmount = baseAmount * finish.multiplier * location.multiplier
     return Math.round(finalAmount)
-  }
+  }, [projectTypes, finishLevels, locations])
 
-  // Update budget whenever form changes
-  const updateBudget = () => {
-    const budget = calculateBudget()
-    setFormData(prev => ({ ...prev, estimatedBudget: budget }))
-  }
+  // Update budget whenever relevant form fields change - Fixed to avoid infinite loop
+  useEffect(() => {
+    const budget = calculateBudget(formData)
+    setFormData(prev => {
+      // Only update if the budget actually changed
+      if (prev.estimatedBudget === budget) return prev
+      return { ...prev, estimatedBudget: budget }
+    })
+  }, [
+    formData.projectType,
+    formData.propertySize,
+    formData.bedrooms,
+    formData.bathrooms,
+    formData.floors,
+    formData.finishLevel,
+    formData.location,
+    calculateBudget
+  ])
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
     setFormData(prev => ({ ...prev, [name]: value }))
-    setTimeout(() => updateBudget(), 100)
   }
 
   const nextStep = () => {
@@ -96,7 +117,6 @@ export default function Calculator() {
     e.preventDefault()
     setIsSubmitting(true)
     
-    // REPLACE WITH YOUR FORMSPREE ID
     const FORMSPREE_ID = 'xqejnbra'
     const FORMSPREE_URL = `https://formspree.io/f/${FORMSPREE_ID}`
     
@@ -158,9 +178,24 @@ export default function Calculator() {
   }
 
   return (
-    <div className="bg-white min-h-screen">
-      {/* Hero Section */}
-      <div className="relative h-[40vh] min-h-[300px] flex items-center justify-center bg-gray-900">
+    <div className="relative min-h-screen bg-gray-50 overflow-hidden">
+      {/* Green Background Highlights */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+        <div className="absolute -top-32 -right-32 w-96 h-96 bg-green-200/30 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute top-1/2 -left-32 w-80 h-80 bg-green-300/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
+        <div className="absolute -bottom-32 right-1/3 w-72 h-72 bg-green-200/25 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '4s' }} />
+        <div className="absolute top-2/3 right-1/4 w-64 h-64 bg-green-400/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+        
+        <div 
+          className="absolute inset-0 opacity-[0.02]"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='grid' width='60' height='60' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 60 0 L 0 0 0 60' fill='none' stroke='%2322c55e' stroke-width='1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23grid)'/%3E%3C/svg%3E")`
+          }}
+        />
+      </div>
+
+      {/* Hero Section - Full with Background Image - Fixed navbar spacing */}
+      <div className="relative h-[40vh] min-h-[300px] flex items-center justify-center bg-gray-900 pt-16 md:pt-20">
         <div className="absolute inset-0 overflow-hidden">
           <img
             src="https://images.pexels.com/photos/2760242/pexels-photo-2760242.jpeg?w=1600&h=600&fit=crop"
@@ -170,26 +205,28 @@ export default function Calculator() {
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60" />
         <div className="relative z-10 text-center text-white px-4">
-          <div className="inline-block px-4 py-2 rounded-full bg-amber-500/20 text-amber-300 text-sm font-medium mb-4 backdrop-blur-sm">
+          <div className="inline-block px-4 py-2 rounded-full bg-green-500/20 text-green-300 text-sm font-medium mb-4 backdrop-blur-sm border border-green-400/30">
             Plan Your Project
           </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-light tracking-tight mb-4">
             Cost{' '}
-            <span className="font-bold text-amber-400">Estimator</span>
+            <span className="font-bold bg-gradient-to-r from-green-400 to-green-300 bg-clip-text text-transparent">
+              Estimator
+            </span>
           </h1>
           <p className="text-lg text-gray-300 max-w-2xl mx-auto">
             Get a rough estimate for your construction or renovation project
           </p>
           <div className="flex justify-center gap-2 mt-6">
-            <div className="w-12 h-px bg-amber-400"></div>
-            <div className="w-2 h-2 rounded-full bg-amber-400"></div>
-            <div className="w-12 h-px bg-amber-400"></div>
+            <div className="w-12 h-px bg-green-400"></div>
+            <div className="w-2 h-2 rounded-full bg-green-400"></div>
+            <div className="w-12 h-px bg-green-400"></div>
           </div>
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Progress Steps */}
+      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Progress Steps - Green Theme */}
         <div className="mb-8">
           <div className="flex items-center justify-between">
             {[
@@ -202,14 +239,14 @@ export default function Calculator() {
                 <div
                   className={`w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-2 transition-all ${
                     step >= item.step
-                      ? 'bg-amber-500 text-white'
+                      ? 'bg-green-500 text-white'
                       : 'bg-gray-200 text-gray-400'
                   }`}
                 >
                   {item.step}
                 </div>
                 <p className={`text-sm hidden sm:block ${
-                  step >= item.step ? 'text-amber-600 font-medium' : 'text-gray-400'
+                  step >= item.step ? 'text-green-600 font-medium' : 'text-gray-400'
                 }`}>
                   {item.label}
                 </p>
@@ -219,7 +256,7 @@ export default function Calculator() {
           <div className="relative mt-2">
             <div className="absolute top-0 left-0 h-1 bg-gray-200 rounded-full w-full">
               <div
-                className="absolute top-0 left-0 h-1 bg-amber-500 rounded-full transition-all duration-500"
+                className="absolute top-0 left-0 h-1 bg-green-500 rounded-full transition-all duration-500"
                 style={{ width: `${((step - 1) / 3) * 100}%` }}
               />
             </div>
@@ -227,7 +264,7 @@ export default function Calculator() {
         </div>
 
         {/* Form Container */}
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-lg p-6 md:p-8">
+        <div className="bg-white/90 backdrop-blur-sm rounded-2xl border border-gray-200/50 shadow-xl p-6 md:p-8">
           {/* Step 1: Project Details */}
           {step === 1 && (
             <div className="space-y-6">
@@ -245,14 +282,11 @@ export default function Calculator() {
                     <button
                       key={type.id}
                       type="button"
-                      onClick={() => {
-                        setFormData(prev => ({ ...prev, projectType: type.id }))
-                        updateBudget()
-                      }}
+                      onClick={() => setFormData(prev => ({ ...prev, projectType: type.id }))}
                       className={`p-4 border rounded-xl text-left transition-all ${
                         formData.projectType === type.id
-                          ? 'border-amber-500 bg-amber-50 ring-2 ring-amber-500'
-                          : 'border-gray-200 hover:border-amber-300'
+                          ? 'border-green-500 bg-green-50 ring-2 ring-green-500'
+                          : 'border-gray-200 hover:border-green-300'
                       }`}
                     >
                       <p className="font-semibold text-gray-900">{type.label}</p>
@@ -274,7 +308,7 @@ export default function Calculator() {
                       value={formData.propertySize}
                       onChange={handleInputChange}
                       placeholder="e.g., 2000"
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-amber-400"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-green-400 focus:ring-2 focus:ring-green-400/20 transition-all"
                     />
                     <p className="text-xs text-gray-400 mt-1">Approximate total floor area</p>
                   </div>
@@ -288,7 +322,7 @@ export default function Calculator() {
                         name="bedrooms"
                         value={formData.bedrooms}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-amber-400"
+                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-green-400 focus:ring-2 focus:ring-green-400/20 transition-all"
                       >
                         <option value="">Select</option>
                         {[1,2,3,4,5,6].map(num => (
@@ -304,7 +338,7 @@ export default function Calculator() {
                         name="bathrooms"
                         value={formData.bathrooms}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-amber-400"
+                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-green-400 focus:ring-2 focus:ring-green-400/20 transition-all"
                       >
                         <option value="">Select</option>
                         {[1,2,3,4,5].map(num => (
@@ -320,7 +354,7 @@ export default function Calculator() {
                         name="floors"
                         value={formData.floors}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-amber-400"
+                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-green-400 focus:ring-2 focus:ring-green-400/20 transition-all"
                       >
                         <option value="">Select</option>
                         {[1,2,3,4,5].map(num => (
@@ -343,7 +377,7 @@ export default function Calculator() {
                     value={formData.propertySize}
                     onChange={handleInputChange}
                     placeholder="e.g., 5000"
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-amber-400"
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-green-400 focus:ring-2 focus:ring-green-400/20 transition-all"
                   />
                 </div>
               )}
@@ -351,7 +385,7 @@ export default function Calculator() {
               <button
                 onClick={nextStep}
                 disabled={!formData.projectType || (formData.projectType !== 'material' && !formData.propertySize)}
-                className="w-full bg-amber-500 text-white font-semibold py-3 rounded-xl hover:bg-amber-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold py-3 rounded-xl hover:from-green-600 hover:to-green-700 transition-all duration-300 shadow-lg shadow-green-500/25 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Continue →
               </button>
@@ -375,14 +409,11 @@ export default function Calculator() {
                     <button
                       key={level.id}
                       type="button"
-                      onClick={() => {
-                        setFormData(prev => ({ ...prev, finishLevel: level.id }))
-                        updateBudget()
-                      }}
+                      onClick={() => setFormData(prev => ({ ...prev, finishLevel: level.id }))}
                       className={`p-4 border rounded-xl text-left transition-all ${
                         formData.finishLevel === level.id
-                          ? 'border-amber-500 bg-amber-50 ring-2 ring-amber-500'
-                          : 'border-gray-200 hover:border-amber-300'
+                          ? 'border-green-500 bg-green-50 ring-2 ring-green-500'
+                          : 'border-gray-200 hover:border-green-300'
                       }`}
                     >
                       <p className="font-semibold text-gray-900">{level.label}</p>
@@ -400,7 +431,7 @@ export default function Calculator() {
                   name="location"
                   value={formData.location}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-amber-400"
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-green-400 focus:ring-2 focus:ring-green-400/20 transition-all"
                 >
                   <option value="">Select location</option>
                   {locations.map(loc => (
@@ -417,7 +448,7 @@ export default function Calculator() {
                   name="timeline"
                   value={formData.timeline}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-amber-400"
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-green-400 focus:ring-2 focus:ring-green-400/20 transition-all"
                 >
                   <option value="">Select timeline</option>
                   <option value="3-6 months">3-6 months</option>
@@ -437,7 +468,7 @@ export default function Calculator() {
                 <button
                   onClick={nextStep}
                   disabled={!formData.finishLevel || !formData.location}
-                  className="flex-1 bg-amber-500 text-white font-semibold py-3 rounded-xl hover:bg-amber-600 transition-colors disabled:opacity-50"
+                  className="flex-1 bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold py-3 rounded-xl hover:from-green-600 hover:to-green-700 transition-all duration-300 shadow-lg shadow-green-500/25 disabled:opacity-50"
                 >
                   Continue →
                 </button>
@@ -453,9 +484,9 @@ export default function Calculator() {
                 <p className="text-gray-500 text-sm mt-1">Based on the information you provided</p>
               </div>
 
-              <div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl p-8 text-center">
+              <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-8 text-center border border-green-100">
                 <p className="text-gray-600 text-sm mb-2">Estimated Project Cost</p>
-                <p className="text-5xl font-bold text-amber-600">
+                <p className="text-5xl font-bold text-green-600">
                   ${formData.estimatedBudget.toLocaleString()}
                 </p>
                 <p className="text-xs text-gray-500 mt-3">*This is a rough estimate only</p>
@@ -470,7 +501,7 @@ export default function Calculator() {
                     <p className="text-sm font-semibold text-yellow-800">Important Note</p>
                     <p className="text-sm text-yellow-700 mt-1">
                       This is an estimated budget only. Actual costs may vary based on specific requirements, 
-                      material availability, and market conditions. For an accurate quote, please book a free consultation.
+                      material availability, and market conditions.
                     </p>
                   </div>
                 </div>
@@ -501,7 +532,7 @@ export default function Calculator() {
                 </button>
                 <button
                   onClick={nextStep}
-                  className="flex-1 bg-amber-500 text-white font-semibold py-3 rounded-xl hover:bg-amber-600 transition-colors"
+                  className="flex-1 bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold py-3 rounded-xl hover:from-green-600 hover:to-green-700 transition-all duration-300 shadow-lg shadow-green-500/25"
                 >
                   Get Free Consultation →
                 </button>
@@ -549,7 +580,7 @@ export default function Calculator() {
                       value={formData.name}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-amber-400"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-green-400 focus:ring-2 focus:ring-green-400/20 transition-all"
                       placeholder="John Doe"
                     />
                   </div>
@@ -564,7 +595,7 @@ export default function Calculator() {
                       value={formData.email}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-amber-400"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-green-400 focus:ring-2 focus:ring-green-400/20 transition-all"
                       placeholder="john@example.com"
                     />
                   </div>
@@ -579,7 +610,7 @@ export default function Calculator() {
                       value={formData.phone}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-amber-400"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-green-400 focus:ring-2 focus:ring-green-400/20 transition-all"
                       placeholder="+233 XX XXX XXXX"
                     />
                   </div>
@@ -594,7 +625,7 @@ export default function Calculator() {
                     <button
                       onClick={handleSubmit}
                       disabled={isSubmitting || !formData.name || !formData.email || !formData.phone}
-                      className="flex-1 bg-green-500 text-white font-semibold py-3 rounded-xl hover:bg-green-600 transition-colors disabled:opacity-50"
+                      className="flex-1 bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold py-3 rounded-xl hover:from-green-600 hover:to-green-700 transition-all duration-300 shadow-lg shadow-green-500/25 disabled:opacity-50"
                     >
                       {isSubmitting ? 'Submitting...' : 'Submit & Get Estimate →'}
                     </button>
@@ -602,8 +633,8 @@ export default function Calculator() {
 
                   <div className="flex items-center justify-center gap-6 pt-4">
                     <a
-                      href="tel:+233548869192"
-                      className="flex items-center gap-2 text-gray-500 hover:text-amber-500 transition-colors text-sm"
+                      href="tel:+233256073041"
+                      className="flex items-center gap-2 text-gray-500 hover:text-green-600 transition-colors text-sm"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
@@ -614,7 +645,7 @@ export default function Calculator() {
                     <button
                       type="button"
                       onClick={() => setStep(1)}
-                      className="text-gray-500 hover:text-amber-500 transition-colors text-sm"
+                      className="text-gray-500 hover:text-green-600 transition-colors text-sm"
                     >
                       Start Over
                     </button>
@@ -623,14 +654,6 @@ export default function Calculator() {
               )}
             </div>
           )}
-        </div>
-
-        {/* Help Section */}
-        <div className="mt-8 text-center">
-          <p className="text-gray-500 text-sm">
-            Need help? Call us at <a href="tel:+233548869192" className="text-amber-600 font-medium">+233 54 886 9192</a> 
-            {' '}or email <a href="mailto:info@agedgeglobal.com" className="text-amber-600 font-medium">info@agedgeglobal.com</a>
-          </p>
         </div>
       </div>
     </div>

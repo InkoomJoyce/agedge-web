@@ -51,12 +51,13 @@ export default function Navbar() {
     },
     {
       name: 'Resources',
-      path: '/resources',
+      path: '/calculator',
       ariaLabel: 'AGEdge Resources and Tools',
       dropdown: [
-        { name: 'Locations', path: '/locations' },
+        // { name: 'Locations', path: '/locations' },
+        { name: '360° Walkthrough', path: '/walkthrough' },
         { name: 'Cost Calculator', path: '/calculator' },
-        { name: '360° Walkthrough', path: '/walkthrough' }
+        
       ]
     },
     {
@@ -66,8 +67,8 @@ export default function Navbar() {
       dropdown: [
         { name: 'Blog', path: '/blog' },
         { name: 'News', path: '/live-news' },
-        { name: 'Magazine', path: '/magazine' },
-        { name: 'Annual Reports', path: '/annual-reports' },
+        // { name: 'Magazine', path: '/magazine' },
+        // { name: 'Annual Reports', path: '/annual-reports' },
       ]
     },
     { name: 'Contact Us', path: '/contact', ariaLabel: 'Contact AGEdge Global' },
