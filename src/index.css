@@ -1,1 +1,10 @@
 @import "tailwindcss";
+
+/* ONE LINE - Makes everything smaller on mobile */
+@media (max-width: 640px) {
+  html { font-size: 14px; }
+}
+
+@media (max-width: 480px) {
+  html { font-size: 13px; }
+}
