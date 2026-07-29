@@ -61,7 +61,7 @@ export default function Footer() {
     "sameAs": [
       "https://instagram.com/agedgeglobal",
       "https://linkedin.com/company/agedge-global-limited",
-      "https://facebook.com/share/1PLAcDxj81/",
+      "https://facebook.com/share/1PLAcDxj8i/",
       "https://twitter.com/agedgeglobal",
       "https://youtube.com/@agedgegloballimited",
       "https://tiktok.com/@agedgegloballimited"
@@ -293,12 +293,12 @@ export default function Footer() {
                    aria-label="Follow AGEdge Global on Instagram">
                   <FaInstagram className="w-4 h-4" />
                 </a>
-                <a href="https://linkedin.com/company/agedgegloballimited" target="_blank" rel="noopener noreferrer me"
+                <a href="https://linkedin.com/company/agedge-global-limited" target="_blank" rel="noopener noreferrer me"
                    className="w-9 h-9 rounded-full border-2 border-green-500/40 flex items-center justify-center text-gray-600 hover:bg-green-600 hover:text-white hover:border-green-600 transition"
                    aria-label="Follow AGEdge Global on LinkedIn">
                   <FaLinkedinIn className="w-4 h-4" />
                 </a>
-                <a href="https://facebook.com/agedgegloballimited" target="_blank" rel="noopener noreferrer me"
+                <a href="https://facebook.com/share/1PLAcDxj8i/" target="_blank" rel="noopener noreferrer me"
                    className="w-9 h-9 rounded-full border-2 border-green-500/40 flex items-center justify-center text-gray-600 hover:bg-green-600 hover:text-white hover:border-green-600 transition"
                    aria-label="Follow AGEdge Global on Facebook">
                   <FaFacebookF className="w-4 h-4" />
