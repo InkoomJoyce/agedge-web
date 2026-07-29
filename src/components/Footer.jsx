@@ -60,8 +60,8 @@ export default function Footer() {
     },
     "sameAs": [
       "https://instagram.com/agedgeglobal",
-      "https://linkedin.com/company/agedgegloballimited",
-      "https://facebook.com/agedgegloballimited",
+      "https://linkedin.com/company/agedge-global-limited",
+      "https://facebook.com/share/1PLAcDxj81/",
       "https://twitter.com/agedgeglobal",
       "https://youtube.com/@agedgegloballimited",
       "https://tiktok.com/@agedgegloballimited"

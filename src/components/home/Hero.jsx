@@ -15,10 +15,10 @@ export default function Hero() {
       url: 'https://images.pexels.com/photos/28681443/pexels-photo-28681443.jpeg',
       alt: 'Luxury residential apartment complex construction Ghana'
     },
-    {
-      url: 'https://images.pexels.com/photos/28350363/pexels-photo-28350363.jpeg',
-      alt: 'Commercial skyscraper architecture project by AGEdge'
-    },
+    // {
+    //   url: 'https://images.pexels.com/photos/28350363/pexels-photo-28350363.jpeg',
+    //   alt: 'Commercial skyscraper architecture project by AGEdge'
+    // },
     {
       url: 'https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg',
       alt: 'Contemporary home interior design Ghana real estate'
@@ -43,10 +43,10 @@ export default function Hero() {
       url: 'https://images.pexels.com/photos/36871609/pexels-photo-36871609.jpeg',
       alt: 'Architectural building facade Accra commercial project'
     },
-    {
-      url: 'https://images.pexels.com/photos/29334668/pexels-photo-29334668.png',
-      alt: 'Luxury real estate property for sale Ghana AGEdge'
-    },
+    // {
+    //   url: 'https://images.pexels.com/photos/29334668/pexels-photo-29334668.png',
+    //   alt: 'Luxury real estate property for sale Ghana AGEdge'
+    // },
   ]
 
   // Preload first image for LCP
