@@ -9,6 +9,12 @@ import {
   ArrowUpRight, Sparkles
 } from 'lucide-react'
 
+// Import your local images
+import heroImage from '../assets/hero-image.jpg' // Replace with actual filename
+import technologyImage from '../assets/tech-image.jpg' // Replace with actual filename
+import officeImage1 from '../assets/office-1.jpg' // Replace with actual filename
+import officeImage2 from '../assets/office-2.jpg' // Replace with actual filename
+
 // Constants - extracted for better maintainability
 const EXPERTISE_AREAS = [
   { icon: PenTool, title: "Design & Costing", desc: "Innovative designs with accurate cost estimation" },
@@ -27,14 +33,15 @@ const STATS = [
 
 const TECHNOLOGIES = ["AutoCAD", "Revit", "Lumion", "3ds Max", "SketchUp", "Photoshop", "Illustrator"]
 
+// Updated to use local images
 const OFFICE_IMAGES = [
   {
-    url: "https://images.pexels.com/photos/2724749/pexels-photo-2724749.jpeg?w=600&h=400&fit=crop",
+    url: officeImage1, // Using imported image
     title: "Modern Office Space",
     location: "Accra, Ghana"
   },
   {
-    url: "https://images.pexels.com/photos/36444550/pexels-photo-36444550.png",
+    url: officeImage2, // Using imported image
     title: "Architecture Team",
     location: "Collaboration Hub"
   }
@@ -136,12 +143,12 @@ export default function About() {
           </div>
         </div>
 
-        {/* Hero Image - Compact */}
+        {/* Hero Image - Compact - USING LOCAL IMAGE */}
         <div className={`mb-12 ${getAnimationClasses(100)}`}>
           <div className="relative group rounded-xl overflow-hidden shadow-xl">
             <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 via-transparent to-transparent z-10" />
             <img
-              src="https://images.pexels.com/photos/13729358/pexels-photo-13729358.png"
+              src={heroImage} // REPLACED with local image
               alt="AGEdge Global architecture firm - Modern building design showcase"
               className="w-full h-[200px] sm:h-[280px] md:h-[340px] object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
               loading="lazy"
@@ -221,13 +228,13 @@ export default function About() {
               </div>
             )}
 
-            {/* Technology Tab */}
+            {/* Technology Tab - USING LOCAL IMAGE */}
             {activeTab === 'technology' && (
               <div className="bg-white rounded-xl border border-gray-200/50 shadow-sm overflow-hidden">
                 <div className="grid md:grid-cols-2 gap-0">
                   <div className="relative overflow-hidden min-h-[220px]">
                     <img
-                      src="https://images.pexels.com/photos/1181263/pexels-photo-1181263.jpeg?w=600&h=400&fit=crop"
+                      src={technologyImage} // REPLACED with local image
                       alt="Architecture software and drafting tools"
                       className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
                       loading="lazy"
@@ -259,13 +266,13 @@ export default function About() {
           </div>
         </div>
 
-        {/* Office Images - Compact Grid */}
+        {/* Office Images - Compact Grid - USING LOCAL IMAGES */}
         <div className={`grid sm:grid-cols-2 gap-4 ${getAnimationClasses(400)}`}>
           {OFFICE_IMAGES.map((item, idx) => (
             <div key={idx} className="group relative rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300">
               <div className="relative overflow-hidden">
                 <img
-                  src={item.url}
+                  src={item.url} // Now using local images via the imported variables
                   alt={item.title}
                   className="w-full h-[180px] sm:h-[220px] object-cover group-hover:scale-110 transition-transform duration-500 ease-out"
                   loading="lazy"

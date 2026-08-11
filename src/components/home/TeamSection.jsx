@@ -1,6 +1,14 @@
 import { useEffect, useRef, useState, useMemo, useCallback } from 'react'
 import { Users, Award, GraduationCap, MapPin, Mail, Phone, ChevronRight, Star, Calendar, BookOpen, HardHat, PenTool, Ruler, Wrench, Briefcase } from 'lucide-react'
 
+// Import local images
+import victorImage from '../../assets/victor.jpg'
+import selormImage from '../../assets/victor.jpg'
+import paulImage from '../../assets/victor.jpg'
+import michaelImage from '../../assets/dankyi.jpg'
+import wilberforceImage from '../../assets/victor.jpg'
+import joyceImage from '../../assets/joyce.jpg'
+
 // Memoized team data - prevents recreation on each render
 const TEAM_MEMBERS = [
   {
@@ -9,7 +17,7 @@ const TEAM_MEMBERS = [
     role: "Principal Architect & Managing Director",
     category: "Leadership",
     experience: "15+ years",
-    image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=400&fit=crop&auto=format",
+    image: victorImage,
     icon: PenTool,
     qualifications: [
       "BSc & Post Graduate Diploma in Architecture - KNUST",
@@ -21,8 +29,8 @@ const TEAM_MEMBERS = [
     description: "Over fifteen years of practice in Ghana, Victor has acquired in-depth knowledge in architecture and construction through a wide collection of private, commercial and government projects.",
     projects: 50,
     awards: 8,
-    email: "victor.gyasi@agedge.com",
-    phone: "+233 24 XXXX",
+    email: "vagyasi2@gmail.com",
+    phone: "+233 244 988 093",
     location: "Accra, Ghana"
   },
   {
@@ -31,7 +39,7 @@ const TEAM_MEMBERS = [
     role: "Assistant Architect",
     category: "Architecture",
     experience: "3+ years",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop&auto=format",
+    image: selormImage,
     icon: PenTool,
     qualifications: ["BSc in Architecture - KNUST", "MSc in Architecture - KNUST"],
     affiliations: ["Member - Ghana Institute of Architects (Probationers List)"],
@@ -49,7 +57,7 @@ const TEAM_MEMBERS = [
     role: "Senior Technician",
     category: "Technical",
     experience: "10+ years",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&auto=format",
+    image: paulImage,
     icon: Wrench,
     qualifications: ["Certificate in Architecture & Draftsmanship - KNUST (2007)"],
     affiliations: [],
@@ -67,7 +75,7 @@ const TEAM_MEMBERS = [
     role: "Project Manager & Quantity Surveyor",
     category: "Management",
     experience: "15+ years",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&auto=format",
+    image: michaelImage,
     icon: Ruler,
     qualifications: ["BSc in Building Technology - KNUST"],
     affiliations: [],
@@ -85,7 +93,7 @@ const TEAM_MEMBERS = [
     role: "Civil & Structural Engineer",
     category: "Engineering",
     experience: "30+ years",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop&auto=format",
+    image: wilberforceImage,
     icon: HardHat,
     qualifications: ["Civil & Structural Engineering", "Traditional & Contemporary Structural Analysis"],
     affiliations: [],
@@ -102,21 +110,22 @@ const TEAM_MEMBERS = [
     name: "Joyce Inkoom",
     role: "Business Development Lead",
     category: "Leadership",
-    experience: "8+ years",
-    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=400&fit=crop&auto=format",
+    experience: "4+ years",
+    image: joyceImage,
     icon: Briefcase,
     qualifications: [
-      "BSc in Business Administration - University of Ghana",
-      "MBA in Marketing - GIMPA",
+      "BSc - University of Ghana",
+      "Project Management Professional",
+      "Revenue Operations Professional",
       "Certified Sales Professional"
     ],
-    affiliations: ["Member - Chartered Institute of Marketing Ghana"],
+    affiliations: ["GNBCC"],
     expertise: ["Business Development", "Strategic Partnerships", "Client Relations", "Market Expansion"],
-    description: "Joyce brings over 8 years of experience in business development and strategic partnerships across Ghana's real estate and construction sectors.",
+    description: "Joyce brings over 4 years of experience in business development and strategic partnerships across Ghana's real estate and construction sectors.",
     projects: 30,
     awards: 4,
-    email: "joyce.inkoom@agedge.com",
-    phone: "+233 24 XXXX",
+    email: "inkoomja@gmail.com",
+    phone: "+233 548 869 192",
     location: "Accra, Ghana"
   }
 ]
@@ -285,13 +294,13 @@ export default function TeamSection() {
                         <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-green-600 rounded-2xl blur-md opacity-0 group-hover:opacity-50 transition-opacity duration-500" />
                         <div className="relative w-28 h-28 lg:w-32 lg:h-32 mx-auto rounded-2xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
                           <img
-                            src={member.image}
-                            alt={`${member.name} - ${member.role}`}
-                            className="w-full h-full object-cover"
-                            loading="lazy"
-                            width="128"
-                            height="128"
-                          />
+  src={member.image}
+  alt={`${member.name} - ${member.role}`}
+  className="w-full h-full object-cover object-top"  // Shows the top part
+  loading="lazy"
+  width="128"
+  height="128"
+/>
                         </div>
 
                         <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2">
@@ -395,14 +404,16 @@ export default function TeamSection() {
                 <div>
                   <div className="relative mb-6">
                     <div className="w-full aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
-                      <img
-                        src={selectedMember.image}
-                        alt={selectedMember.name}
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                        width="400"
-                        height="400"
-                      />
+                      <div className="w-full aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
+  <img
+    src={selectedMember.image}
+    alt={selectedMember.name}
+    className="w-full h-full object-cover object-top"
+    loading="lazy"
+    width="400"
+    height="400"
+  />
+</div>
                     </div>
                   </div>
 
