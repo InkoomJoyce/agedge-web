@@ -3,10 +3,10 @@ import { Users, Award, GraduationCap, MapPin, Mail, Phone, ChevronRight, Star, C
 
 // Import local images
 import victorImage from '../../assets/victor.jpg'
-import selormImage from '../../assets/victor.jpg'
-import paulImage from '../../assets/victor.jpg'
+import selormImage from '../../assets/selorm.jpg'
+import paulImage from '../../assets/paul.jpg'
 import michaelImage from '../../assets/dankyi.jpg'
-import wilberforceImage from '../../assets/victor.jpg'
+import wilberforceImage from '../../assets/brown.jpg'
 import joyceImage from '../../assets/joyce.jpg'
 
 // Memoized team data - prevents recreation on each render
