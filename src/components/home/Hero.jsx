@@ -5,54 +5,9 @@ export default function Hero() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
-  // Order:
-  //   1) Project images first — 2 per project — no two from same project adjacent
-  //   2) Then the online Pexels images
+  // Online images FIRST (fast load), project images LAST
   const images = [
-    // ─── Project images (interleaved) ───
-    {
-      url: "/images/projects/richmond-complex/1.jpeg",
-      alt: "Richmond Complex commercial project in Accra by AGEdge Global",
-    },
-    {
-      url: "/images/projects/abenas-home/1.jpeg",
-      alt: "Abena's Home multi-family residence in Accra",
-    },
-    {
-      url: "/images/projects/the-francis/1.jpeg",
-      alt: "The Francis luxury apartments in Cantonments, Accra",
-    },
-    {
-      url: "/images/projects/kantu-residence/1.jpeg",
-      alt: "Kantu Residence luxury villa in East Legon, Accra",
-    },
-    {
-      url: "/images/projects/nanas-residence/1.jpeg",
-      alt: "Nana's Residence executive home in Spintex, Accra",
-    },
-    
-    {
-      url: "/images/projects/kantu-residence/2.jpeg",
-      alt: "Kantu Residence additional view, East Legon, Accra",
-    },
-    {
-      url: "/images/projects/nanas-residence/2.jpeg",
-      alt: "Nana's Residence additional view, Spintex, Accra",
-    },
-    {
-      url: "/images/projects/richmond-complex/2.jpeg",
-      alt: "Richmond Complex additional view, Accra",
-    },
-    {
-      url: "/images/projects/abenas-home/2.jpeg",
-      alt: "Abena's Home additional view, Accra",
-    },
-    {
-      url: "/images/projects/the-francis/2.jpeg",
-      alt: "The Francis additional view, Cantonments, Accra",
-    },
-
-    // ─── Original online images ───
+    // ─── Online images first ───
     {
       url: "https://images.pexels.com/photos/10647324/pexels-photo-10647324.jpeg",
       alt: "Modern architecture office building in Accra Ghana by AGEdge Global",
@@ -85,19 +40,91 @@ export default function Hero() {
       url: "https://images.pexels.com/photos/36871609/pexels-photo-36871609.jpeg",
       alt: "Architectural building facade Accra commercial project",
     },
+
+    // ─── Project images second (interleaved, 2 per project) ───
+    {
+      url: "/images/projects/richmond-complex/1.jpeg",
+      alt: "Richmond Complex commercial project in Accra by AGEdge Global",
+    },
+    {
+      url: "/images/projects/abenas-home/1.jpeg",
+      alt: "Abena's Home multi-family residence in Accra",
+    },
+    {
+      url: "/images/projects/the-francis/1.jpeg",
+      alt: "The Francis luxury apartments in Cantonments, Accra",
+    },
+    {
+      url: "/images/projects/kantu-residence/1.jpeg",
+      alt: "Kantu Residence luxury villa in East Legon, Accra",
+    },
+    {
+      url: "/images/projects/nanas-residence/1.jpeg",
+      alt: "Nana's Residence executive home in Spintex, Accra",
+    },
+    {
+      url: "/images/projects/kantu-residence/2.jpeg",
+      alt: "Kantu Residence additional view, East Legon, Accra",
+    },
+    {
+      url: "/images/projects/nanas-residence/2.jpeg",
+      alt: "Nana's Residence additional view, Spintex, Accra",
+    },
+    {
+      url: "/images/projects/richmond-complex/2.jpeg",
+      alt: "Richmond Complex additional view, Accra",
+    },
+    {
+      url: "/images/projects/abenas-home/2.jpeg",
+      alt: "Abena's Home additional view, Accra",
+    },
+    {
+      url: "/images/projects/the-francis/2.jpeg",
+      alt: "The Francis additional view, Cantonments, Accra",
+    },
   ];
 
-  // Preload first image for LCP
+  // Preload the very first image for fast LCP
   useEffect(() => {
     const img = new Image();
+    img.fetchPriority = "high";
     img.src = images[0].url;
   }, []);
 
-  // Auto-advance every 4 seconds
+  // Background preload — silently download the project images
+  // while the user watches the online slides
+  useEffect(() => {
+    // Wait until the page has fully loaded (so we don't fight the initial render)
+    const startPreload = () => {
+      // Preload project images one at a time, slightly staggered,
+      // so we don't saturate the connection
+      const projectImages = images.filter((img) =>
+        img.url.startsWith("/images/")
+      );
+
+      projectImages.forEach((img, idx) => {
+        // Stagger by 800ms each so they trickle in gently
+        setTimeout(() => {
+          const preloader = new Image();
+          preloader.decoding = "async";
+          preloader.src = img.url;
+        }, idx * 800);
+      });
+    };
+
+    if (document.readyState === "complete") {
+      startPreload();
+    } else {
+      window.addEventListener("load", startPreload, { once: true });
+      return () => window.removeEventListener("load", startPreload);
+    }
+  }, []);
+
+  // Auto-advance every 5 seconds (a touch slower to give images time)
   useEffect(() => {
     const timer = setInterval(() => {
       handleSlideChange((prev) => (prev + 1) % images.length);
-    }, 4000);
+    }, 5000);
     return () => clearInterval(timer);
   }, [images.length]);
 
@@ -130,37 +157,35 @@ export default function Hero() {
       className="relative bg-black text-white pt-20 h-screen overflow-hidden"
       aria-label="AGEdge Global Hero"
     >
-      {/* Background Images - Zoom Out Transition */}
-      {/* Background Images - Only render current + next + prev */}
-<div className="absolute inset-0">
-  {images.map((img, index) => {
-    const isActive = index === currentSlide;
-    const isNext = index === (currentSlide + 1) % images.length;
-    const isPrev =
-      index === (currentSlide - 1 + images.length) % images.length;
+      {/* Background images — only render prev, current, next */}
+      <div className="absolute inset-0">
+        {images.map((img, index) => {
+          const isActive = index === currentSlide;
+          const isNext = index === (currentSlide + 1) % images.length;
+          const isPrev =
+            index === (currentSlide - 1 + images.length) % images.length;
 
-    // Only render 3 slides at a time (prev, current, next)
-    if (!isActive && !isNext && !isPrev) return null;
+          if (!isActive && !isNext && !isPrev) return null;
 
-    return (
-      <div
-        key={index}
-        className={`absolute inset-0 transition-all duration-1000 ease-in-out ${
-          isActive ? "opacity-100 scale-100" : "opacity-0 scale-110"
-        }`}
-      >
-        <img
-          src={img.url}
-          alt={img.alt}
-          loading={index === 0 ? "eager" : "lazy"}
-          decoding="async"
-          fetchpriority={index === 0 ? "high" : "low"}
-          className="w-full h-full object-cover"
-        />
+          return (
+            <div
+              key={index}
+              className={`absolute inset-0 transition-all duration-1000 ease-in-out ${
+                isActive ? "opacity-100 scale-100" : "opacity-0 scale-110"
+              }`}
+            >
+              <img
+                src={img.url}
+                alt={img.alt}
+                loading={index === 0 ? "eager" : "lazy"}
+                decoding="async"
+                fetchpriority={index === 0 ? "high" : "low"}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          );
+        })}
       </div>
-    );
-  })}
-</div>
 
       {/* Gradient Overlay */}
       <div
