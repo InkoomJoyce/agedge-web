@@ -131,26 +131,36 @@ export default function Hero() {
       aria-label="AGEdge Global Hero"
     >
       {/* Background Images - Zoom Out Transition */}
-      <div className="absolute inset-0">
-        {images.map((img, index) => (
-          <div
-            key={index}
-            className={`absolute inset-0 transition-all duration-1000 ease-in-out ${
-              index === currentSlide
-                ? "opacity-100 scale-100"
-                : "opacity-0 scale-110"
-            }`}
-          >
-            <img
-              src={img.url}
-              alt={img.alt}
-              loading={index === 0 ? "eager" : "lazy"}
-              fetchpriority={index === 0 ? "high" : "low"}
-              className="w-full h-full object-cover"
-            />
-          </div>
-        ))}
+      {/* Background Images - Only render current + next + prev */}
+<div className="absolute inset-0">
+  {images.map((img, index) => {
+    const isActive = index === currentSlide;
+    const isNext = index === (currentSlide + 1) % images.length;
+    const isPrev =
+      index === (currentSlide - 1 + images.length) % images.length;
+
+    // Only render 3 slides at a time (prev, current, next)
+    if (!isActive && !isNext && !isPrev) return null;
+
+    return (
+      <div
+        key={index}
+        className={`absolute inset-0 transition-all duration-1000 ease-in-out ${
+          isActive ? "opacity-100 scale-100" : "opacity-0 scale-110"
+        }`}
+      >
+        <img
+          src={img.url}
+          alt={img.alt}
+          loading={index === 0 ? "eager" : "lazy"}
+          decoding="async"
+          fetchpriority={index === 0 ? "high" : "low"}
+          className="w-full h-full object-cover"
+        />
       </div>
+    );
+  })}
+</div>
 
       {/* Gradient Overlay */}
       <div
