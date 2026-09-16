@@ -1,110 +1,151 @@
-import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 export default function Hero() {
-  const [currentSlide, setCurrentSlide] = useState(0)
-  const [isTransitioning, setIsTransitioning] = useState(false)
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
-  // Added descriptive alt text for each image - critical for SEO
+  // Order:
+  //   1) Project images first — 2 per project — no two from same project adjacent
+  //   2) Then the online Pexels images
   const images = [
+    // ─── Project images (interleaved) ───
     {
-      url: 'https://images.pexels.com/photos/10647324/pexels-photo-10647324.jpeg',
-      alt: 'Modern architecture office building in Accra Ghana by AGEdge Global'
+      url: "/images/projects/richmond-complex/1.jpeg",
+      alt: "Richmond Complex commercial project in Accra by AGEdge Global",
     },
     {
-      url: 'https://images.pexels.com/photos/28681443/pexels-photo-28681443.jpeg',
-      alt: 'Luxury residential apartment complex construction Ghana'
-    },
-    // {
-    //   url: 'https://images.pexels.com/photos/28350363/pexels-photo-28350363.jpeg',
-    //   alt: 'Commercial skyscraper architecture project by AGEdge'
-    // },
-    {
-      url: 'https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg',
-      alt: 'Contemporary home interior design Ghana real estate'
+      url: "/images/projects/abenas-home/1.jpeg",
+      alt: "Abena's Home multi-family residence in Accra",
     },
     {
-      url: 'https://images.pexels.com/photos/36394726/pexels-photo-36394726.jpeg',
-      alt: 'Modern villa exterior with pool Accra residential project'
+      url: "/images/projects/the-francis/1.jpeg",
+      alt: "The Francis luxury apartments in Cantonments, Accra",
     },
     {
-      url: 'https://images.pexels.com/photos/26886878/pexels-photo-26886878.jpeg',
-      alt: 'Luxury living room construction and materials Ghana'
+      url: "/images/projects/kantu-residence/1.jpeg",
+      alt: "Kantu Residence luxury villa in East Legon, Accra",
     },
     {
-      url: 'https://images.pexels.com/photos/323775/pexels-photo-323775.jpeg',
-      alt: 'Real estate property exterior design by AGEdge Global'
+      url: "/images/projects/nanas-residence/1.jpeg",
+      alt: "Nana's Residence executive home in Spintex, Accra",
+    },
+    
+    {
+      url: "/images/projects/kantu-residence/2.jpeg",
+      alt: "Kantu Residence additional view, East Legon, Accra",
     },
     {
-      url: 'https://images.pexels.com/photos/30945258/pexels-photo-30945258.jpeg',
-      alt: 'Modern kitchen construction materials Ghana'
+      url: "/images/projects/nanas-residence/2.jpeg",
+      alt: "Nana's Residence additional view, Spintex, Accra",
     },
     {
-      url: 'https://images.pexels.com/photos/36871609/pexels-photo-36871609.jpeg',
-      alt: 'Architectural building facade Accra commercial project'
+      url: "/images/projects/richmond-complex/2.jpeg",
+      alt: "Richmond Complex additional view, Accra",
     },
-    // {
-    //   url: 'https://images.pexels.com/photos/29334668/pexels-photo-29334668.png',
-    //   alt: 'Luxury real estate property for sale Ghana AGEdge'
-    // },
-  ]
+    {
+      url: "/images/projects/abenas-home/2.jpeg",
+      alt: "Abena's Home additional view, Accra",
+    },
+    {
+      url: "/images/projects/the-francis/2.jpeg",
+      alt: "The Francis additional view, Cantonments, Accra",
+    },
+
+    // ─── Original online images ───
+    {
+      url: "https://images.pexels.com/photos/10647324/pexels-photo-10647324.jpeg",
+      alt: "Modern architecture office building in Accra Ghana by AGEdge Global",
+    },
+    {
+      url: "https://images.pexels.com/photos/28681443/pexels-photo-28681443.jpeg",
+      alt: "Luxury residential apartment complex construction Ghana",
+    },
+    {
+      url: "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg",
+      alt: "Contemporary home interior design Ghana real estate",
+    },
+    {
+      url: "https://images.pexels.com/photos/36394726/pexels-photo-36394726.jpeg",
+      alt: "Modern villa exterior with pool Accra residential project",
+    },
+    {
+      url: "https://images.pexels.com/photos/26886878/pexels-photo-26886878.jpeg",
+      alt: "Luxury living room construction and materials Ghana",
+    },
+    {
+      url: "https://images.pexels.com/photos/323775/pexels-photo-323775.jpeg",
+      alt: "Real estate property exterior design by AGEdge Global",
+    },
+    {
+      url: "https://images.pexels.com/photos/30945258/pexels-photo-30945258.jpeg",
+      alt: "Modern kitchen construction materials Ghana",
+    },
+    {
+      url: "https://images.pexels.com/photos/36871609/pexels-photo-36871609.jpeg",
+      alt: "Architectural building facade Accra commercial project",
+    },
+  ];
 
   // Preload first image for LCP
   useEffect(() => {
-    const img = new Image()
-    img.src = images[0].url
-  }, [])
+    const img = new Image();
+    img.src = images[0].url;
+  }, []);
 
   // Auto-advance every 4 seconds
   useEffect(() => {
     const timer = setInterval(() => {
-      handleSlideChange((prev) => (prev + 1) % images.length)
-    }, 4000)
-    return () => clearInterval(timer)
-  }, [images.length])
+      handleSlideChange((prev) => (prev + 1) % images.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [images.length]);
 
   const handleSlideChange = (newSlide) => {
-    if (isTransitioning) return
-    setIsTransitioning(true)
-    setCurrentSlide(newSlide)
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setCurrentSlide(newSlide);
     setTimeout(() => {
-      setIsTransitioning(false)
-    }, 1000) // Match the transition duration
-  }
+      setIsTransitioning(false);
+    }, 1000);
+  };
 
   const nextSlide = () => {
-    if (isTransitioning) return
-    handleSlideChange((prev) => (prev + 1) % images.length)
-  }
+    if (isTransitioning) return;
+    handleSlideChange((prev) => (prev + 1) % images.length);
+  };
 
   const prevSlide = () => {
-    if (isTransitioning) return
-    handleSlideChange((prev) => (prev - 1 + images.length) % images.length)
-  }
+    if (isTransitioning) return;
+    handleSlideChange((prev) => (prev - 1 + images.length) % images.length);
+  };
 
   const goToSlide = (index) => {
-    if (isTransitioning || index === currentSlide) return
-    handleSlideChange(index)
-  }
+    if (isTransitioning || index === currentSlide) return;
+    handleSlideChange(index);
+  };
 
   return (
-    <section className="relative bg-black text-white pt-20 h-screen overflow-hidden" aria-label="AGEdge Global Hero">
+    <section
+      className="relative bg-black text-white pt-20 h-screen overflow-hidden"
+      aria-label="AGEdge Global Hero"
+    >
       {/* Background Images - Zoom Out Transition */}
       <div className="absolute inset-0">
         {images.map((img, index) => (
           <div
             key={index}
             className={`absolute inset-0 transition-all duration-1000 ease-in-out ${
-              index === currentSlide 
-                ? 'opacity-100 scale-100' 
-                : 'opacity-0 scale-110'
+              index === currentSlide
+                ? "opacity-100 scale-100"
+                : "opacity-0 scale-110"
             }`}
           >
             <img
               src={img.url}
               alt={img.alt}
-              loading={index === 0 ? 'eager' : 'lazy'}
-              fetchpriority={index === 0 ? 'high' : 'low'}
+              loading={index === 0 ? "eager" : "lazy"}
+              fetchpriority={index === 0 ? "high" : "low"}
               className="w-full h-full object-cover"
             />
           </div>
@@ -112,16 +153,20 @@ export default function Hero() {
       </div>
 
       {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/30" aria-hidden="true" />
+      <div
+        className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/30"
+        aria-hidden="true"
+      />
 
-      {/* Content - H1 is now keyword optimized */}
+      {/* Content */}
       <div className="relative max-w-6xl mx-auto px-6 h-full flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6 max-w-3xl mx-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
-            Architecture, Construction & Real Estate 
+            Architecture, Construction & Real Estate
           </h1>
           <p className="text-xl md:text-xl text-gray-100 mb-10 max-w-2xl mx-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
-            AGEdge Global delivers end-to-end building solutions across Ghana. From architectural design to construction and property development.
+            AGEdge Global delivers end-to-end building solutions across Ghana.
+            From architectural design to construction and property development.
           </p>
           <div className="flex gap-4 justify-center">
             <Link
@@ -149,8 +194,19 @@ export default function Hero() {
         aria-label="Previous project image"
         disabled={isTransitioning}
       >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+        <svg
+          className="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M15 19l-7-7 7-7"
+          />
         </svg>
       </button>
       <button
@@ -159,26 +215,42 @@ export default function Hero() {
         aria-label="Next project image"
         disabled={isTransitioning}
       >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+        <svg
+          className="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9 5l7 7-7 7"
+          />
         </svg>
       </button>
 
       {/* Dots Indicator */}
-      <nav aria-label="Hero image gallery navigation" className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+      <nav
+        aria-label="Hero image gallery navigation"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-wrap justify-center gap-2 z-10 max-w-[90vw]"
+      >
         {images.map((_, index) => (
           <button
             key={index}
             onClick={() => goToSlide(index)}
             className={`h-2 rounded-full transition-all duration-300 ${
-              index === currentSlide ? 'bg-white w-8' : 'bg-white/50 w-2 hover:bg-white/80'
+              index === currentSlide
+                ? "bg-white w-8"
+                : "bg-white/50 w-2 hover:bg-white/80"
             }`}
             aria-label={`Go to project image ${index + 1} of ${images.length}`}
-            aria-current={index === currentSlide ? 'true' : 'false'}
+            aria-current={index === currentSlide ? "true" : "false"}
             disabled={isTransitioning}
           />
         ))}
       </nav>
     </section>
-  )
+  );
 }

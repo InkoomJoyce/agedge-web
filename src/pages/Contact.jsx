@@ -1,44 +1,50 @@
-import { useState, useEffect, useRef } from 'react'
-import { 
-  Phone, Mail, MapPin, Clock, Calendar, 
-  User, MessageCircle, ArrowRight, CheckCircle,
-  Building2
-} from 'lucide-react'
+import { useState, useEffect, useRef } from "react";
+import {
+  Phone,
+  Mail,
+  MapPin,
+  Clock,
+  Calendar,
+  User,
+  MessageCircle,
+  CheckCircle,
+  Sparkles,
+  Send,
+  AlertCircle,
+} from "lucide-react";
 
 export default function Contact() {
-  const [activeForm, setActiveForm] = useState('contact')
+  const [activeForm, setActiveForm] = useState("contact");
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    message: '',
-    preferredDate: '',
-    projectType: '',
-    budget: '',
-    address: ''
-  })
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitStatus, setSubmitStatus] = useState(null)
-  const [errorDetails, setErrorDetails] = useState('')
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+    preferredDate: "",
+    projectType: "",
+    budget: "",
+    address: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
+  const [errorDetails, setErrorDetails] = useState("");
 
-  const [heroVisible, setHeroVisible] = useState(false)
-  const [contentVisible, setContentVisible] = useState(false)
-
-  const heroRef = useRef(null)
-  const contentRef = useRef(null)
+  const [contentVisible, setContentVisible] = useState(false);
+  const contentRef = useRef(null);
 
   const FORMSPREE_IDS = {
-    contact: 'xpqnbrvy',
-    consultation: 'mojbrwgl',
-    quote: 'xqejnbra'
-  }
+    contact: "xpqnbrvy",
+    consultation: "mojbrwgl",
+    quote: "xqejnbra",
+  };
 
   const contactInfo = {
-    phone: ["+233 54 886 9192", "+233 24 XXX XXXX"],
-    email: ["info@agedgeglobal.com", "projects@agedgeglobal.com"],
+    phone: ["0256073041"],
+    email: ["info@agedgeglobal.com"],
     address: "Number 1 Beige Street, Azumah, New Weija, Accra",
-    gps: "GS-0065-2998"
-  }
+    gps: "GS-0065-2998",
+    hours: "Monday – Friday, 8:00 AM – 5:00 PM",
+  };
 
   const projectTypes = [
     "Residential Villa",
@@ -46,8 +52,8 @@ export default function Contact() {
     "Educational Facility",
     "Multi-Family Housing",
     "Renovation Project",
-    "Material Supply"
-  ]
+    "Material Supply",
+  ];
 
   const budgetRanges = [
     "Under $50,000",
@@ -55,615 +61,638 @@ export default function Contact() {
     "$100,000 - $250,000",
     "$250,000 - $500,000",
     "$500,000 - $1,000,000",
-    "Over $1,000,000"
-  ]
+    "Over $1,000,000",
+  ];
 
-  // SEO Schema
   const contactSchema = {
     "@context": "https://schema.org",
     "@type": "ContactPage",
-    "name": "Contact AGEdge Global - Architecture and Construction Experts",
-    "description": "Contact AGEdge Global for architecture, construction, real estate, and building services in Ghana. Get a free consultation for your project.",
-    "url": "https://agedgeglobal.com/contact",
-    "mainEntity": {
+    name: "Contact AGEdge Global - Architecture and Construction Experts",
+    description:
+      "Contact AGEdge Global for architecture, construction, real estate, and building services in Ghana. Get a free consultation for your project.",
+    url: "https://agedgeglobal.com/contact",
+    mainEntity: {
       "@type": "Organization",
-      "name": "AGEdge Global",
-      "telephone": "+233548869192",
-      "email": "info@agedgeglobal.com",
-      "address": {
+      name: "AGEdge Global",
+      telephone: "+233256073041",
+      email: "info@agedgeglobal.com",
+      address: {
         "@type": "PostalAddress",
-        "streetAddress": "Number 1 Beige Street, Azumah, New Weija",
-        "addressLocality": "Accra",
-        "addressCountry": "GH"
-      }
-    }
-  }
+        streetAddress: "Number 1 Beige Street, Azumah, New Weija",
+        addressLocality: "Accra",
+        addressCountry: "GH",
+      },
+      openingHoursSpecification: {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        opens: "08:00",
+        closes: "17:00",
+      },
+    },
+  };
 
   useEffect(() => {
-    const options = { threshold: 0.1 }
+    const options = { threshold: 0.1 };
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setContentVisible(true);
+        observer.disconnect();
+      }
+    }, options);
 
-    const createObserver = (setVisible, ref) => {
-      const observer = new IntersectionObserver(([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true)
-          observer.disconnect()
-        }
-      }, options)
-      if (ref.current) observer.observe(ref.current)
-      return observer
-    }
-
-    const observers = [
-      createObserver(setHeroVisible, heroRef),
-      createObserver(setContentVisible, contentRef)
-    ]
-
-    return () => observers.forEach(obs => obs && obs.disconnect())
-  }, [])
+    if (contentRef.current) observer.observe(contentRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   const handleInputChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
-    })
-  }
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    setSubmitStatus(null)
-    setErrorDetails('')
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+    setErrorDetails("");
 
-    const formElement = e.target
-    const formDataObj = new FormData(formElement)
-    const formType = formDataObj.get('form_type')
-    
-    const formspreeId = FORMSPREE_IDS[formType] || FORMSPREE_IDS.contact
+    const formElement = e.target;
+    const formDataObj = new FormData(formElement);
+    const formType = formDataObj.get("form_type");
+
+    const formspreeId = FORMSPREE_IDS[formType] || FORMSPREE_IDS.contact;
 
     try {
       const res = await fetch(`https://formspree.io/f/${formspreeId}`, {
-        method: 'POST',
+        method: "POST",
         body: formDataObj,
         headers: {
-          'Accept': 'application/json'
-        }
-      })
+          Accept: "application/json",
+        },
+      });
 
       if (res.ok) {
-        setSubmitStatus('success')
+        setSubmitStatus("success");
         setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          message: '',
-          preferredDate: '',
-          projectType: '',
-          budget: '',
-          address: ''
-        })
-        setTimeout(() => setSubmitStatus(null), 5000)
+          name: "",
+          email: "",
+          phone: "",
+          message: "",
+          preferredDate: "",
+          projectType: "",
+          budget: "",
+          address: "",
+        });
+        setTimeout(() => setSubmitStatus(null), 5000);
       } else {
-        const errorData = await res.json()
-        setSubmitStatus('error')
-        setErrorDetails(errorData.error || `Server responded with ${res.status}`)
-        setTimeout(() => setSubmitStatus(null), 5000)
+        const data = await res.json().catch(() => ({}));
+        setSubmitStatus("error");
+        setErrorDetails(
+          data?.errors?.map((err) => err.message).join(", ") ||
+            "Something went wrong. Please try again."
+        );
+        setTimeout(() => setSubmitStatus(null), 6000);
       }
-    } catch (error) {
-      setSubmitStatus('error')
-      setErrorDetails(error.message || 'Network error. Please check your connection.')
-      setTimeout(() => setSubmitStatus(null), 5000)
+    } catch (err) {
+      setSubmitStatus("error");
+      setErrorDetails(
+        "Network error. Please check your connection and try again."
+      );
+      setTimeout(() => setSubmitStatus(null), 6000);
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
-
-  const contactCards = [
-    {
-      icon: Phone,
-      title: "Call Us",
-      items: contactInfo.phone,
-      action: (item) => `tel:${item.replace(/\s/g, '')}`,
-      bgColor: "bg-green-50",
-      textColor: "text-green-600",
-      hoverBg: "group-hover:bg-green-500",
-      ariaLabel: "Call AGEdge Global"
-    },
-    {
-      icon: Mail,
-      title: "Email Us",
-      items: contactInfo.email,
-      action: (item) => `mailto:${item}`,
-      bgColor: "bg-blue-50",
-      textColor: "text-blue-600",
-      hoverBg: "group-hover:bg-blue-500",
-      ariaLabel: "Email AGEdge Global"
-    },
-    {
-      icon: MapPin,
-      title: "Visit Us",
-      items: [contactInfo.address],
-      action: (item) => `https://maps.google.com/?q=${encodeURIComponent(item)}`,
-      bgColor: "bg-purple-50",
-      textColor: "text-purple-600",
-      hoverBg: "group-hover:bg-purple-500",
-      extra: contactInfo.gps,
-      ariaLabel: "Visit AGEdge Global office"
-    }
-  ]
+  };
 
   return (
-    <>
-      {/* SEO Schema */}
+    <div className="relative min-h-screen bg-gray-50 overflow-hidden">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(contactSchema) }}
       />
 
-      <div className="relative min-h-screen bg-gray-50 overflow-hidden pb-12 md:pb-16">
-        {/* Green Background Highlights - Optimized for mobile */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-          <div className="absolute -top-32 -right-32 w-64 sm:w-96 h-64 sm:h-96 bg-green-200/30 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute top-1/2 -left-32 w-56 sm:w-80 h-56 sm:h-80 bg-green-300/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
-          <div className="absolute -bottom-32 right-1/3 w-56 sm:w-72 h-56 sm:h-72 bg-green-200/25 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '4s' }} />
-          <div className="absolute top-2/3 right-1/4 w-48 sm:w-64 h-48 sm:h-64 bg-green-400/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+      {/* Green Background Highlights */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+        <div className="absolute -top-32 -right-32 w-96 h-96 bg-green-200/30 rounded-full blur-3xl animate-pulse" />
+        <div
+          className="absolute top-1/2 -left-32 w-80 h-80 bg-green-300/20 rounded-full blur-3xl animate-pulse"
+          style={{ animationDelay: "2s" }}
+        />
+        <div
+          className="absolute -bottom-32 right-1/3 w-72 h-72 bg-green-200/25 rounded-full blur-3xl animate-pulse"
+          style={{ animationDelay: "4s" }}
+        />
+        <div
+          className="absolute top-2/3 right-1/4 w-64 h-64 bg-green-400/15 rounded-full blur-3xl animate-pulse"
+          style={{ animationDelay: "1s" }}
+        />
+
+        <div
+          className="absolute inset-0 opacity-[0.02]"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='grid' width='60' height='60' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 60 0 L 0 0 0 60' fill='none' stroke='%2322c55e' stroke-width='1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23grid)'/%3E%3C/svg%3E")`,
+          }}
+        />
+      </div>
+
+      {/* ═══════════ HERO SECTION — FULL SCREEN ═══════════ */}
+      <section className="relative min-h-screen -mt-24 md:-mt-28 flex items-center overflow-hidden">
+        <div className="absolute inset-0">
+          <img
+            src="/images/projects/richmond-complex/1.jpeg"
+            alt="Contact AGEdge Global"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black/30" />
+          <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+          <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/40 to-transparent" />
         </div>
 
-        {/* Hero Section - Mobile optimized */}
-        <header ref={heroRef} className="relative h-[35vh] min-h-[280px] sm:h-[40vh] sm:min-h-[300px] flex items-center justify-center bg-gray-900 pt-16 md:pt-20 overflow-hidden">
-          <div className="absolute inset-0">
-            <img
-              src="https://images.pexels.com/photos/28973399/pexels-photo-28973399.jpeg"
-              alt="Contact AGEdge Global - Architecture and Construction Experts in Ghana"
-              className="w-full h-full object-cover opacity-25"
-              loading="eager"
-              fetchPriority="high"
-              width="1600"
-              height="900"
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-green-500/10 via-transparent to-transparent" />
-          </div>
-          <div className={`relative z-10 text-center text-white px-4 transition-all duration-1000 ${
-            heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-          }`}>
-            <div className="inline-flex items-center gap-2 px-3 py-1 sm:px-4 sm:py-1.5 bg-green-500/20 border border-green-400/30 rounded-full text-green-300 text-xs sm:text-sm font-medium mb-4 sm:mb-6">
-              <span className="relative flex h-1.5 w-1.5 sm:h-2 sm:w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-1.5 w-1.5 sm:h-2 sm:w-2 bg-green-500"></span>
-              </span>
-              <span className="hidden xs:inline">We're Here to Help</span>
-              <span className="xs:hidden">Contact Us</span>
-            </div>
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-2 sm:mb-4">
-              Get in{' '}
-              <span className="bg-gradient-to-r from-green-400 to-green-300 bg-clip-text text-transparent">
-                Touch
-              </span>
-            </h1>
-            <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto font-light px-2">
-              Let's discuss your vision and bring it to life
-            </p>
-            <div className="flex justify-center gap-2 sm:gap-3 mt-4 sm:mt-8">
-              <div className="w-10 sm:w-16 h-px bg-gradient-to-r from-transparent via-green-400 to-transparent"></div>
-              <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-green-400"></div>
-              <div className="w-10 sm:w-16 h-px bg-gradient-to-l from-transparent via-green-400 to-transparent"></div>
-            </div>
-          </div>
-        </header>
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute -top-20 -right-20 w-96 h-96 bg-green-400/15 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 -left-20 w-80 h-80 bg-emerald-400/10 rounded-full blur-3xl" />
+        </div>
 
-        {/* Main Content - Mobile Optimized */}
-        <main ref={contentRef} className="relative z-10 max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 -mt-6 sm:-mt-8">
-          <div className={`grid lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 transition-all duration-1000 ${
-            contentVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-          }`}>
-            {/* Left Column - Contact Cards (Vertical - Mobile First) */}
-            <div className="lg:col-span-4 space-y-3 sm:space-y-4">
-              {contactCards.map((card, idx) => {
-                const Icon = card.icon
-                return (
-                  <div
-                    key={idx}
-                    className="group bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-gray-200/50 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 relative overflow-hidden"
-                    style={{ animationDelay: `${idx * 100}ms` }}
+        <div className="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-32 pb-40">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/15 backdrop-blur-md border border-white/25 rounded-full shadow-sm mb-6">
+            <MessageCircle className="w-3.5 h-3.5 text-green-300" />
+            <span className="text-xs font-semibold tracking-wider uppercase text-white">
+              Get in Touch
+            </span>
+          </div>
+
+          <h1 className="text-4xl sm:text-5xl lg:text-7xl font-light tracking-tight text-white leading-[1.05] mb-4 drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)]">
+            Let's Build
+            <br />
+            <span className="relative inline-block mt-2">
+              <span className="font-bold bg-gradient-to-r from-green-300 via-green-200 to-emerald-300 bg-clip-text text-transparent">
+                Something Great
+              </span>
+              <svg
+                className="absolute -bottom-3 left-0 w-full"
+                viewBox="0 0 300 12"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                preserveAspectRatio="none"
+              >
+                <path
+                  d="M2 9C50 3 150 1 298 6"
+                  stroke="url(#contactUnderline)"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                />
+                <defs>
+                  <linearGradient
+                    id="contactUnderline"
+                    x1="0"
+                    y1="0"
+                    x2="300"
+                    y2="0"
+                    gradientUnits="userSpaceOnUse"
                   >
-                    <div className="absolute inset-0 bg-gradient-to-br from-gray-50/0 via-gray-50/0 to-gray-100/0 group-hover:bg-opacity-30 transition-all duration-500" />
-                    <div className="relative flex items-start gap-3 sm:gap-4">
-                      <div className={`p-2 sm:p-3 rounded-xl ${card.bgColor} ${card.hoverBg} transition-all duration-500 flex-shrink-0`}>
-                        <Icon className={`w-5 h-5 sm:w-6 sm:h-6 ${card.textColor} group-hover:text-white transition-colors duration-500`} />
+                    <stop stopColor="#86efac" stopOpacity="0" />
+                    <stop offset="0.5" stopColor="#4ade80" />
+                    <stop offset="1" stopColor="#86efac" stopOpacity="0" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </span>
+          </h1>
+
+          <p className="text-base sm:text-lg text-gray-100 font-light leading-relaxed mt-8 max-w-2xl mx-auto drop-shadow-[0_1px_6px_rgba(0,0,0,0.7)]">
+            Whether you're starting a new build, renovating a space, or just
+            exploring ideas — our team is ready to help bring your vision to
+            life.
+          </p>
+
+          <div className="flex flex-wrap justify-center gap-3 mt-8">
+            <a
+              href="tel:0256073041"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-white/15 backdrop-blur-md border border-white/25 rounded-full text-xs text-white shadow-sm hover:bg-white/25 transition-colors"
+            >
+              <Phone className="w-3.5 h-3.5 text-green-300" />
+              <span className="font-medium">0256073041</span>
+            </a>
+            <a
+              href="mailto:info@agedgeglobal.com"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-white/15 backdrop-blur-md border border-white/25 rounded-full text-xs text-white shadow-sm hover:bg-white/25 transition-colors"
+            >
+              <Mail className="w-3.5 h-3.5 text-green-300" />
+              <span className="font-medium">info@agedgeglobal.com</span>
+            </a>
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/15 backdrop-blur-md border border-white/25 rounded-full text-xs text-white shadow-sm">
+              <Clock className="w-3.5 h-3.5 text-green-300" />
+              <span className="font-medium">Mon – Fri, 8AM – 5PM</span>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-center gap-3 mt-12">
+            <div className="h-px w-16 bg-gradient-to-r from-transparent to-green-300/70" />
+            <div className="w-2 h-2 rotate-45 bg-green-300" />
+            <div className="w-1.5 h-1.5 rotate-45 bg-green-200/70" />
+            <div className="w-2 h-2 rotate-45 bg-green-300" />
+            <div className="h-px w-16 bg-gradient-to-l from-transparent to-green-300/70" />
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════ EVERYTHING ELSE ═══════════ */}
+      <div
+        ref={contentRef}
+        className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+      >
+        {/* Info cards — overlapping hero bottom */}
+        <div className="relative z-20 -mt-20 md:-mt-24 mb-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+            {[
+              {
+                icon: Phone,
+                label: "Call Us",
+                value: "0256073041",
+                href: "tel:0256073041",
+                theme: {
+                  card: "from-emerald-50 via-white to-emerald-100/60 border-emerald-100",
+                  bubble: "from-emerald-500 to-green-600 shadow-emerald-500/30",
+                  text: "from-emerald-900 via-emerald-700 to-emerald-500",
+                  bar: "from-emerald-400 via-green-500 to-emerald-400",
+                  label: "group-hover:text-emerald-700",
+                  blob: "from-emerald-400/20 to-green-400/10",
+                },
+              },
+              {
+                icon: Mail,
+                label: "Email Us",
+                value: "info@agedgeglobal.com",
+                href: "mailto:info@agedgeglobal.com",
+                theme: {
+                  card: "from-blue-50 via-white to-blue-100/60 border-blue-100",
+                  bubble: "from-blue-500 to-indigo-600 shadow-blue-500/30",
+                  text: "from-blue-900 via-blue-700 to-indigo-500",
+                  bar: "from-blue-400 via-indigo-500 to-blue-400",
+                  label: "group-hover:text-blue-700",
+                  blob: "from-blue-400/20 to-indigo-400/10",
+                },
+              },
+              {
+                icon: MapPin,
+                label: "Visit Us",
+                value: "New Weija, Accra",
+                subvalue: "GS-0065-2998",
+                href: null,
+                theme: {
+                  card: "from-amber-50 via-white to-amber-100/60 border-amber-100",
+                  bubble: "from-amber-500 to-orange-600 shadow-amber-500/30",
+                  text: "from-amber-900 via-amber-700 to-orange-500",
+                  bar: "from-amber-400 via-orange-500 to-amber-400",
+                  label: "group-hover:text-amber-700",
+                  blob: "from-amber-400/20 to-orange-400/10",
+                },
+              },
+              {
+                icon: Clock,
+                label: "Working Hours",
+                value: "Mon – Fri",
+                subvalue: "8:00 AM – 5:00 PM",
+                href: null,
+                theme: {
+                  card: "from-purple-50 via-white to-purple-100/60 border-purple-100",
+                  bubble: "from-purple-500 to-fuchsia-600 shadow-purple-500/30",
+                  text: "from-purple-900 via-purple-700 to-fuchsia-500",
+                  bar: "from-purple-400 via-fuchsia-500 to-purple-400",
+                  label: "group-hover:text-purple-700",
+                  blob: "from-purple-400/20 to-fuchsia-400/10",
+                },
+              },
+            ].map((item, idx) => {
+              const Icon = item.icon;
+              const theme = item.theme;
+              const Card = item.href ? "a" : "div";
+              const cardProps = item.href
+                ? { href: item.href, className: "block" }
+                : {};
+
+              return (
+                <Card
+                  key={idx}
+                  {...cardProps}
+                  className={`group relative overflow-hidden rounded-2xl p-5 text-center shadow-xl shadow-black/10 hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 bg-gradient-to-br border ${theme.card}`}
+                >
+                  <div
+                    className={`absolute -top-8 -right-8 w-24 h-24 rounded-full bg-gradient-to-br ${theme.blob} blur-2xl group-hover:scale-125 transition-transform duration-500`}
+                  />
+                  <div
+                    className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r opacity-80 ${theme.bar}`}
+                  />
+                  <div className="relative flex justify-center mb-3">
+                    <div className="relative">
+                      <div
+                        className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${theme.bubble} blur-md opacity-40 group-hover:opacity-70 transition-opacity duration-300`}
+                      />
+                      <div
+                        className={`relative p-3 rounded-2xl bg-gradient-to-br ${theme.bubble} shadow-lg group-hover:scale-110 transition-transform duration-300`}
+                      >
+                        <Icon className="w-5 h-5 text-white" strokeWidth={2.2} />
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <h3 className="text-base sm:text-lg font-semibold text-gray-900">{card.title}</h3>
-                        {card.items.map((item, i) => (
-                          <a
-                            key={i}
-                            href={card.action(item)}
-                            target={card.title === "Visit Us" ? "_blank" : undefined}
-                            rel={card.title === "Visit Us" ? "noopener noreferrer" : undefined}
-                            className="block text-gray-600 hover:text-green-600 transition-colors text-xs sm:text-sm truncate"
-                            aria-label={`${card.ariaLabel} - ${item}`}
-                          >
-                            {item}
-                          </a>
-                        ))}
-                        {card.extra && (
-                          <p className="text-[10px] sm:text-xs text-gray-400 mt-1 font-mono">{card.extra}</p>
-                        )}
-                      </div>
-                      <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 text-gray-300 group-hover:text-green-500 group-hover:translate-x-1 transition-all flex-shrink-0 mt-1 sm:mt-2" />
                     </div>
                   </div>
-                )
-              })}
+                  <p
+                    className={`relative text-[10px] uppercase tracking-wider font-semibold text-gray-500 mb-1 transition-colors ${theme.label}`}
+                  >
+                    {item.label}
+                  </p>
+                  <p
+                    className={`relative text-sm font-bold bg-gradient-to-br ${theme.text} bg-clip-text text-transparent leading-tight break-words`}
+                  >
+                    {item.value}
+                  </p>
+                  {item.subvalue && (
+                    <p className="relative text-xs text-gray-500 mt-1">
+                      {item.subvalue}
+                    </p>
+                  )}
+                  <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-10 h-0.5 rounded-full bg-gradient-to-r from-transparent via-green-400/60 to-transparent group-hover:w-16 transition-all duration-500" />
+                </Card>
+              );
+            })}
+          </div>
+        </div>
 
-              {/* Hours Card */}
-              <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-gray-200/50 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                <div className="flex items-start gap-3 sm:gap-4">
-                  <div className="p-2 sm:p-3 rounded-xl bg-amber-50 flex-shrink-0">
-                    <Clock className="w-5 h-5 sm:w-6 sm:h-6 text-amber-600" />
+        {/* Section heading */}
+        <div
+          className={`text-center mb-10 transition-all duration-700 ${
+            contentVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          }`}
+        >
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-green-500/10 border border-green-500/20 rounded-full text-green-600 text-xs font-medium mb-4">
+            <Sparkles className="w-4 h-4" />
+            <span>Send a Message</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl font-light tracking-tight text-gray-900 mb-3">
+            How Can We{" "}
+            <span className="font-bold bg-gradient-to-r from-green-600 to-green-700 bg-clip-text text-transparent">
+              Help You?
+            </span>
+          </h2>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            Choose the form that fits your needs — a quick message, a
+            consultation booking, or a project quote request.
+          </p>
+        </div>
+
+        {/* Tabs */}
+        <div className="flex flex-wrap justify-center gap-2 mb-8">
+          {[
+            { id: "contact", label: "Send a Message" },
+            { id: "consultation", label: "Book Consultation" },
+            { id: "quote", label: "Request a Quote" },
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveForm(tab.id)}
+              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                activeForm === tab.id
+                  ? "bg-green-600 text-white shadow-lg shadow-green-500/25"
+                  : "bg-white text-gray-600 hover:bg-gray-100 border border-gray-200"
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        {/* ═══════════ CENTERED FORM ═══════════ */}
+        <div className="max-w-3xl mx-auto mb-16">
+          <div className="bg-white rounded-2xl shadow-xl border border-gray-200/60 p-6 md:p-10">
+            {/* SUCCESS */}
+            {submitStatus === "success" && (
+              <div className="mb-6 p-5 bg-green-50 border border-green-200 rounded-xl flex items-start gap-3">
+                <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                <div>
+                  <p className="font-semibold text-green-800">
+                    Message sent successfully!
+                  </p>
+                  <p className="text-sm text-green-700 mt-1">
+                    Thank you for reaching out — we'll get back to you within 24
+                    hours (Mon–Fri).
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {/* ERROR */}
+            {submitStatus === "error" && (
+              <div className="mb-6 p-5 bg-red-50 border border-red-200 rounded-xl flex items-start gap-3">
+                <AlertCircle className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
+                <div>
+                  <p className="font-semibold text-red-800">
+                    Something went wrong
+                  </p>
+                  <p className="text-sm text-red-700 mt-1">
+                    {errorDetails ||
+                      "Please try again or call us at 0256073041."}
+                  </p>
+                </div>
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <input type="hidden" name="form_type" value={activeForm} />
+
+              {/* Name + Phone */}
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Full Name *
+                  </label>
+                  <div className="relative">
+                    <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                    <input
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      required
+                      className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-green-400 focus:ring-2 focus:ring-green-400/20 transition-all"
+                      placeholder="John Doe"
+                    />
                   </div>
-                  <div>
-                    <h3 className="text-base sm:text-lg font-semibold text-gray-900">Working Hours</h3>
-                    <p className="text-xs sm:text-sm text-gray-600">Mon-Sat: 8:00 AM - 6:00 PM</p>
-                    <p className="text-xs sm:text-sm text-gray-600">Sunday: Closed</p>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Phone Number *
+                  </label>
+                  <div className="relative">
+                    <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      required
+                      className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-green-400 focus:ring-2 focus:ring-green-400/20 transition-all"
+                      placeholder="0256073041"
+                    />
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/* Right Column - Form (Mobile Optimized) */}
-            <div className="lg:col-span-8">
-              <div className="bg-white/90 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 border border-gray-200/50 shadow-lg">
-                {/* Form Tabs - Mobile Optimized */}
-                <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-4 sm:mb-6">
-                  {[
-                    { id: 'contact', label: '📧 Contact', mobileLabel: '📧 Contact Us' },
-                    { id: 'consultation', label: '📅 Consultation', mobileLabel: '📅 Book Consultation' },
-                    { id: 'quote', label: '💰 Quote', mobileLabel: '💰 Request Quote' }
-                  ].map((tab) => (
-                    <button
-                      key={tab.id}
-                      onClick={() => setActiveForm(tab.id)}
-                      className={`px-3 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 border-2 ${
-                        activeForm === tab.id
-                          ? 'bg-green-600 text-white border-green-600 shadow-lg shadow-green-500/25'
-                          : 'bg-white text-gray-600 hover:bg-gray-50 border-green-500 hover:border-green-600'
-                      }`}
-                      aria-label={`Switch to ${tab.label} form`}
-                    >
-                      <span className="hidden xs:inline">{tab.label}</span>
-                      <span className="xs:hidden">{tab.mobileLabel}</span>
-                    </button>
-                  ))}
+              {/* Email */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Email Address *
+                </label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-green-400 focus:ring-2 focus:ring-green-400/20 transition-all"
+                    placeholder="you@example.com"
+                  />
                 </div>
+              </div>
 
-                {/* Success/Error Messages - Mobile Optimized */}
-                {submitStatus === 'success' && (
-                  <div className="mb-4 sm:mb-6 p-3 sm:p-4 bg-green-50 border border-green-200 rounded-xl animate-fade-in">
-                    <div className="flex items-center gap-2 sm:gap-3">
-                      <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-green-500 flex-shrink-0" />
-                      <div>
-                        <p className="text-sm sm:text-base font-medium text-green-700">Message sent successfully!</p>
-                        <p className="text-xs sm:text-sm text-green-600">We'll contact you within 24 hours.</p>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {submitStatus === 'error' && (
-                  <div className="mb-4 sm:mb-6 p-3 sm:p-4 bg-red-50 border border-red-200 rounded-xl">
-                    <div className="flex items-center gap-2 sm:gap-3">
-                      <svg className="w-5 h-5 sm:w-6 sm:h-6 text-red-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                      <div>
-                        <p className="text-sm sm:text-base font-medium text-red-700">Submission failed</p>
-                        <p className="text-xs sm:text-sm text-red-600">{errorDetails || "Please try again."}</p>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* Contact Form - Mobile Optimized */}
-                {activeForm === 'contact' && (
-                  <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
-                    <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-green-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
-                        <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5 text-green-600" />
-                      </div>
-                      <h3 className="text-base sm:text-xl font-bold text-gray-900">Send us a Message</h3>
-                    </div>
-                    <input type="hidden" name="form_type" value="contact" />
-                    <input type="hidden" name="_subject" value="New Contact Form Submission - AGEdge Global" />
-                    <input type="hidden" name="_replyto" value={formData.email} />
-                    <input type="hidden" name="_gotcha" value="" />
-                    
-                    <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
-                      <div className="relative">
-                        <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                        <input
-                          type="text"
-                          name="name"
-                          value={formData.name}
-                          onChange={handleInputChange}
-                          placeholder="Your Name"
-                          required
-                          className="w-full pl-9 sm:pl-10 pr-3 sm:pr-4 py-2.5 sm:py-3 bg-white border border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:border-green-400 focus:ring-2 focus:ring-green-400/20 transition-all text-xs sm:text-sm"
-                        />
-                      </div>
-                      <div className="relative">
-                        <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                        <input
-                          type="email"
-                          name="email"
-                          value={formData.email}
-                          onChange={handleInputChange}
-                          placeholder="Email Address"
-                          required
-                          className="w-full pl-9 sm:pl-10 pr-3 sm:pr-4 py-2.5 sm:py-3 bg-white border border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:border-green-400 focus:ring-2 focus:ring-green-400/20 transition-all text-xs sm:text-sm"
-                        />
-                      </div>
-                    </div>
+              {/* Consultation fields */}
+              {activeForm === "consultation" && (
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Preferred Date
+                    </label>
                     <div className="relative">
-                      <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                      <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                       <input
-                        type="tel"
-                        name="phone"
-                        value={formData.phone}
+                        type="date"
+                        name="preferredDate"
+                        value={formData.preferredDate}
                         onChange={handleInputChange}
-                        placeholder="Phone Number"
-                        required
-                        className="w-full pl-9 sm:pl-10 pr-3 sm:pr-4 py-2.5 sm:py-3 bg-white border border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:border-green-400 focus:ring-2 focus:ring-green-400/20 transition-all text-xs sm:text-sm"
+                        className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-green-400 focus:ring-2 focus:ring-green-400/20 transition-all"
                       />
                     </div>
-                    <textarea
-                      name="message"
-                      value={formData.message}
-                      onChange={handleInputChange}
-                      placeholder="Your Message"
-                      rows={3}
-                      required
-                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-white border border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:border-green-400 focus:ring-2 focus:ring-green-400/20 transition-all resize-none text-xs sm:text-sm"
-                    />
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold py-3 sm:py-3.5 rounded-lg sm:rounded-xl hover:from-green-600 hover:to-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-lg shadow-green-500/25 hover:shadow-green-500/40 text-sm"
-                    >
-                      {isSubmitting ? (
-                        <span className="flex items-center justify-center gap-2">
-                          <svg className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                          </svg>
-                          Sending...
-                        </span>
-                      ) : 'Send Message'}
-                    </button>
-                  </form>
-                )}
-
-                {/* Consultation Form - Mobile Optimized */}
-                {activeForm === 'consultation' && (
-                  <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
-                    <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-green-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
-                        <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-green-600" />
-                      </div>
-                      <h3 className="text-base sm:text-xl font-bold text-gray-900">Book a Consultation</h3>
-                    </div>
-                    <input type="hidden" name="form_type" value="consultation" />
-                    <input type="hidden" name="_subject" value="New Consultation Request - AGEdge Global" />
-                    <input type="hidden" name="_replyto" value={formData.email} />
-                    <input type="hidden" name="_gotcha" value="" />
-                    
-                    <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
-                      <div className="relative">
-                        <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                        <input
-                          type="text"
-                          name="name"
-                          value={formData.name}
-                          onChange={handleInputChange}
-                          placeholder="Full Name"
-                          required
-                          className="w-full pl-9 sm:pl-10 pr-3 sm:pr-4 py-2.5 sm:py-3 bg-white border border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:border-green-400 focus:ring-2 focus:ring-green-400/20 transition-all text-xs sm:text-sm"
-                        />
-                      </div>
-                      <div className="relative">
-                        <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                        <input
-                          type="email"
-                          name="email"
-                          value={formData.email}
-                          onChange={handleInputChange}
-                          placeholder="Email Address"
-                          required
-                          className="w-full pl-9 sm:pl-10 pr-3 sm:pr-4 py-2.5 sm:py-3 bg-white border border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:border-green-400 focus:ring-2 focus:ring-green-400/20 transition-all text-xs sm:text-sm"
-                        />
-                      </div>
-                    </div>
-                    <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
-                      <div className="relative">
-                        <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                        <input
-                          type="tel"
-                          name="phone"
-                          value={formData.phone}
-                          onChange={handleInputChange}
-                          placeholder="Phone Number"
-                          required
-                          className="w-full pl-9 sm:pl-10 pr-3 sm:pr-4 py-2.5 sm:py-3 bg-white border border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:border-green-400 focus:ring-2 focus:ring-green-400/20 transition-all text-xs sm:text-sm"
-                        />
-                      </div>
-                      <div className="relative">
-                        <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                        <input
-                          type="date"
-                          name="preferredDate"
-                          value={formData.preferredDate}
-                          onChange={handleInputChange}
-                          required
-                          className="w-full pl-9 sm:pl-10 pr-3 sm:pr-4 py-2.5 sm:py-3 bg-white border border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:border-green-400 focus:ring-2 focus:ring-green-400/20 transition-all text-xs sm:text-sm"
-                        />
-                      </div>
-                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Project Type
+                    </label>
                     <select
                       name="projectType"
                       value={formData.projectType}
                       onChange={handleInputChange}
-                      required
-                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-white border border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:border-green-400 focus:ring-2 focus:ring-green-400/20 transition-all text-xs sm:text-sm"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-green-400 focus:ring-2 focus:ring-green-400/20 transition-all"
                     >
-                      <option value="">Select Project Type</option>
-                      {projectTypes.map(type => (
-                        <option key={type} value={type}>{type}</option>
+                      <option value="">Select type</option>
+                      {projectTypes.map((type) => (
+                        <option key={type} value={type}>
+                          {type}
+                        </option>
                       ))}
                     </select>
-                    <textarea
-                      name="message"
-                      value={formData.message}
-                      onChange={handleInputChange}
-                      placeholder="Tell us about your project..."
-                      rows={2}
-                      required
-                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-white border border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:border-green-400 focus:ring-2 focus:ring-green-400/20 transition-all resize-none text-xs sm:text-sm"
-                    />
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold py-3 sm:py-3.5 rounded-lg sm:rounded-xl hover:from-green-600 hover:to-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-lg shadow-green-500/25 hover:shadow-green-500/40 text-sm"
-                    >
-                      {isSubmitting ? (
-                        <span className="flex items-center justify-center gap-2">
-                          <svg className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                          </svg>
-                          Submitting...
-                        </span>
-                      ) : 'Request Consultation'}
-                    </button>
-                  </form>
-                )}
+                  </div>
+                </div>
+              )}
 
-                {/* Quote Form - Mobile Optimized */}
-                {activeForm === 'quote' && (
-                  <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
-                    <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-green-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
-                        <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-green-600" />
-                      </div>
-                      <h3 className="text-base sm:text-xl font-bold text-gray-900">Request a Quote</h3>
+              {/* Quote fields */}
+              {activeForm === "quote" && (
+                <>
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Project Type
+                      </label>
+                      <select
+                        name="projectType"
+                        value={formData.projectType}
+                        onChange={handleInputChange}
+                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-green-400 focus:ring-2 focus:ring-green-400/20 transition-all"
+                      >
+                        <option value="">Select type</option>
+                        {projectTypes.map((type) => (
+                          <option key={type} value={type}>
+                            {type}
+                          </option>
+                        ))}
+                      </select>
                     </div>
-                    <input type="hidden" name="form_type" value="quote" />
-                    <input type="hidden" name="_subject" value="NEW QUOTE REQUEST - AGEdge Global" />
-                    <input type="hidden" name="_replyto" value={formData.email} />
-                    <input type="hidden" name="_gotcha" value="" />
-                    
-                    <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
-                      <div className="relative">
-                        <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                        <input
-                          type="text"
-                          name="name"
-                          value={formData.name}
-                          onChange={handleInputChange}
-                          placeholder="Full Name"
-                          required
-                          className="w-full pl-9 sm:pl-10 pr-3 sm:pr-4 py-2.5 sm:py-3 bg-white border border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:border-green-400 focus:ring-2 focus:ring-green-400/20 transition-all text-xs sm:text-sm"
-                        />
-                      </div>
-                      <div className="relative">
-                        <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                        <input
-                          type="email"
-                          name="email"
-                          value={formData.email}
-                          onChange={handleInputChange}
-                          placeholder="Email Address"
-                          required
-                          className="w-full pl-9 sm:pl-10 pr-3 sm:pr-4 py-2.5 sm:py-3 bg-white border border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:border-green-400 focus:ring-2 focus:ring-green-400/20 transition-all text-xs sm:text-sm"
-                        />
-                      </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Estimated Budget
+                      </label>
+                      <select
+                        name="budget"
+                        value={formData.budget}
+                        onChange={handleInputChange}
+                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-green-400 focus:ring-2 focus:ring-green-400/20 transition-all"
+                      >
+                        <option value="">Select range</option>
+                        {budgetRanges.map((range) => (
+                          <option key={range} value={range}>
+                            {range}
+                          </option>
+                        ))}
+                      </select>
                     </div>
-                    <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
-                      <div className="relative">
-                        <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                        <input
-                          type="tel"
-                          name="phone"
-                          value={formData.phone}
-                          onChange={handleInputChange}
-                          placeholder="Phone Number"
-                          required
-                          className="w-full pl-9 sm:pl-10 pr-3 sm:pr-4 py-2.5 sm:py-3 bg-white border border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:border-green-400 focus:ring-2 focus:ring-green-400/20 transition-all text-xs sm:text-sm"
-                        />
-                      </div>
-                      <div className="relative">
-                        <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                        <input
-                          type="text"
-                          name="address"
-                          value={formData.address}
-                          onChange={handleInputChange}
-                          placeholder="Project Location"
-                          required
-                          className="w-full pl-9 sm:pl-10 pr-3 sm:pr-4 py-2.5 sm:py-3 bg-white border border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:border-green-400 focus:ring-2 focus:ring-green-400/20 transition-all text-xs sm:text-sm"
-                        />
-                      </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Project Address / Location
+                    </label>
+                    <div className="relative">
+                      <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                      <input
+                        type="text"
+                        name="address"
+                        value={formData.address}
+                        onChange={handleInputChange}
+                        className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-green-400 focus:ring-2 focus:ring-green-400/20 transition-all"
+                        placeholder="e.g., East Legon, Accra"
+                      />
                     </div>
-                    <select
-                      name="projectType"
-                      value={formData.projectType}
-                      onChange={handleInputChange}
-                      required
-                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-white border border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:border-green-400 focus:ring-2 focus:ring-green-400/20 transition-all text-xs sm:text-sm"
-                    >
-                      <option value="">Select Project Type</option>
-                      {projectTypes.map(type => (
-                        <option key={type} value={type}>{type}</option>
-                      ))}
-                    </select>
-                    <select
-                      name="budget"
-                      value={formData.budget}
-                      onChange={handleInputChange}
-                      required
-                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-white border border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:border-green-400 focus:ring-2 focus:ring-green-400/20 transition-all text-xs sm:text-sm"
-                    >
-                      <option value="">Select Budget Range</option>
-                      {budgetRanges.map(range => (
-                        <option key={range} value={range}>{range}</option>
-                      ))}
-                    </select>
-                    <textarea
-                      name="message"
-                      value={formData.message}
-                      onChange={handleInputChange}
-                      placeholder="Project Details..."
-                      rows={2}
-                      required
-                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-white border border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:border-green-400 focus:ring-2 focus:ring-green-400/20 transition-all resize-none text-xs sm:text-sm"
-                    />
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold py-3 sm:py-3.5 rounded-lg sm:rounded-xl hover:from-green-600 hover:to-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-lg shadow-green-500/25 hover:shadow-green-500/40 text-sm"
-                    >
-                      {isSubmitting ? (
-                        <span className="flex items-center justify-center gap-2">
-                          <svg className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                          </svg>
-                          Submitting...
-                        </span>
-                      ) : 'Request Quote'}
-                    </button>
-                  </form>
-                )}
+                  </div>
+                </>
+              )}
+
+              {/* Message */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Message *
+                </label>
+                <textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleInputChange}
+                  required
+                  rows={5}
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-green-400 focus:ring-2 focus:ring-green-400/20 transition-all resize-none"
+                  placeholder="Tell us about your project..."
+                />
               </div>
-            </div>
+
+              {/* Submit */}
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold py-3 rounded-xl hover:from-green-600 hover:to-green-700 transition-all duration-300 shadow-lg shadow-green-500/25 disabled:opacity-50"
+              >
+                {isSubmitting ? (
+                  <>
+                    <span className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent" />
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-4 h-4" />
+                    Send Message
+                  </>
+                )}
+              </button>
+            </form>
           </div>
-        </main>
+        </div>
       </div>
-    </>
-  )
+    </div>
+  );
 }

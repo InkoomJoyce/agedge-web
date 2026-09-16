@@ -9,18 +9,25 @@ export default function Navbar() {
   const location = useLocation()
   const timeoutRef = useRef(null)
 
-  // Check if we're on the home page
-  const isHomePage = location.pathname === '/'
+  // Pages with a full-screen hero (navbar starts transparent here)
+  const HERO_PAGES = ['/', '/about', '/projects', '/calculator', '/walkthrough', '/blog', '/live-news', '/contact', '/team']
+  const isHeroPage = HERO_PAGES.includes(location.pathname)
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50)
     }
+
+    // Run once on mount in case the user reloads mid-page
+    handleScroll()
+
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // Reset scroll state + close menus on route change
   useEffect(() => {
+    setScrolled(false)
     setMenuOpen(false)
     setOpenDropdown(null)
   }, [location])
@@ -56,8 +63,7 @@ export default function Navbar() {
       dropdown: [
         // { name: 'Locations', path: '/locations' },
         { name: '360° Walkthrough', path: '/walkthrough' },
-        { name: 'Cost Calculator', path: '/calculator' },
-        
+        { name: 'Cost Estimator', path: '/calculator' },
       ]
     },
     {
@@ -76,14 +82,14 @@ export default function Navbar() {
   ]
 
   // Determine if navbar should be transparent
-  // Only transparent on home page AND not scrolled
-  const isTransparent = isHomePage && !scrolled
+  // Transparent on hero pages AND not scrolled yet
+  const isTransparent = isHeroPage && !scrolled
 
   const linkBaseClass = "font-bold px-3 py-2 rounded-full transition duration-200 relative"
-  
+
   // Hover class based on transparency state
-  const linkHoverClass = isTransparent 
-    ? 'hover:bg-white/20' 
+  const linkHoverClass = isTransparent
+    ? 'hover:bg-white/20'
     : 'hover:bg-gray-200'
 
   // Text color based on transparency state
