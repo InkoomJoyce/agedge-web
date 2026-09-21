@@ -308,7 +308,7 @@ export default function Blog() {
         {/* Background Image — The Francis */}
         <div className="absolute inset-0">
           <img
-            src="/images/projects/the-francis/1.jpeg"
+            src="/images/projects/richmond-complex/2.jpeg"
             alt="AGEdge Global Blog - Architecture and Construction Insights"
             className="w-full h-full object-cover"
           />

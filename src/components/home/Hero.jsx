@@ -46,42 +46,42 @@ export default function Hero() {
       url: "/images/projects/richmond-complex/1.jpeg",
       alt: "Richmond Complex commercial project in Accra by AGEdge Global",
     },
-    {
-      url: "/images/projects/abenas-home/1.jpeg",
-      alt: "Abena's Home multi-family residence in Accra",
-    },
-    {
-      url: "/images/projects/the-francis/1.jpeg",
-      alt: "The Francis luxury apartments in Cantonments, Accra",
-    },
-    {
-      url: "/images/projects/kantu-residence/1.jpeg",
-      alt: "Kantu Residence luxury villa in East Legon, Accra",
-    },
-    {
-      url: "/images/projects/nanas-residence/1.jpeg",
-      alt: "Nana's Residence executive home in Spintex, Accra",
-    },
-    {
-      url: "/images/projects/kantu-residence/2.jpeg",
-      alt: "Kantu Residence additional view, East Legon, Accra",
-    },
-    {
-      url: "/images/projects/nanas-residence/2.jpeg",
-      alt: "Nana's Residence additional view, Spintex, Accra",
-    },
+    // {
+    //   url: "/images/projects/abenas-home/1.jpeg",
+    //   alt: "Abena's Home multi-family residence in Accra",
+    // },
+    // {
+    //   url: "/images/projects/the-francis/1.jpeg",
+    //   alt: "The Francis luxury apartments in Cantonments, Accra",
+    // },
+    // {
+    //   url: "/images/projects/kantu-residence/1.jpeg",
+    //   alt: "Kantu Residence luxury villa in East Legon, Accra",
+    // },
+    // {
+    //   url: "/images/projects/nanas-residence/1.jpeg",
+    //   alt: "Nana's Residence executive home in Spintex, Accra",
+    // },
+    // {
+    //   url: "/images/projects/kantu-residence/2.jpeg",
+    //   alt: "Kantu Residence additional view, East Legon, Accra",
+    // },
+    // {
+    //   url: "/images/projects/nanas-residence/2.jpeg",
+    //   alt: "Nana's Residence additional view, Spintex, Accra",
+    // }
     {
       url: "/images/projects/richmond-complex/2.jpeg",
       alt: "Richmond Complex additional view, Accra",
     },
-    {
-      url: "/images/projects/abenas-home/2.jpeg",
-      alt: "Abena's Home additional view, Accra",
-    },
-    {
-      url: "/images/projects/the-francis/2.jpeg",
-      alt: "The Francis additional view, Cantonments, Accra",
-    },
+    // {
+    //   url: "/images/projects/abenas-home/2.jpeg",
+    //   alt: "Abena's Home additional view, Accra",
+    // },
+    // {
+    //   url: "/images/projects/the-francis/2.jpeg",
+    //   alt: "The Francis additional view, Cantonments, Accra",
+    // },
   ];
 
   // Preload the very first image for fast LCP

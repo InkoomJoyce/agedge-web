@@ -156,7 +156,7 @@ export default function Walkthrough() {
         {/* Background Image — Nana's Residence */}
         <div className="absolute inset-0">
           <img
-            src="/images/projects/nanas-residence/1.jpeg"
+            src="/images/projects/richmond-complex/3.jpeg"
             alt="360° Walkthrough - See Your Project Come to Life"
             className="w-full h-full object-cover"
           />

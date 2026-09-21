@@ -343,7 +343,7 @@ export default function LiveNews() {
         {/* Background Image — Kantu Residence */}
         <div className="absolute inset-0">
           <img
-            src="/images/projects/kantu-residence/1.jpeg"
+            src="/images/projects/richmond-complex/4.jpeg"
             alt="Architecture and Construction News"
             className="w-full h-full object-cover"
           />

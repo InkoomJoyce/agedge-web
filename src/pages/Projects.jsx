@@ -1,4 +1,3 @@
-// src/pages/projects.jsx
 import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -13,12 +12,82 @@ import {
 } from "lucide-react";
 
 // ═══════════════════════════════════════════
+// REUSABLE PROTECTED IMAGE
+// Applies: draggable=false, no right-click, no select,
+// and a CSS watermark overlay
+// ═══════════════════════════════════════════
+function ProtectedImage({
+  src,
+  alt,
+  className = "",
+  imgClassName = "",
+  watermark = true,
+  watermarkPosition = "bottom-right",
+  pointerEvents = "auto",
+}) {
+  // Position class for the watermark
+  const positionClass = {
+    "bottom-right": "bottom-2 right-2",
+    "bottom-left": "bottom-2 left-2",
+    "top-right": "top-2 right-2",
+    "top-left": "top-2 left-2",
+    "center": "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
+  }[watermarkPosition] || "bottom-2 right-2";
+
+  return (
+    <div className={`relative overflow-hidden ${className}`}>
+      <img
+        src={src}
+        alt={alt}
+        draggable="false"
+        onContextMenu={(e) => e.preventDefault()}
+        className={`select-none ${imgClassName}`}
+        style={{ pointerEvents }}
+      />
+
+      {watermark && (
+        <div
+          className={`absolute ${positionClass} pointer-events-none select-none z-10`}
+          aria-hidden="true"
+        >
+          <span className="text-[9px] sm:text-[10px] font-medium tracking-wider text-white/60 drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)] whitespace-nowrap">
+            © AGEdge Global
+          </span>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════
 // DATA
 // ═══════════════════════════════════════════
 const projects = [
   // ─────────── PRIVATE RESIDENCES ───────────
   {
     id: 1,
+    name: "Akorkor's Residence",
+    category: "residential",
+    type: "Mediterranean Villa",
+    location: "Accra, Ghana",
+    year: "2024",
+    description:
+      "A Mediterranean-inspired villa defined by warm cream walls, terracotta roof tiles, and elegant arched windows. Deep wooden eaves, ornate lantern sconces, and a double-height balcony create a relaxed, timeless character, while the landscaped gardens and outdoor lounge offer a serene retreat for family living.",
+    images: [
+      "/images/projects/akorkors-residence/1.jpeg",
+      "/images/projects/akorkors-residence/2.jpeg",
+      "/images/projects/akorkors-residence/3.jpeg",
+      "/images/projects/akorkors-residence/4.jpeg",
+    ],
+    features: [
+      "Mediterranean Architecture",
+      "Arched Windows",
+      "Landscaped Gardens",
+      "Covered Balcony",
+    ],
+  },
+  {
+    id: 2,
     name: "Buabeng Residence",
     category: "residential",
     type: "Private Residence",
@@ -40,7 +109,7 @@ const projects = [
     ],
   },
   {
-    id: 2,
+    id: 3,
     name: "Kantu Residence",
     category: "residential",
     type: "Luxury Villa",
@@ -62,7 +131,7 @@ const projects = [
     ],
   },
   {
-    id: 3,
+    id: 4,
     name: "Nana's Residence",
     category: "residential",
     type: "Executive Home",
@@ -86,7 +155,7 @@ const projects = [
 
   // ─────────── EDUCATIONAL ───────────
   {
-    id: 4,
+    id: 5,
     name: "Faith Montessori - Admin Block",
     category: "educational",
     type: "Administrative Block",
@@ -103,7 +172,7 @@ const projects = [
     ],
   },
   {
-    id: 5,
+    id: 6,
     name: "Faith Montessori - Boys Dormitory",
     category: "educational",
     type: "Boys Dormitory",
@@ -120,7 +189,7 @@ const projects = [
     ],
   },
   {
-    id: 6,
+    id: 7,
     name: "Faith Montessori - Girls Dormitory",
     category: "educational",
     type: "Girls Dormitory",
@@ -142,7 +211,7 @@ const projects = [
 
   // ─────────── OFFICE & COMMERCIAL ───────────
   {
-    id: 7,
+    id: 8,
     name: "Richmond Complex",
     category: "office",
     type: "Commercial Complex",
@@ -166,27 +235,27 @@ const projects = [
 
   // ─────────── MULTI-FAMILY HOUSING ───────────
   {
-    id: 8,
+    id: 9,
     name: "Abena's Home",
     category: "multifamily",
-    type: "Multi-Family Home",
+    type: "Affordable Housing",
     location: "Accra, Ghana",
     year: "2024",
     description:
-      "A contemporary multi-family home offering comfortable living spaces with a warm, community-focused design.",
+      "A thoughtfully designed affordable housing development that delivers quality living without compromise. Abena's Home makes dignified, well-built residences accessible to families and young professionals, proving that good design and affordability can go hand in hand.",
     images: [
       "/images/projects/abenas-home/1.jpeg",
       "/images/projects/abenas-home/2.jpeg",
     ],
     features: [
-      "Spacious Units",
+      "Affordable Units",
+      "Quality Construction",
+      "Community Spaces",
       "Secure Environment",
-      "Parking Facility",
-      "Green Spaces",
     ],
   },
   {
-    id: 9,
+    id: 10,
     name: "Tachie Enclave",
     category: "multifamily",
     type: "Multi-Family Housing",
@@ -208,7 +277,7 @@ const projects = [
     ],
   },
   {
-    id: 10,
+    id: 11,
     name: "The Francis",
     category: "multifamily",
     type: "Luxury Apartments",
@@ -230,7 +299,7 @@ const projects = [
     ],
   },
   {
-    id: 11,
+    id: 12,
     name: "Airport Heights",
     category: "multifamily",
     type: "Residential Apartments",
@@ -263,10 +332,42 @@ const stats = [
   { value: "50+", label: "Projects Completed", icon: Building2 },
   { value: "15+", label: "Happy Clients", icon: Users },
   { value: "10+", label: "Years Experience", icon: Award },
-  { value: "11", label: "Featured Projects", icon: Sparkles },
+  { value: "12", label: "Featured Projects", icon: Sparkles },
 ];
 
 const ALL_PROJECTS_INITIAL_COUNT = 6;
+
+// ─────────── FEATURED ORDERING ───────────
+const ALL_PROJECTS_ORDER = [
+  "Richmond Complex",
+  "Airport Heights",
+  "Akorkor's Residence",
+  "Kantu Residence",
+  "Buabeng Residence",
+  "Nana's Residence",
+  "The Francis",
+  "Tachie Enclave",
+  "Abena's Home",
+  "Faith Montessori - Girls Dormitory",
+  "Faith Montessori - Boys Dormitory",
+  "Faith Montessori - Admin Block",
+];
+
+const MULTIFAMILY_ORDER = [
+  "Airport Heights",
+  "Abena's Home",
+  "Tachie Enclave",
+  "The Francis",
+];
+
+const sortByName = (list, order) => {
+  const indexMap = new Map(order.map((name, i) => [name, i]));
+  return [...list].sort((a, b) => {
+    const ai = indexMap.has(a.name) ? indexMap.get(a.name) : 999;
+    const bi = indexMap.has(b.name) ? indexMap.get(b.name) : 999;
+    return ai - bi;
+  });
+};
 
 // ═══════════════════════════════════════════
 // MAIN COMPONENT
@@ -282,15 +383,25 @@ export default function Projects() {
   };
 
   const filteredProjects = useMemo(() => {
-    const base =
-      filter === "all"
-        ? projects
-        : projects.filter((p) => p.category === filter);
+    let base;
 
-    if (filter === "all" && !showAll) {
-      return base.slice(0, ALL_PROJECTS_INITIAL_COUNT);
+    if (filter === "all") {
+      base = sortByName(projects, ALL_PROJECTS_ORDER);
+      if (!showAll) {
+        return base.slice(0, ALL_PROJECTS_INITIAL_COUNT);
+      }
+      return base;
     }
-    return base;
+
+    if (filter === "multifamily") {
+      base = sortByName(
+        projects.filter((p) => p.category === "multifamily"),
+        MULTIFAMILY_ORDER
+      );
+      return base;
+    }
+
+    return projects.filter((p) => p.category === filter);
   }, [filter, showAll]);
 
   const totalForFilter =
@@ -305,7 +416,7 @@ export default function Projects() {
 
   return (
     <div className="relative min-h-screen bg-gray-50 overflow-hidden">
-      {/* Background Highlights (soft orbs behind everything) */}
+      {/* Background Highlights */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute -top-32 -right-32 w-96 h-96 bg-green-200/30 rounded-full blur-3xl animate-pulse" />
         <div
@@ -328,32 +439,28 @@ export default function Projects() {
         />
       </div>
 
-      {/* ═══════════ HERO SECTION — FULL SCREEN ═══════════ */}
+      {/* ═══════════ HERO SECTION ═══════════ */}
       <section className="relative min-h-screen -mt-24 md:-mt-28 flex items-center overflow-hidden">
-        {/* Background Image */}
         <div className="absolute inset-0">
-          <img
+          <ProtectedImage
             src="/images/projects/richmond-complex/1.jpeg"
             alt="Richmond Complex"
-            className="w-full h-full object-cover"
+            className="w-full h-full"
+            imgClassName="w-full h-full object-cover"
+            watermarkPosition="bottom-right"
+            pointerEvents="none"
           />
-          {/* Very light overlay — image stays visible */}
-          <div className="absolute inset-0 bg-black/20" />
-          {/* Stronger gradient at the bottom so text pops */}
-          <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/75 via-black/35 to-transparent" />
-          {/* Subtle top fade for header legibility */}
-          <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/40 to-transparent" />
+          <div className="absolute inset-0 bg-black/20 pointer-events-none" />
+          <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/75 via-black/35 to-transparent pointer-events-none" />
+          <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/40 to-transparent pointer-events-none" />
         </div>
 
-        {/* Decorative orbs */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div className="absolute -top-20 -right-20 w-96 h-96 bg-green-400/15 rounded-full blur-3xl" />
           <div className="absolute bottom-0 -left-20 w-80 h-80 bg-emerald-400/10 rounded-full blur-3xl" />
         </div>
 
-        {/* Hero Content */}
         <div className="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-32 pb-40">
-          {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/15 backdrop-blur-md border border-white/25 rounded-full shadow-sm mb-6">
             <Sparkles className="w-3.5 h-3.5 text-green-300" />
             <span className="text-xs font-semibold tracking-wider uppercase text-white">
@@ -361,7 +468,6 @@ export default function Projects() {
             </span>
           </div>
 
-          {/* Title */}
           <h1 className="text-4xl sm:text-5xl lg:text-7xl font-light tracking-tight text-white leading-[1.05] mb-4 drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)]">
             A Showcase of
             <br />
@@ -369,7 +475,6 @@ export default function Projects() {
               <span className="font-bold bg-gradient-to-r from-green-300 via-green-200 to-emerald-300 bg-clip-text text-transparent">
                 Crafted Excellence
               </span>
-              {/* Decorative underline */}
               <svg
                 className="absolute -bottom-3 left-0 w-full"
                 viewBox="0 0 300 12"
@@ -401,18 +506,16 @@ export default function Projects() {
             </span>
           </h1>
 
-          {/* Subtitle */}
           <p className="text-base sm:text-lg text-gray-100 font-light leading-relaxed mt-8 max-w-2xl mx-auto drop-shadow-[0_1px_6px_rgba(0,0,0,0.7)]">
             From intimate family homes to landmark commercial developments —
             explore a curated selection of our architectural and construction
             work across Ghana.
           </p>
 
-          {/* Floating stat chips */}
           <div className="flex flex-wrap justify-center gap-3 mt-8">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/15 backdrop-blur-md border border-white/25 rounded-full text-xs text-white shadow-sm">
               <Building2 className="w-3.5 h-3.5 text-green-300" />
-              <span className="font-medium">11 Featured Projects</span>
+              <span className="font-medium">12 Featured Projects</span>
             </div>
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/15 backdrop-blur-md border border-white/25 rounded-full text-xs text-white shadow-sm">
               <MapPin className="w-3.5 h-3.5 text-green-300" />
@@ -428,54 +531,43 @@ export default function Projects() {
 
       {/* ═══════════ EVERYTHING ELSE ═══════════ */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* STATS — overlapping the hero bottom */}
-        {/* STATS — overlapping the hero bottom */}
-<div className="relative z-20 -mt-20 md:-mt-24 mb-12">
-  <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 md:gap-5">
-    {stats.map((stat, idx) => {
-      const Icon = stat.icon;
-      return (
-        <div
-          key={idx}
-          className="group relative overflow-hidden rounded-2xl p-5 text-center shadow-xl shadow-black/10 hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 bg-gradient-to-br from-white via-white to-green-50/60 border border-green-100/80"
-        >
-          {/* Decorative corner blob */}
-          <div className="absolute -top-8 -right-8 w-24 h-24 rounded-full bg-gradient-to-br from-green-400/20 to-emerald-400/10 blur-2xl group-hover:scale-125 transition-transform duration-500" />
-
-          {/* Top accent bar */}
-          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-green-400 via-emerald-500 to-green-400 opacity-80" />
-
-          {/* Icon bubble */}
-          {Icon && (
-            <div className="relative flex justify-center mb-3">
-              <div className="relative">
-                {/* Glow ring */}
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-green-400 to-emerald-500 blur-md opacity-40 group-hover:opacity-70 transition-opacity duration-300" />
-                {/* Icon container */}
-                <div className="relative p-3 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-600 shadow-lg shadow-green-500/30 group-hover:scale-110 transition-transform duration-300">
-                  <Icon className="w-5 h-5 text-white" strokeWidth={2.2} />
+        {/* STATS — overlapping hero bottom */}
+        <div className="relative z-20 -mt-20 md:-mt-24 mb-12">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 md:gap-5">
+            {stats.map((stat, idx) => {
+              const Icon = stat.icon;
+              return (
+                <div
+                  key={idx}
+                  className="group relative overflow-hidden rounded-2xl p-5 text-center shadow-xl shadow-black/10 hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 bg-gradient-to-br from-white via-white to-green-50/60 border border-green-100/80"
+                >
+                  <div className="absolute -top-8 -right-8 w-24 h-24 rounded-full bg-gradient-to-br from-green-400/20 to-emerald-400/10 blur-2xl group-hover:scale-125 transition-transform duration-500" />
+                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-green-400 via-emerald-500 to-green-400 opacity-80" />
+                  {Icon && (
+                    <div className="relative flex justify-center mb-3">
+                      <div className="relative">
+                        <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-green-400 to-emerald-500 blur-md opacity-40 group-hover:opacity-70 transition-opacity duration-300" />
+                        <div className="relative p-3 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-600 shadow-lg shadow-green-500/30 group-hover:scale-110 transition-transform duration-300">
+                          <Icon
+                            className="w-5 h-5 text-white"
+                            strokeWidth={2.2}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  <p className="relative text-3xl font-extrabold bg-gradient-to-br from-gray-900 via-green-800 to-green-600 bg-clip-text text-transparent leading-none">
+                    {stat.value}
+                  </p>
+                  <p className="relative text-[11px] uppercase tracking-wider font-semibold text-gray-500 mt-2 group-hover:text-green-700 transition-colors">
+                    {stat.label}
+                  </p>
+                  <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-10 h-0.5 rounded-full bg-gradient-to-r from-transparent via-green-400/60 to-transparent group-hover:w-16 transition-all duration-500" />
                 </div>
-              </div>
-            </div>
-          )}
-
-          {/* Value */}
-          <p className="relative text-3xl font-extrabold bg-gradient-to-br from-gray-900 via-green-800 to-green-600 bg-clip-text text-transparent leading-none">
-            {stat.value}
-          </p>
-
-          {/* Label */}
-          <p className="relative text-[11px] uppercase tracking-wider font-semibold text-gray-500 mt-2 group-hover:text-green-700 transition-colors">
-            {stat.label}
-          </p>
-
-          {/* Bottom subtle divider */}
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-10 h-0.5 rounded-full bg-gradient-to-r from-transparent via-green-400/60 to-transparent group-hover:w-16 transition-all duration-500" />
+              );
+            })}
+          </div>
         </div>
-      );
-    })}
-  </div>
-</div>
 
         {/* Filter Buttons */}
         <div className="flex flex-wrap justify-center gap-2 mb-10">
@@ -548,14 +640,17 @@ function ProjectCard({ project, onClick }) {
       className="group bg-white rounded-xl overflow-hidden border border-gray-200/50 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer"
     >
       <div className="relative h-52 overflow-hidden">
-        <img
+        <ProtectedImage
           src={project.images[0]}
           alt={project.name}
-          loading="lazy"
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+          className="w-full h-full"
+          imgClassName="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+          watermarkPosition="bottom-right"
+          pointerEvents="none"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-        <div className="absolute top-3 right-3 bg-green-500 text-white px-2.5 py-1 rounded-full text-[10px] font-medium">
+
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+        <div className="absolute top-3 right-3 bg-green-500 text-white px-2.5 py-1 rounded-full text-[10px] font-medium z-20">
           {project.type}
         </div>
       </div>
@@ -609,7 +704,7 @@ function ProjectModal({ project, onClose }) {
         <button
           onClick={onClose}
           aria-label="Close"
-          className="absolute top-4 right-4 z-10 p-2 bg-white rounded-full shadow-md hover:bg-gray-100 transition-colors"
+          className="absolute top-4 right-4 z-20 p-2 bg-white rounded-full shadow-md hover:bg-gray-100 transition-colors"
         >
           <X className="w-5 h-5" />
         </button>
@@ -617,12 +712,14 @@ function ProjectModal({ project, onClose }) {
         <div className="p-6 md:p-8">
           <div className={`grid ${gridCols} gap-3 mb-6`}>
             {project.images.map((img, idx) => (
-              <img
+              <ProtectedImage
                 key={idx}
                 src={img}
                 alt={`${project.name} - Image ${idx + 1}`}
-                loading="lazy"
-                className={`rounded-xl w-full ${imageHeight} object-cover`}
+                className={`rounded-xl w-full ${imageHeight}`}
+                imgClassName="rounded-xl w-full h-full object-cover"
+                watermarkPosition="bottom-right"
+                pointerEvents="none"
               />
             ))}
           </div>

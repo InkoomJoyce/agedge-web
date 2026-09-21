@@ -221,7 +221,7 @@ export default function Calculator() {
         {/* Background Image — The Francis */}
         <div className="absolute inset-0">
           <img
-            src="/images/projects/the-francis/1.jpeg"
+            src="/images/projects/richmond-complex/4.jpeg"
             alt="Cost Calculator - Estimate Your Building Project"
             className="w-full h-full object-cover"
           />

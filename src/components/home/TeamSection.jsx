@@ -344,7 +344,7 @@ export default function TeamSection() {
       >
         <div className="absolute inset-0">
           <img
-            src="/images/projects/kantu-residence/1.jpeg"
+            src="/images/projects/richmond-complex/1.jpeg"
             alt="AGEdge Global Team"
             className="w-full h-full object-cover"
           />
