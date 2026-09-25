@@ -60,89 +60,102 @@
 
     <!-- ═══════════ STRUCTURED DATA — ARCHITECTURE FIRM (PROFESSIONAL SERVICE) ═══════════ -->
     <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "@id": "https://agedgeglobal.com/#architect",
+  "name": "AGEdge Global — Architecture Firm in Accra",
+  "alternateName": "AGEdge Global Architects",
+  "url": "https://agedgeglobal.com",
+  "logo": "https://agedgeglobal.com/agedge-logo.png",
+  "image": "https://agedgeglobal.com/og-image.jpg",
+  "description": "AGEdge Global is a leading architecture firm in Accra, Ghana specializing in architectural design, residential architecture, commercial architecture, and design & build services.",
+  "telephone": "+233256073041",
+  "email": "info@agedgeglobal.com",
+  "priceRange": "$$",
+  "areaServed": [
+    { "@type": "City", "name": "Accra" },
+    { "@type": "City", "name": "Tema" },
+    { "@type": "City", "name": "Kumasi" },
+    { "@type": "Country", "name": "Ghana" }
+  ],
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Number 1 Beige Street, Azumah, New Weija",
+    "addressLocality": "Accra",
+    "addressRegion": "Greater Accra",
+    "addressCountry": "GH"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5",
+    "reviewCount": "15"
+  },
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Architecture & Construction Services",
+    "itemListElement": [
       {
-        "@context": "https://schema.org",
-        "@type": "ProfessionalService",
-        "@id": "https://agedgeglobal.com/#architect",
-        "name": "AGEdge Global — Architecture Firm in Accra",
-        "alternateName": "AGEdge Global Architects",
-        "url": "https://agedgeglobal.com",
-        "logo": "https://agedgeglobal.com/agedge-logo.png",
-        "image": "https://agedgeglobal.com/og-image.jpg",
-        "description": "AGEdge Global is a leading architecture firm in Accra, Ghana specializing in architectural design, residential architecture, commercial architecture, and design & build services.",
-        "serviceType": [
-          "Architecture",
-          "Architectural Design",
-          "Residential Architecture",
-          "Commercial Architecture",
-          "Interior Architecture",
-          "Urban Design",
-          "Design & Build",
-          "3D Visualization",
-          "Building Permits",
-          "Project Feasibility"
-        ],
-        "areaServed": [
-          { "@type": "City", "name": "Accra" },
-          { "@type": "City", "name": "Tema" },
-          { "@type": "City", "name": "Kumasi" },
-          { "@type": "Country", "name": "Ghana" }
-        ],
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Number 1 Beige Street, Azumah, New Weija",
-          "addressLocality": "Accra",
-          "addressRegion": "Greater Accra",
-          "addressCountry": "GH"
-        },
-        "telephone": "+233256073041",
-        "email": "info@agedgeglobal.com",
-        "priceRange": "$$",
-        "aggregateRating": {
-          "@type": "AggregateRating",
-          "ratingValue": "5",
-          "reviewCount": "15"
-        },
-        "hasOfferCatalog": {
-          "@type": "OfferCatalog",
-          "name": "Architecture & Construction Services",
-          "itemListElement": [
-            {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Architectural Design",
-                "description": "Innovative, climate-smart architectural design for residential and commercial buildings in Ghana."
-              }
-            },
-            {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Residential Architecture",
-                "description": "Custom residential architecture — private homes, villas, and multi-family housing across Accra and Ghana."
-              }
-            },
-            {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Commercial Architecture",
-                "description": "Commercial architectural design for offices, retail, and mixed-use developments in Ghana."
-              }
-            },
-            {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Design & Build",
-                "description": "End-to-end design and construction services — architecture, materials, and build under one roof."
-              }
-            }
-          ]
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Architectural Design",
+          "description": "Innovative, climate-smart architectural design for residential and commercial buildings in Ghana."
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Residential Architecture",
+          "description": "Custom residential architecture — private homes, villas, and multi-family housing across Accra and Ghana."
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Commercial Architecture",
+          "description": "Commercial architectural design for offices, retail, and mixed-use developments in Ghana."
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Design & Build",
+          "description": "End-to-end design and construction services — architecture, materials, and build under one roof."
         }
       }
-    </script>
+    ]
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "serviceType": "Architecture",
+  "name": "Architecture Services in Accra, Ghana",
+  "description": "Full-service architecture firm in Accra offering architectural design, 3D visualization, and building permits for residential and commercial projects across Ghana.",
+  "provider": {
+    "@type": "ProfessionalService",
+    "@id": "https://agedgeglobal.com/#architect"
+  },
+  "areaServed": [
+    { "@type": "City", "name": "Accra" },
+    { "@type": "Country", "name": "Ghana" }
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Architecture Services",
+    "itemListElement": [
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Residential Architecture" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Commercial Architecture" } }
+    ]
+  }
+}
+</script>
 
     <!-- ═══════════ STRUCTURED DATA — ORGANIZATION ═══════════ -->
     <script type="application/ld+json">
