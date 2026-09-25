@@ -200,9 +200,11 @@ export default function Hero() {
             Architecture, Construction & Real Estate
           </h1>
           <p className="text-xl md:text-xl text-gray-100 mb-10 max-w-2xl mx-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
-            AGEdge Global delivers end-to-end building solutions across Ghana.
-            From architectural design to construction and property development.
-          </p>
+  AGEdge Global is a leading architecture firm in Ghana — delivering
+  architectural design, construction, and real estate development across the
+  country. From private residences to commercial landmarks, we build
+  end-to-end under one roof.
+</p>
           <div className="flex gap-4 justify-center">
             <Link
               to="/projects"

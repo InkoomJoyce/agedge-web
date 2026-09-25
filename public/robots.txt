@@ -1,0 +1,56 @@
+# ═══════════════════════════════════════════
+# AGEdge Global — robots.txt
+# ═══════════════════════════════════════════
+
+# Allow all traditional search engines
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /private/
+
+# ═══════ AI CRAWLERS — explicitly allowed ═══════
+
+# OpenAI — ChatGPT Search (live retrieval)
+User-agent: OAI-SearchBot
+Allow: /
+
+# OpenAI — ChatGPT training
+User-agent: GPTBot
+Allow: /
+
+# Google Gemini
+User-agent: Google-Extended
+Allow: /
+
+# Anthropic Claude
+User-agent: ClaudeBot
+Allow: /
+User-agent: anthropic-ai
+Allow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+User-agent: Perplexity-User
+Allow: /
+
+# Apple Intelligence
+User-agent: Applebot
+Allow: /
+User-agent: Applebot-Extended
+Allow: /
+
+# Meta AI
+User-agent: meta-externalagent
+Allow: /
+
+# Common Crawl (many LLMs train on this)
+User-agent: CCBot
+Allow: /
+
+# Amazon
+User-agent: Amazonbot
+Allow: /
+
+# Sitemap
+Sitemap: https://agedgeglobal.com/sitemap.xml
