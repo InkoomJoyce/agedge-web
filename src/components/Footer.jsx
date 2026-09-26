@@ -328,7 +328,7 @@ export default function Footer() {
                 <li><Link to="/about" className="text-gray-600 hover:text-green-600 transition text-sm">About AGEdge Global</Link></li>
                 <li><Link to="/services" className="text-gray-600 hover:text-green-600 transition text-sm">Construction & Architectural Services</Link></li>
                 <li><Link to="/projects" className="text-gray-600 hover:text-green-600 transition text-sm">Featured Projects in Ghana</Link></li>
-                <li><Link to="/locations" className="text-gray-600 hover:text-green-600 transition text-sm">Our Locations</Link></li>
+                {/* <li><Link to="/locations" className="text-gray-600 hover:text-green-600 transition text-sm">Our Locations</Link></li> */}
               </ul>
             </nav>
 
