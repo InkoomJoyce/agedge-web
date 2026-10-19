@@ -65,8 +65,6 @@ const TEAM_MEMBERS = [
       "Over fifteen years of practice in Ghana, Victor has acquired in-depth knowledge in architecture and construction through a wide collection of private, commercial and government projects.",
     projects: 50,
     awards: 8,
-    email: "vagyasi2@gmail.com",
-    phone: "+233 244 988 093",
     location: "Accra, Ghana",
   },
   {
@@ -91,8 +89,7 @@ const TEAM_MEMBERS = [
       "Selorm brings fresh perspectives and contemporary design sensibilities to the firm. Her widespread skills in design and construction make her an invaluable asset.",
     projects: 15,
     awards: 2,
-    email: "selorm.lumor@agedge.com",
-    phone: "+233 24 XXXX",
+  
     location: "Accra, Ghana",
   },
   {
@@ -117,8 +114,7 @@ const TEAM_MEMBERS = [
       "With over a decade of hands-on experience, Paul's widespread skills in design exposure and site work make him an indispensable asset.",
     projects: 35,
     awards: 3,
-    email: "paul.tetteh@agedge.com",
-    phone: "+233 24 XXX XXXX",
+    
     location: "Accra, Ghana",
   },
   {
@@ -141,8 +137,8 @@ const TEAM_MEMBERS = [
       "Michael brings comprehensive experience in quantity surveying services across Building and Civil engineering works.",
     projects: 45,
     awards: 5,
-    email: "michael.yeboah@agedge.com",
-    phone: "+233 24 XXX XXXX",
+    // email: "michael.yeboah@agedge.com",
+    // phone: "+233 24 XXX XXXX",
     location: "Accra, Ghana",
   },
   {
@@ -168,9 +164,9 @@ const TEAM_MEMBERS = [
       "With over three decades of experience, Wilberforce combines both contemporary and traditional methods of structural design analysis.",
     projects: 80,
     awards: 12,
-    email: "wilberforce.brown@agedge.com",
-    phone: "+233 24 XXXX",
-    location: "Accra, Ghana",
+    // email: "wilberforce.brown@agedge.com",
+    // phone: "+233 24 XXXX",
+    // location: "Accra, Ghana",
   },
   {
     id: 6,
@@ -197,9 +193,9 @@ const TEAM_MEMBERS = [
       "Joyce brings over 4 years of experience in business development and strategic partnerships across Ghana's real estate and construction sectors.",
     projects: 30,
     awards: 4,
-    email: "inkoomja@gmail.com",
-    phone: "+233 548 869 192",
-    location: "Accra, Ghana",
+    // email: "inkoomja@gmail.com",
+    // phone: "+233 548 869 192",
+    // location: "Accra, Ghana",
   },
 ];
 
